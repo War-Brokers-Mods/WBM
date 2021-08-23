@@ -5,7 +5,7 @@ using System.Collections;
 
 namespace WBM
 {
-	[BepInPlugin("com.developomp.wbm", "War Brokers Mods", "0.2.0.0")]
+	[BepInPlugin("com.developomp.wbm", "War Brokers Mods", "0.3.0.0")]
 	public partial class WBM : BaseUnityPlugin
 	{
 		private void Start()
@@ -42,7 +42,7 @@ namespace WBM
 				new Rect(this.GUIOffsetX, this.GUIOffsetY, 200, 60),
 				@"War Brokers Mods
 Made by [LP] POMP
-v0.2.0.0"
+v0.3.0.0"
 			);
 			if (this.localPlayerIndex > 0)
 			{
@@ -73,7 +73,7 @@ HeadShots: {this.MyPlayerStats.headShots}"
 
 			yield return new WaitForSeconds(time);
 
-			this.UpdateValues = UpdateValuesFunction(1f);
+			this.UpdateValues = UpdateValuesFunction(0.1f);
 			StartCoroutine(this.UpdateValues);
 		}
 	}

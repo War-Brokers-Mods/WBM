@@ -1,7 +1,6 @@
 # [War Brokers Mods (WBM)](https://github.com/developomp/WBM)
 
 ![License: MIT](https://img.shields.io/github/license/developomp/WBM?style=flat-square&color=blue)
-e
 
 > **IF YOU USE THIS TO DEVELOP HACKS YOUR MOM IS GAY.**
 

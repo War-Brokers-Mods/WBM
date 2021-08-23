@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace WBM
 {
-	[BepInPlugin("com.developomp.wbm", "War Brokers Mods", "1.0.0.0")]
+	[BepInPlugin("com.developomp.wbm", "War Brokers Mods", "0.2.0.0")]
 	public partial class WBM : BaseUnityPlugin
 	{
 		private void Start()

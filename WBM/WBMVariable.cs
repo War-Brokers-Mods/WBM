@@ -1,15 +1,21 @@
 using System.Reflection;
+using System.Collections;
 
 namespace WBM
 {
 	public partial class WBM
 	{
 		private webguy _webguy;
+		private IEnumerator UpdateValues;
+
 		// private ushort serverPort = 24601;
 		private static BindingFlags bindFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static;
 
+		private int GUIOffsetX = 40;
+		private int GUIOffsetY = 325;
+
 		private FieldInfo showEloRef;
-		private bool showElo
+		private bool showEloRaw
 		{
 			get
 			{
@@ -22,7 +28,7 @@ namespace WBM
 		}
 
 		private FieldInfo showSquadServerRef;
-		private bool showSquadServer
+		private bool showSquadServerRaw
 		{
 			get
 			{
@@ -35,7 +41,7 @@ namespace WBM
 		}
 
 		private FieldInfo showTestingServerRef;
-		private bool showTestingServer
+		private bool showTestingServerRaw
 		{
 			get
 			{
@@ -48,7 +54,7 @@ namespace WBM
 		}
 
 		private FieldInfo playerStatsArrayRef;
-		private Data.PlayerStatsStruct[] playerStatsArray
+		private Data.PlayerStatsStruct[] playerStatsArrayRaw
 		{
 			get
 			{
@@ -79,12 +85,12 @@ namespace WBM
 				return result;
 			}
 		}
-		private Data.PlayerStatsStruct MyPlayerStats
+		private Data.PlayerStatsStruct MyPlayerStatsRaw
 		{
 			get
 			{
 				PDEMAFHPNBD[] rawPlayerStatsArray = (PDEMAFHPNBD[])playerStatsArrayRef.GetValue(this._webguy); ;
-				PDEMAFHPNBD currentlyParsing = rawPlayerStatsArray[localPlayerIndex];
+				PDEMAFHPNBD currentlyParsing = rawPlayerStatsArray[localPlayerIndexRaw];
 
 				return new Data.PlayerStatsStruct
 				{
@@ -103,9 +109,10 @@ namespace WBM
 				};
 			}
 		}
+		private Data.PlayerStatsStruct MyPlayerStats;
 
 		private FieldInfo currentAreaRef;
-		private int currentArea
+		private int currentAreaRaw
 		{
 			get
 			{
@@ -118,7 +125,7 @@ namespace WBM
 		}
 
 		private FieldInfo playersActiveRef;
-		private bool[] playersActive
+		private bool[] playersActiveRaw
 		{
 			get
 			{
@@ -131,7 +138,7 @@ namespace WBM
 		}
 
 		private FieldInfo killListRef;
-		private int[] killList
+		private int[] killListRaw
 		{
 			get
 			{
@@ -144,7 +151,7 @@ namespace WBM
 		}
 
 		private FieldInfo teamListRef;
-		private Data.TeamEnum[] teamList
+		private Data.TeamEnum[] teamListRaw
 		{
 			get
 			{
@@ -157,7 +164,7 @@ namespace WBM
 		}
 
 		private FieldInfo localPlayerIndexRef;
-		private int localPlayerIndex
+		private int localPlayerIndexRaw
 		{
 			get
 			{
@@ -168,6 +175,6 @@ namespace WBM
 				localPlayerIndexRef.SetValue(this._webguy, value);
 			}
 		}
-
+		private int localPlayerIndex;
 	}
 }

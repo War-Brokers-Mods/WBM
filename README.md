@@ -145,8 +145,6 @@ If you are a casual user, this is completely unnecessary. This is only recommend
 
 If you have a cool idea that will make WBM better, or if WBM misbehaves in any way (no matter how minor the problem is), feel free go to the [Issues page](https://github.com/developomp/WBM/issues) and open a new issue!
 
-If you need help, join [my discord server!](https://discord.gg/JWzU496EFZ)
-
 ## Contributing
 
 - use GH pull request

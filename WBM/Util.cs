@@ -1,0 +1,6 @@
+namespace WBM
+{
+	class Util
+	{
+	}
+}

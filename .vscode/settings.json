@@ -1,0 +1,11 @@
+{
+  "cSpell.words": ["Behaviour", "headshot", "wbm"],
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": true,
+
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+
+  "[csharp]": {
+    "editor.defaultFormatter": "ms-dotnettools.csharp"
+  }
+}

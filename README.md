@@ -30,8 +30,7 @@ Officially supported platforms: Windows, MacOS, and Linux
    |      Platform | Filename                      |
    | ------------: | :---------------------------- |
    | Linux & MacOS | BepInEx_unix\_**5**.Y.Z.W.zip |
-   | Windows 64bit | BepInEx_x64\_**5**.Y.Z.W.zip  |
-   | Windows 32bit | BepInEx_x86\_**5**.Y.Z.W.zip  |
+   |       Windows | BepInEx_x86\_**5**.Y.Z.W.zip  |
 
 2. Extract (Unzip) the content**s** to where the game executable is located.
 

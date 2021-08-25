@@ -40,12 +40,12 @@ Officially supported platforms: Windows, MacOS, and Linux
 
    https://docs.bepinex.dev/v5.4.11/articles/advanced/steam_interop.html
 
-4. Run the game at least once to generate necessary files.
+4. Run the game at least once to generate the plugins folder as well as other necessary files.
 
 ### Installing WBM
 
-1. [Download](https://github.com/developomp/WBM/releases/latest) the latest version of WBM
-2. Put the dll file in the `<Game foler>BepInEx/plugins` folder.
+1. [Download](https://github.com/developomp/WBM/releases/latest) the latest version of WBM (a .dll file).
+2. Put the dll file in the `<Game folder>/BepInEx/plugins` folder.
 
 ### Setting up OBS
 

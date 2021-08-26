@@ -142,12 +142,13 @@ v0.4.0.0"
 					{
 						string killsEloDeltaSign = this.MyPlayerStats.killsEloDelta >= 0 ? "+" : "";
 						string gamesEloDeltaSign = this.MyPlayerStats.gamesEloDelta >= 0 ? "+" : "";
+						string kdr = this.MyPlayerStats.deaths == 0 ? "inf" : (this.MyPlayerStats.kills / this.MyPlayerStats.deaths).ToString();
 
 						GUI.Box(
 							new Rect(this.GUIOffsetX, this.GUIOffsetY + 65, 200, 145),
 							$@"Player stats
 
-KDR: {(this.MyPlayerStats.deaths == 0 ? 0 : (this.MyPlayerStats.kills / this.MyPlayerStats.deaths))}
+KDR: {kdr}
 kills Elo: {this.MyPlayerStats.killsElo} {killsEloDeltaSign}{this.MyPlayerStats.killsEloDelta}
 games Elo: {this.MyPlayerStats.gamesElo} {gamesEloDeltaSign}{this.MyPlayerStats.gamesEloDelta}
 Damage dealt: {this.MyPlayerStats.damage}
@@ -167,11 +168,11 @@ HeadShots: {this.MyPlayerStats.headShots}"
 					try
 					{
 						GUI.Box(
-							new Rect(this.GUIOffsetX, this.GUIOffsetY + 215, 200, 145),
+							new Rect(this.GUIOffsetX, this.GUIOffsetY + 215, 220, 145),
 							$@"Weapon stats
 
 Weapon: {Util.getGunName(this.gunType)}
-fire Timer: {Util.getGunFireTimer(this.personGun)}s (max: {Util.getGunFireRate(this.personGun)}s)
+fire Timer: {String.Format("{0:0.00}", Util.getGunFireTimer(this.personGun))}s (max: {String.Format("{0:0.00}", Util.getGunFireRate(this.personGun))}s)
 reload Timer: {Util.getGunReloadTimer(this.personGun)}
 cooldown Timer: {Util.getGunCooldownTimer(this.personGun)}
 speed: {Util.getGunFireVelocity(this.personGun)}

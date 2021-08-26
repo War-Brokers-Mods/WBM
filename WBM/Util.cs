@@ -19,7 +19,7 @@ namespace WBM
 
 		public static float getGunFireVelocity(NGNJNHEFLHB gun)
 		{
-			return gun.ADLGCCMDNED;
+			return gun.HOIKHOJJBOG;
 		}
 
 		public static float getGunFireRate(NGNJNHEFLHB gun)

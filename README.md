@@ -14,7 +14,7 @@
 **W**ar **B**rokers **M**ods, AKA **WBM** is a unofficial mod for [War Brokers](https://store.steampowered.com/app/750470).<br />
 
 <details>
-<summary>Example Images</summary>
+<summary>Example Images (click to unfold)</summary>
 
 ![Example 1](./images/example1.png)
 
@@ -23,27 +23,6 @@
 ![Example 3](./images/example3.png)
 
 </details>
-
-## Usage
-
-- You can only move GUI one step at a time. To move the GUI multiple steps (i.e. long press), press the <kbd>LShift</kbd> key too.
-- Hold down <kbd>LCtrl</kbd> or <kbd>RShift</kbd> to show shortcuts in-game.
-
-| Function                   | Shortcut                       |
-| -------------------------- | ------------------------------ |
-| Move GUI one step up       | <kbd>LCtrl</kbd>+<kbd>↑</kbd>  |
-| Move GUI one step down     | <kbd>LCtrl</kbd>+<kbd>↓</kbd>  |
-| Move GUI one step left     | <kbd>LCtrl</kbd>+<kbd>←</kbd>  |
-| Move GUI one step right    | <kbd>LCtrl</kbd>+<kbd>→</kbd>  |
-| Reset GUI position         | <kbd>LCtrl</kbd>+<kbd>R</kbd>  |
-| Show current configuration | <kbd>RShift</kbd>+<kbd>C</kbd> |
-| Toggle All GUI             | <kbd>RShift</kbd>+<kbd>A</kbd> |
-| Toggle Player statistics   | <kbd>RShift</kbd>+<kbd>P</kbd> |
-| Toggle Weapon statistics   | <kbd>RShift</kbd>+<kbd>W</kbd> |
-| Toggle Elo on leaderboard  | <kbd>RShift</kbd>+<kbd>E</kbd> |
-| Show squad server          | <kbd>RShift</kbd>+<kbd>S</kbd> |
-| Show testing servers       | <kbd>RShift</kbd>+<kbd>T</kbd> |
-| Reset All                  | <kbd>RShift</kbd>+<kbd>R</kbd> |
 
 ## Installation
 
@@ -82,32 +61,59 @@ WIP...
 
 That's it! Now you're a proud user of WBM!
 
+## Usage
+
+- You can only move GUI one step at a time. To move the GUI multiple steps (i.e. long press), press the <kbd>LShift</kbd> key too.
+- Hold down <kbd>LCtrl</kbd> or <kbd>RShift</kbd> to show shortcuts in-game.
+
+| Function                   | Shortcut                       |
+| -------------------------- | ------------------------------ |
+| Move GUI one step up       | <kbd>LCtrl</kbd>+<kbd>↑</kbd>  |
+| Move GUI one step down     | <kbd>LCtrl</kbd>+<kbd>↓</kbd>  |
+| Move GUI one step left     | <kbd>LCtrl</kbd>+<kbd>←</kbd>  |
+| Move GUI one step right    | <kbd>LCtrl</kbd>+<kbd>→</kbd>  |
+| Reset GUI position         | <kbd>LCtrl</kbd>+<kbd>R</kbd>  |
+| Show current configuration | <kbd>RShift</kbd>+<kbd>C</kbd> |
+| Toggle All GUI             | <kbd>RShift</kbd>+<kbd>A</kbd> |
+| Toggle Player statistics   | <kbd>RShift</kbd>+<kbd>P</kbd> |
+| Toggle Weapon statistics   | <kbd>RShift</kbd>+<kbd>W</kbd> |
+| Toggle Elo on leaderboard  | <kbd>RShift</kbd>+<kbd>E</kbd> |
+| Show squad server          | <kbd>RShift</kbd>+<kbd>S</kbd> |
+| Show testing servers       | <kbd>RShift</kbd>+<kbd>T</kbd> |
+| Reset All                  | <kbd>RShift</kbd>+<kbd>R</kbd> |
+
 ## Features
 
 Full list of features:
 
 - [x] in-game overlays
+- [ ] Shortcut
 - [ ] OBS overlays
 - [ ] design custom OBS overlays
 - [ ] customize game audio, textures, and text.
 
-- available data:
+- in-game overlay
 
-  - [ ] kill streak per player
+  - [x] KDR
+  - [x] damage dealt per player per match
   - [x] longest kill per player per match
   - [x] kills Elo
   - [x] games Elo
   - [x] kills Elo earned/lost
   - [x] games Elo earned/lost
   - [x] total headshot count per player
+  - [x] total headshot count
+
+- OBS (includes everything in in-game overlay):
+
+  - [ ] kills
+  - [ ] deaths
+  - [ ] kill streak per player
   - [ ] headshot count per player per weapon
   - [ ] hit accuracy per match
-  - [ ] damage dealt per player per match
   - [ ] game version
   - [ ] game mode
   - [ ] team score
-  - [x] kills per player per match
-  - [x] deaths per player per match
   - [ ] server id
   - [ ] streamer ID
   - [ ] survivors left in a BR match
@@ -119,7 +125,7 @@ Full list of features:
 
 # Building
 
-If you are a casual user, this is completely unnecessary. This is only recommended for fellow developers.
+If you are a casual user, this is completely unnecessary. **This is only recommended for developers.**
 
 > Assumes that working directory is project root.
 

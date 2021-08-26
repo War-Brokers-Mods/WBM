@@ -6,7 +6,7 @@ using System.Collections;
 
 namespace WBM
 {
-	[BepInPlugin("com.developomp.wbm", "War Brokers Mods", "0.4.0.0")]
+	[BepInPlugin("com.developomp.wbm", "War Brokers Mods", "0.5.0.0")]
 	public partial class WBM : BaseUnityPlugin
 	{
 		private void Start()
@@ -131,7 +131,7 @@ Reset Everything: (RShift+R)"
 				new Rect(this.GUIOffsetX, this.GUIOffsetY, 200, 60),
 				@"War Brokers Mods
 Made by [LP] POMP
-v0.4.0.0"
+v0.5.0.0"
 			);
 
 			if (this.localPlayerIndex >= 0)

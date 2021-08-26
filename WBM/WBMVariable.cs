@@ -1,29 +1,36 @@
 using System.Reflection;
 using System.Collections;
+using UnityEngine;
 
 namespace WBM
 {
 	public partial class WBM
 	{
-		private webguy _webguy;
+		private webguy webguy;
 		private IEnumerator UpdateValues;
 
 		// private ushort serverPort = 24601;
 		private static BindingFlags bindFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static;
 
-		private int GUIOffsetX = 40;
-		private int GUIOffsetY = 325;
+		private bool showConfig = false;
+		private int GUIOffsetX;
+		private int DefaultGUIOffsetX = 40;
+		private int GUIOffsetY;
+		private int DefaultGUIOffsetY = 325;
+		private bool showGUI;
+		private bool showPlayerStats;
+		private bool showWeaponStats;
 
 		private FieldInfo showEloRef;
 		private bool showEloRaw
 		{
 			get
 			{
-				return (bool)showEloRef.GetValue(this._webguy);
+				return (bool)showEloRef.GetValue(this.webguy);
 			}
 			set
 			{
-				showEloRef.SetValue(this._webguy, value);
+				showEloRef.SetValue(this.webguy, value);
 			}
 		}
 
@@ -32,11 +39,11 @@ namespace WBM
 		{
 			get
 			{
-				return (bool)showSquadServerRef.GetValue(this._webguy);
+				return (bool)showSquadServerRef.GetValue(this.webguy);
 			}
 			set
 			{
-				showSquadServerRef.SetValue(this._webguy, value);
+				showSquadServerRef.SetValue(this.webguy, value);
 			}
 		}
 
@@ -45,11 +52,11 @@ namespace WBM
 		{
 			get
 			{
-				return (bool)showTestingServerRef.GetValue(this._webguy);
+				return (bool)showTestingServerRef.GetValue(this.webguy);
 			}
 			set
 			{
-				showTestingServerRef.SetValue(this._webguy, value);
+				showTestingServerRef.SetValue(this.webguy, value);
 			}
 		}
 
@@ -58,7 +65,7 @@ namespace WBM
 		{
 			get
 			{
-				PDEMAFHPNBD[] rawPlayerStatsArray = (PDEMAFHPNBD[])playerStatsArrayRef.GetValue(this._webguy);
+				PDEMAFHPNBD[] rawPlayerStatsArray = (PDEMAFHPNBD[])playerStatsArrayRef.GetValue(this.webguy);
 				Data.PlayerStatsStruct[] result = new Data.PlayerStatsStruct[rawPlayerStatsArray.Length];
 
 				for (int i = 0; i < rawPlayerStatsArray.Length; i++)
@@ -89,8 +96,7 @@ namespace WBM
 		{
 			get
 			{
-				PDEMAFHPNBD[] rawPlayerStatsArray = (PDEMAFHPNBD[])playerStatsArrayRef.GetValue(this._webguy); ;
-				PDEMAFHPNBD currentlyParsing = rawPlayerStatsArray[localPlayerIndexRaw];
+				PDEMAFHPNBD currentlyParsing = ((PDEMAFHPNBD[])playerStatsArrayRef.GetValue(this.webguy))[localPlayerIndexRaw];
 
 				return new Data.PlayerStatsStruct
 				{
@@ -116,11 +122,7 @@ namespace WBM
 		{
 			get
 			{
-				return (int)currentAreaRef.GetValue(this._webguy);
-			}
-			set
-			{
-				currentAreaRef.SetValue(this._webguy, value);
+				return (int)currentAreaRef.GetValue(this.webguy);
 			}
 		}
 
@@ -129,11 +131,7 @@ namespace WBM
 		{
 			get
 			{
-				return (bool[])playersActiveRef.GetValue(this._webguy);
-			}
-			set
-			{
-				playersActiveRef.SetValue(this._webguy, value);
+				return (bool[])playersActiveRef.GetValue(this.webguy);
 			}
 		}
 
@@ -142,11 +140,7 @@ namespace WBM
 		{
 			get
 			{
-				return (int[])killListRef.GetValue(this._webguy);
-			}
-			set
-			{
-				killListRef.SetValue(this._webguy, value);
+				return (int[])killListRef.GetValue(this.webguy);
 			}
 		}
 
@@ -155,11 +149,7 @@ namespace WBM
 		{
 			get
 			{
-				return (Data.TeamEnum[])teamListRef.GetValue(this._webguy);
-			}
-			set
-			{
-				teamListRef.SetValue(this._webguy, value);
+				return (Data.TeamEnum[])teamListRef.GetValue(this.webguy);
 			}
 		}
 
@@ -168,13 +158,29 @@ namespace WBM
 		{
 			get
 			{
-				return (int)localPlayerIndexRef.GetValue(this._webguy);
-			}
-			set
-			{
-				localPlayerIndexRef.SetValue(this._webguy, value);
+				return (int)localPlayerIndexRef.GetValue(this.webguy);
 			}
 		}
 		private int localPlayerIndex;
+
+		private FieldInfo gunTypeRef;
+		private Data.GunEnum gunTypeRaw
+		{
+			get
+			{
+				return (Data.GunEnum)gunTypeRef.GetValue(this.webguy);
+			}
+		}
+		private Data.GunEnum gunType;
+
+		private FieldInfo personGunRef;
+		private NGNJNHEFLHB personGunRaw
+		{
+			get
+			{
+				return (NGNJNHEFLHB)personGunRef.GetValue(this.webguy);
+			}
+		}
+		private NGNJNHEFLHB personGun;
 	}
 }

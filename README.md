@@ -13,8 +13,14 @@
 
 **W**ar **B**rokers **M**ods, AKA **WBM** is a unofficial mod for [War Brokers](https://store.steampowered.com/app/750470).<br />
 
-Example:<br />
-![Example](./images/example.png)
+<details>
+<summary>Example Images</summary>
+
+![Example 1](./images/example1.png)
+
+![Example 2](./images/example2.png)
+
+</details>
 
 ## Usage
 

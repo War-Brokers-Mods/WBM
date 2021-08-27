@@ -6,7 +6,7 @@ using System.Collections;
 
 namespace WBM
 {
-	[BepInPlugin("com.developomp.wbm", "War Brokers Mods", "0.5.0.0")]
+	[BepInPlugin("com.developomp.wbm", "War Brokers Mods", "0.6.0.0")]
 	public partial class WBM : BaseUnityPlugin
 	{
 		private void Start()
@@ -21,12 +21,12 @@ namespace WBM
 			this.showTestingServerRef = webguyType.GetField("LHHEGFHLNJE", bindFlags);
 			this.playerStatsArrayRef = webguyType.GetField("NAFCGDLLFJC", bindFlags);
 			this.currentAreaRef = webguyType.GetField("FLJLJNLDFAM", bindFlags);
-			this.playersActiveRef = webguyType.GetField("EPNEEBOFKHA", bindFlags);
-			this.killListRef = webguyType.GetField("IKKEILIBONF", bindFlags);
 			this.teamListRef = webguyType.GetField("MNEJLPDLMBH", bindFlags);
 			this.localPlayerIndexRef = webguyType.GetField("ALEJJPEPFOG", bindFlags);
 			this.gunTypeRef = webguyType.GetField("JBMCOIGJFMG", bindFlags);
 			this.personGunRef = webguyType.GetField("IEGLIMLBDPH", bindFlags);
+			this.nickListRef = webguyType.GetField("CLLDJOMEKIP", bindFlags);
+			// modList
 
 			// Load configurations
 			this.showSquadServerRaw = Convert.ToBoolean(PlayerPrefs.GetInt(PrefNames.showSquadServer, 1));
@@ -36,6 +36,7 @@ namespace WBM
 			this.showGUI = Convert.ToBoolean(PlayerPrefs.GetInt(PrefNames.showGUI, 1));
 			this.showPlayerStats = Convert.ToBoolean(PlayerPrefs.GetInt(PrefNames.showPlayerStats, 1));
 			this.showWeaponStats = Convert.ToBoolean(PlayerPrefs.GetInt(PrefNames.showWeaponStats, 1));
+			this.showTeammateStats = Convert.ToBoolean(PlayerPrefs.GetInt(PrefNames.showTeammateStats, 1));
 			this.showEloRaw = Convert.ToBoolean(PlayerPrefs.GetInt(PrefNames.showElo, Convert.ToInt32(this.showEloRaw)));
 
 			StartCoroutine(UpdateValuesFunction(0f));
@@ -77,6 +78,7 @@ namespace WBM
 				if (Input.GetKeyDown(KeyCode.A)) this.showGUI = !this.showGUI;
 				if (Input.GetKeyDown(KeyCode.P)) this.showPlayerStats = !this.showPlayerStats;
 				if (Input.GetKeyDown(KeyCode.W)) this.showWeaponStats = !this.showWeaponStats;
+				if (Input.GetKeyDown(KeyCode.L)) this.showTeammateStats = !this.showTeammateStats;
 				if (Input.GetKeyDown(KeyCode.E)) this.showEloRaw = !this.showEloRaw;
 				if (Input.GetKeyDown(KeyCode.S)) this.showSquadServerRaw = !this.showSquadServerRaw;
 				if (Input.GetKeyDown(KeyCode.T)) this.showTestingServerRaw = !this.showTestingServerRaw;
@@ -102,10 +104,14 @@ namespace WBM
 
 		private void OnGUI()
 		{
+			GUI.skin.box.fontSize = 15;
+			GUI.skin.label.fontSize = 15;
+			GUI.skin.label.wordWrap = false;
+
 			if (this.showConfig)
 			{
 				GUI.Box(
-		new Rect(this.GUIOffsetX + 205, this.GUIOffsetY, 320, 265),
+		new Rect(Screen.width - 340, 80, 320, 285),
 		$@"Configuration
 
 (LCtrl+Arrow) to move GUI one step at a time
@@ -118,6 +124,7 @@ Show WBM GUI: {this.showGUI} (RShift+A)
 Show Elo on leaderboard: {this.showEloRaw} (RShift+E)
 Show player stats: {this.showPlayerStats} (RShift+P)
 Show weapon stats: {this.showWeaponStats} (RShift+W)
+Show teammate stats: {this.showTeammateStats} (RShift+L)
 show squad server: {this.showSquadServerRaw} (RShift+S)
 show testing server: {this.showTestingServerRaw} (RShift+T)
 Reset Everything: (RShift+R)"
@@ -125,13 +132,12 @@ Reset Everything: (RShift+R)"
 			}
 
 			if (!this.showGUI) return;
-			GUI.skin.box.fontSize = 15;
 
 			GUI.Box(
-				new Rect(this.GUIOffsetX, this.GUIOffsetY, 200, 60),
+				new Rect(this.GUIOffsetX, this.GUIOffsetY, 220, 60),
 				@"War Brokers Mods
 Made by [LP] POMP
-v0.5.0.0"
+v0.6.0.0"
 			);
 
 			if (this.localPlayerIndex >= 0)
@@ -140,21 +146,20 @@ v0.5.0.0"
 				{
 					try
 					{
-						string killsEloDeltaSign = this.MyPlayerStats.killsEloDelta >= 0 ? "+" : "";
-						string gamesEloDeltaSign = this.MyPlayerStats.gamesEloDelta >= 0 ? "+" : "";
-						string kdr = this.MyPlayerStats.deaths == 0 ? "inf" : (this.MyPlayerStats.kills / this.MyPlayerStats.deaths).ToString();
+						string killsEloDeltaSign = this.myPlayerStats.killsEloDelta >= 0 ? "+" : "";
+						string gamesEloDeltaSign = this.myPlayerStats.gamesEloDelta >= 0 ? "+" : "";
 
 						GUI.Box(
-							new Rect(this.GUIOffsetX, this.GUIOffsetY + 65, 200, 145),
+							new Rect(this.GUIOffsetX, this.GUIOffsetY + 65, 220, 145),
 							$@"Player stats
 
-KDR: {kdr}
-kills Elo: {this.MyPlayerStats.killsElo} {killsEloDeltaSign}{this.MyPlayerStats.killsEloDelta}
-games Elo: {this.MyPlayerStats.gamesElo} {gamesEloDeltaSign}{this.MyPlayerStats.gamesEloDelta}
-Damage dealt: {this.MyPlayerStats.damage}
-Longest Kill: {this.MyPlayerStats.longestKill}
-Points: {this.MyPlayerStats.points}
-HeadShots: {this.MyPlayerStats.headShots}"
+KDR: {Util.formatKDR(this.myPlayerStats.kills, this.myPlayerStats.deaths)}
+kills Elo: {this.myPlayerStats.killsElo} {killsEloDeltaSign}{this.myPlayerStats.killsEloDelta}
+games Elo: {this.myPlayerStats.gamesElo} {gamesEloDeltaSign}{this.myPlayerStats.gamesEloDelta}
+Damage dealt: {this.myPlayerStats.damage}
+Longest Kill: {this.myPlayerStats.longestKill}m
+Points: {this.myPlayerStats.points}
+HeadShots: {this.myPlayerStats.headShots}"
 						);
 					}
 					catch (Exception e)
@@ -184,6 +189,57 @@ zoom: {Util.getGunZoom(this.personGun)}"
 						Logger.LogDebug(e);
 					}
 				}
+
+				if (this.showTeammateStats)
+				{
+					try
+					{
+						GUI.Box(new Rect(Screen.width - 320, this.GUIOffsetY + 60, 300, 270), "Team Stats");
+
+						string teamNames = "Nickname\n\n";
+						string teamKDR = "KDR\n\n";
+						string teamPoints = "pts\n\n";
+						string teamDamage = "Damage\n\n";
+
+						int teamTotalKills = 0;
+						int teamTotalDeaths = 0;
+						int teamTotalDamage = 0;
+
+						for (int i = 0; i < this.playerStatsArray.Length; i++)
+						{
+							Data.PlayerStatsStruct stat = this.playerStatsArray[i];
+
+							// if player is not a bot and if player is in my team
+							if ((stat.killsElo != 0) && (this.teamList[i] == this.myTeam))
+							{
+								teamNames += $"{this.nickList[i]}\n";
+								teamKDR += $"{Util.formatKDR(stat.kills, stat.deaths)}";
+								teamPoints += $"{stat.points}";
+								teamDamage += $"{stat.damage}";
+
+								teamTotalKills += stat.kills;
+								teamTotalDeaths += stat.deaths;
+								teamTotalDamage += stat.damage;
+							}
+						}
+
+						GUI.Label(new Rect(Screen.width - 315, this.GUIOffsetY + 85, 105, 250), teamNames);
+						GUI.Label(new Rect(Screen.width - 200, this.GUIOffsetY + 85, 40, 250), teamKDR);
+						GUI.Label(new Rect(Screen.width - 150, this.GUIOffsetY + 85, 40, 250), teamPoints);
+						GUI.Label(new Rect(Screen.width - 100, this.GUIOffsetY + 85, 70, 250), teamDamage);
+
+						GUI.Label(
+							new Rect(Screen.width - 315, this.GUIOffsetY + 270, 300, 55),
+							$@"total damage: {teamTotalDamage}
+total deaths: {teamTotalDeaths}
+total kills: {teamTotalKills}"
+						);
+					}
+					catch (Exception e)
+					{
+						Logger.LogDebug(e);
+					}
+				}
 			}
 		}
 
@@ -195,9 +251,13 @@ zoom: {Util.getGunZoom(this.personGun)}"
 
 				if (this.localPlayerIndex >= 0)
 				{
-					this.MyPlayerStats = this.MyPlayerStatsRaw;
+					this.playerStatsArray = this.playerStatsArrayRaw;
+					this.myPlayerStats = this.playerStatsArray[this.localPlayerIndex];
+					this.teamList = this.teamListRaw;
+					this.myTeam = this.teamList[localPlayerIndex];
 					this.gunType = this.gunTypeRaw;
 					this.personGun = this.personGunRaw;
+					this.nickList = this.nickListRaw;
 				}
 			}
 			catch (Exception e)
@@ -221,6 +281,7 @@ zoom: {Util.getGunZoom(this.personGun)}"
 			PlayerPrefs.SetInt(PrefNames.showGUI, Convert.ToInt32(this.showGUI));
 			PlayerPrefs.SetInt(PrefNames.showPlayerStats, Convert.ToInt32(this.showPlayerStats));
 			PlayerPrefs.SetInt(PrefNames.showWeaponStats, Convert.ToInt32(this.showWeaponStats));
+			PlayerPrefs.SetInt(PrefNames.showTeammateStats, Convert.ToInt32(this.showTeammateStats));
 			PlayerPrefs.SetInt(PrefNames.showElo, Convert.ToInt32(this.showEloRaw));
 			PlayerPrefs.Save();
 		}

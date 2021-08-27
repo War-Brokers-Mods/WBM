@@ -9,6 +9,7 @@ namespace WBM
 		public const string showGUI = "showGUI";
 		public const string showPlayerStats = "showPlayerStats";
 		public const string showWeaponStats = "showWeaponStats";
+		public const string showTeammateStats = "showTeammateStats";
 		public const string showElo = "showElo";
 	}
 }

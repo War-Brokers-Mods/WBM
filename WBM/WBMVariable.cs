@@ -6,20 +6,22 @@ namespace WBM
 {
 	public partial class WBM
 	{
+		private static BindingFlags bindFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static;
 		private webguy webguy;
 		private IEnumerator UpdateValues;
-
 		// private ushort serverPort = 24601;
-		private static BindingFlags bindFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static;
+
+		public Texture2D crouchIcon;
 
 		private bool showConfig = false;
 		private int GUIOffsetX;
-		private int DefaultGUIOffsetX = 40;
+		private int DefaultGUIOffsetX = 38;
 		private int GUIOffsetY;
 		private int DefaultGUIOffsetY = 325;
 		private bool showGUI;
 		private bool showPlayerStats;
 		private bool showWeaponStats;
+		private bool showTeammateStats;
 
 		private FieldInfo showEloRef;
 		private bool showEloRaw
@@ -92,30 +94,8 @@ namespace WBM
 				return result;
 			}
 		}
-		private Data.PlayerStatsStruct MyPlayerStatsRaw
-		{
-			get
-			{
-				PDEMAFHPNBD currentlyParsing = ((PDEMAFHPNBD[])playerStatsArrayRef.GetValue(this.webguy))[localPlayerIndexRaw];
-
-				return new Data.PlayerStatsStruct
-				{
-					kills = currentlyParsing.CFMGCOGACPA,
-					deaths = currentlyParsing.GABHLIIJHBJ,
-					damage = currentlyParsing.CECNBFABADA,
-					longestKill = currentlyParsing.GDFIBEEKMJA,
-					points = currentlyParsing.HNHFAABONHO,
-					headShots = currentlyParsing.GJLLOFLEHHD,
-					vote = currentlyParsing.JCBAKMONPGC,
-					mapVote = currentlyParsing.BOFANBBCNOH,
-					gamesElo = currentlyParsing.IBHFIBAOKCB,
-					gamesEloDelta = currentlyParsing.JMGOHGIGLPI,
-					killsElo = currentlyParsing.GBIABKEEFOC,
-					killsEloDelta = currentlyParsing.JAAKOCPIGJL,
-				};
-			}
-		}
-		private Data.PlayerStatsStruct MyPlayerStats;
+		private Data.PlayerStatsStruct[] playerStatsArray;
+		private Data.PlayerStatsStruct myPlayerStats;
 
 		private FieldInfo currentAreaRef;
 		private int currentAreaRaw
@@ -123,24 +103,6 @@ namespace WBM
 			get
 			{
 				return (int)currentAreaRef.GetValue(this.webguy);
-			}
-		}
-
-		private FieldInfo playersActiveRef;
-		private bool[] playersActiveRaw
-		{
-			get
-			{
-				return (bool[])playersActiveRef.GetValue(this.webguy);
-			}
-		}
-
-		private FieldInfo killListRef;
-		private int[] killListRaw
-		{
-			get
-			{
-				return (int[])killListRef.GetValue(this.webguy);
 			}
 		}
 
@@ -152,6 +114,9 @@ namespace WBM
 				return (Data.TeamEnum[])teamListRef.GetValue(this.webguy);
 			}
 		}
+		private Data.TeamEnum myTeam;
+
+		private Data.TeamEnum[] teamList;
 
 		private FieldInfo localPlayerIndexRef;
 		private int localPlayerIndexRaw
@@ -182,5 +147,15 @@ namespace WBM
 			}
 		}
 		private NGNJNHEFLHB personGun;
+
+		private FieldInfo nickListRef;
+		private string[] nickListRaw
+		{
+			get
+			{
+				return (string[])nickListRef.GetValue(this.webguy);
+			}
+		}
+		private string[] nickList;
 	}
 }

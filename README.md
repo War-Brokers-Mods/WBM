@@ -77,6 +77,7 @@ That's it! Now you're a proud user of WBM!
 | Toggle All GUI             | <kbd>RShift</kbd>+<kbd>A</kbd> |
 | Toggle Player statistics   | <kbd>RShift</kbd>+<kbd>P</kbd> |
 | Toggle Weapon statistics   | <kbd>RShift</kbd>+<kbd>W</kbd> |
+| Toggle Team statistics     | <kbd>RShift</kbd>+<kbd>L</kbd> |
 | Toggle Elo on leaderboard  | <kbd>RShift</kbd>+<kbd>E</kbd> |
 | Show squad server          | <kbd>RShift</kbd>+<kbd>S</kbd> |
 | Show testing servers       | <kbd>RShift</kbd>+<kbd>T</kbd> |
@@ -87,31 +88,39 @@ That's it! Now you're a proud user of WBM!
 Full list of features:
 
 - [x] in-game overlays
-- [ ] Shortcut
+- [x] quick shortcuts
 - [ ] OBS overlays
 - [ ] design custom OBS overlays
-- [ ] customize game audio, textures, and text.
+- [ ] customize game assets (audio, textures, text, models, etc.)
 
 - in-game overlay
 
-  - [x] KDR
-  - [x] damage dealt per player per match
-  - [x] longest kill per player per match
-  - [x] kills Elo
-  - [x] games Elo
-  - [x] kills Elo earned/lost
-  - [x] games Elo earned/lost
-  - [x] total headshot count per player
-  - [x] total headshot count
+  - Tab Leaderboard
 
-- OBS (includes everything in in-game overlay):
+    - show kills Elo
 
-  - [ ] kills
-  - [ ] deaths
-  - [ ] kill streak per player
-  - [ ] headshot count per player per weapon
-  - [ ] hit accuracy per match
-  - [ ] game version
+  - Player statistics
+
+    - KDR
+    - kills Elo
+    - kills Elo earned/lost
+    - games Elo
+    - games Elo earned/lost
+    - total damage dealt
+    - longest kill
+    - points earned
+
+  - Weapon statistics
+
+    - total headshot count
+
+- OBS (includes everything in in-game overlay)
+
+  - **WIP**
+
+  <!-- - [ ] top player per criteria (kills, longest kills, points, etc.)
+  - [ ] kill streak
+  - [ ] hit accuracy
   - [ ] game mode
   - [ ] team score
   - [ ] server id
@@ -121,7 +130,7 @@ Full list of features:
   - [ ] played game history (win, lose, and by how much)
   - [ ] ping in millisecond per player
   - [ ] if a player is a bot or not
-  - [ ] Daily and history record
+  - [ ] Daily and history record -->
 
 # Building
 

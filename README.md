@@ -84,6 +84,7 @@ Simply replace the existing dll file with the latest version.
 | Toggle Elo on leaderboard | <kbd>RShift</kbd>+<kbd>E</kbd> |
 | Show squad server         | <kbd>RShift</kbd>+<kbd>S</kbd> |
 | Show testing servers      | <kbd>RShift</kbd>+<kbd>T</kbd> |
+| Toggle shift to crouch    | <kbd>RShift</kbd>+<kbd>C</kbd> |
 | Reset All                 | <kbd>RShift</kbd>+<kbd>R</kbd> |
 
 ## Features
@@ -134,6 +135,10 @@ Full list of features:
   - [ ] ping in millisecond per player
   - [ ] if a player is a bot or not
   - [ ] Daily and history record -->
+
+- Controls
+
+  - Shift to crouch
 
 # Building
 

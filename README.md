@@ -61,6 +61,10 @@ WIP...
 
 That's it! Now you're a proud user of WBM!
 
+### Updating
+
+Simply replace the existing dll file with the latest version.
+
 ## Usage
 
 - You can only move GUI one step at a time. To move the GUI multiple steps (i.e. long press), press the <kbd>LShift</kbd> key too.

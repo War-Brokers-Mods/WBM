@@ -70,22 +70,21 @@ Simply replace the existing dll file with the latest version.
 - You can only move GUI one step at a time. To move the GUI multiple steps (i.e. long press), press the <kbd>LShift</kbd> key too.
 - Hold down <kbd>LCtrl</kbd> or <kbd>RShift</kbd> to show shortcuts in-game.
 
-| Function                   | Shortcut                       |
-| -------------------------- | ------------------------------ |
-| Move GUI one step up       | <kbd>LCtrl</kbd>+<kbd>↑</kbd>  |
-| Move GUI one step down     | <kbd>LCtrl</kbd>+<kbd>↓</kbd>  |
-| Move GUI one step left     | <kbd>LCtrl</kbd>+<kbd>←</kbd>  |
-| Move GUI one step right    | <kbd>LCtrl</kbd>+<kbd>→</kbd>  |
-| Reset GUI position         | <kbd>LCtrl</kbd>+<kbd>R</kbd>  |
-| Show current configuration | <kbd>RShift</kbd>+<kbd>C</kbd> |
-| Toggle All GUI             | <kbd>RShift</kbd>+<kbd>A</kbd> |
-| Toggle Player statistics   | <kbd>RShift</kbd>+<kbd>P</kbd> |
-| Toggle Weapon statistics   | <kbd>RShift</kbd>+<kbd>W</kbd> |
-| Toggle Team statistics     | <kbd>RShift</kbd>+<kbd>L</kbd> |
-| Toggle Elo on leaderboard  | <kbd>RShift</kbd>+<kbd>E</kbd> |
-| Show squad server          | <kbd>RShift</kbd>+<kbd>S</kbd> |
-| Show testing servers       | <kbd>RShift</kbd>+<kbd>T</kbd> |
-| Reset All                  | <kbd>RShift</kbd>+<kbd>R</kbd> |
+| Function                  | Shortcut                       |
+| ------------------------- | ------------------------------ |
+| Move GUI one step up      | <kbd>LCtrl</kbd>+<kbd>↑</kbd>  |
+| Move GUI one step down    | <kbd>LCtrl</kbd>+<kbd>↓</kbd>  |
+| Move GUI one step left    | <kbd>LCtrl</kbd>+<kbd>←</kbd>  |
+| Move GUI one step right   | <kbd>LCtrl</kbd>+<kbd>→</kbd>  |
+| Reset GUI position        | <kbd>LCtrl</kbd>+<kbd>R</kbd>  |
+| Toggle All GUI            | <kbd>RShift</kbd>+<kbd>A</kbd> |
+| Toggle Player statistics  | <kbd>RShift</kbd>+<kbd>P</kbd> |
+| Toggle Weapon statistics  | <kbd>RShift</kbd>+<kbd>W</kbd> |
+| Toggle Team statistics    | <kbd>RShift</kbd>+<kbd>L</kbd> |
+| Toggle Elo on leaderboard | <kbd>RShift</kbd>+<kbd>E</kbd> |
+| Show squad server         | <kbd>RShift</kbd>+<kbd>S</kbd> |
+| Show testing servers      | <kbd>RShift</kbd>+<kbd>T</kbd> |
+| Reset All                 | <kbd>RShift</kbd>+<kbd>R</kbd> |
 
 ## Features
 

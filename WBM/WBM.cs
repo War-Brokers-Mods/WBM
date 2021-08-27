@@ -6,7 +6,7 @@ using System.Collections;
 
 namespace WBM
 {
-	[BepInPlugin("com.developomp.wbm", "War Brokers Mods", "0.6.0.0")]
+	[BepInPlugin("com.developomp.wbm", "War Brokers Mods", "0.7.0.0")]
 	public partial class WBM : BaseUnityPlugin
 	{
 		private void Start()
@@ -23,7 +23,6 @@ namespace WBM
 			this.currentAreaRef = webguyType.GetField("FLJLJNLDFAM", bindFlags);
 			this.teamListRef = webguyType.GetField("MNEJLPDLMBH", bindFlags);
 			this.localPlayerIndexRef = webguyType.GetField("ALEJJPEPFOG", bindFlags);
-			this.gunTypeRef = webguyType.GetField("JBMCOIGJFMG", bindFlags);
 			this.personGunRef = webguyType.GetField("IEGLIMLBDPH", bindFlags);
 			this.nickListRef = webguyType.GetField("CLLDJOMEKIP", bindFlags);
 			// modList
@@ -137,7 +136,7 @@ Reset Everything: (RShift+R)"
 				new Rect(this.GUIOffsetX, this.GUIOffsetY, 220, 60),
 				@"War Brokers Mods
 Made by [LP] POMP
-v0.6.0.0"
+v0.7.0.0"
 			);
 
 			if (this.localPlayerIndex >= 0)
@@ -150,7 +149,7 @@ v0.6.0.0"
 						string gamesEloDeltaSign = this.myPlayerStats.gamesEloDelta >= 0 ? "+" : "";
 
 						GUI.Box(
-							new Rect(this.GUIOffsetX, this.GUIOffsetY + 65, 220, 145),
+							new Rect(this.GUIOffsetX, this.GUIOffsetY + 65, 220, 160),
 							$@"Player stats
 
 KDR: {Util.formatKDR(this.myPlayerStats.kills, this.myPlayerStats.deaths)}
@@ -173,10 +172,9 @@ HeadShots: {this.myPlayerStats.headShots}"
 					try
 					{
 						GUI.Box(
-							new Rect(this.GUIOffsetX, this.GUIOffsetY + 215, 220, 145),
+							new Rect(this.GUIOffsetX, this.GUIOffsetY + 230, 230, 130),
 							$@"Weapon stats
 
-Weapon: {Util.getGunName(this.gunType)}
 fire Timer: {String.Format("{0:0.00}", Util.getGunFireTimer(this.personGun))}s (max: {String.Format("{0:0.00}", Util.getGunFireRate(this.personGun))}s)
 reload Timer: {Util.getGunReloadTimer(this.personGun)}
 cooldown Timer: {Util.getGunCooldownTimer(this.personGun)}
@@ -213,9 +211,9 @@ zoom: {Util.getGunZoom(this.personGun)}"
 							if ((stat.killsElo != 0) && (this.teamList[i] == this.myTeam))
 							{
 								teamNames += $"{this.nickList[i]}\n";
-								teamKDR += $"{Util.formatKDR(stat.kills, stat.deaths)}";
-								teamPoints += $"{stat.points}";
-								teamDamage += $"{stat.damage}";
+								teamKDR += $"{Util.formatKDR(stat.kills, stat.deaths)}\n";
+								teamPoints += $"{stat.points}\n";
+								teamDamage += $"{stat.damage}\n";
 
 								teamTotalKills += stat.kills;
 								teamTotalDeaths += stat.deaths;
@@ -255,7 +253,6 @@ total kills: {teamTotalKills}"
 					this.myPlayerStats = this.playerStatsArray[this.localPlayerIndex];
 					this.teamList = this.teamListRaw;
 					this.myTeam = this.teamList[localPlayerIndex];
-					this.gunType = this.gunTypeRaw;
 					this.personGun = this.personGunRaw;
 					this.nickList = this.nickListRaw;
 				}

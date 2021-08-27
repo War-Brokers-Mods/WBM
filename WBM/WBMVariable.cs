@@ -128,16 +128,6 @@ namespace WBM
 		}
 		private int localPlayerIndex;
 
-		private FieldInfo gunTypeRef;
-		private Data.GunEnum gunTypeRaw
-		{
-			get
-			{
-				return (Data.GunEnum)gunTypeRef.GetValue(this.webguy);
-			}
-		}
-		private Data.GunEnum gunType;
-
 		private FieldInfo personGunRef;
 		private NGNJNHEFLHB personGunRaw
 		{

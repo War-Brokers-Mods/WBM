@@ -9,11 +9,6 @@ namespace WBM
 			return deaths == 0 ? "inf" : String.Format("{0:0.0}", (float)kills / (float)deaths);
 		}
 
-		public static string getGunName(Data.GunEnum input)
-		{
-			return (int)input > 0 ? Data.gunNames[(int)input] : "None";
-		}
-
 		public static float getGunZoom(NGNJNHEFLHB gun)
 		{
 			return gun.ADLGCCMDNED;

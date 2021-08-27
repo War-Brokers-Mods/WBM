@@ -11,5 +11,6 @@ namespace WBM
 		public const string showWeaponStats = "showWeaponStats";
 		public const string showTeammateStats = "showTeammateStats";
 		public const string showElo = "showElo";
+		public const string shiftToCrouch = "shiftToCrouch";
 	}
 }

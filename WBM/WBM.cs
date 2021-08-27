@@ -6,7 +6,7 @@ using System.Collections;
 
 namespace WBM
 {
-	[BepInPlugin("com.developomp.wbm", "War Brokers Mods", "0.7.0.0")]
+	[BepInPlugin("com.developomp.wbm", "War Brokers Mods", "0.8.0.0")]
 	public partial class WBM : BaseUnityPlugin
 	{
 		private void Start()
@@ -37,6 +37,7 @@ namespace WBM
 			this.showWeaponStats = Convert.ToBoolean(PlayerPrefs.GetInt(PrefNames.showWeaponStats, 1));
 			this.showTeammateStats = Convert.ToBoolean(PlayerPrefs.GetInt(PrefNames.showTeammateStats, 1));
 			this.showEloRaw = Convert.ToBoolean(PlayerPrefs.GetInt(PrefNames.showElo, Convert.ToInt32(this.showEloRaw)));
+			this.shiftToCrouch = Convert.ToBoolean(PlayerPrefs.GetInt(PrefNames.shiftToCrouch, 1));
 
 			StartCoroutine(UpdateValuesFunction(0f));
 
@@ -81,17 +82,21 @@ namespace WBM
 				if (Input.GetKeyDown(KeyCode.E)) this.showEloRaw = !this.showEloRaw;
 				if (Input.GetKeyDown(KeyCode.S)) this.showSquadServerRaw = !this.showSquadServerRaw;
 				if (Input.GetKeyDown(KeyCode.T)) this.showTestingServerRaw = !this.showTestingServerRaw;
-				if (Input.GetKeyDown(KeyCode.C)) this.showConfig = !this.showConfig;
+				if (Input.GetKeyDown(KeyCode.C)) this.shiftToCrouch = !this.shiftToCrouch;
 				if (Input.GetKeyDown(KeyCode.R))
 				{
 					this.GUIOffsetX = this.DefaultGUIOffsetX;
 					this.GUIOffsetY = this.DefaultGUIOffsetY;
+
 					this.showGUI = true;
 					this.showPlayerStats = true;
 					this.showWeaponStats = true;
+					this.showTeammateStats = true;
 					this.showEloRaw = true;
 					this.showSquadServerRaw = true;
 					this.showTestingServerRaw = true;
+					this.shiftToCrouch = true;
+
 					this.showConfig = true;
 				}
 
@@ -99,6 +104,13 @@ namespace WBM
 			}
 
 			if (!Input.GetKey(KeyCode.LeftControl) && !Input.GetKey(KeyCode.RightShift)) this.showConfig = false;
+
+			// only if right buttton is not held
+			if (this.shiftToCrouch && !Input.GetMouseButton(1))
+			{
+				if (Input.GetKeyDown(KeyCode.LeftShift)) OMOJPGNNKFN.NEELEHFDKBP.EGACOOOGDDC = true;
+				if (Input.GetKeyUp(KeyCode.LeftShift)) OMOJPGNNKFN.NEELEHFDKBP.EGACOOOGDDC = false;
+			}
 		}
 
 		private void OnGUI()
@@ -126,6 +138,7 @@ Show weapon stats: {this.showWeaponStats} (RShift+W)
 Show teammate stats: {this.showTeammateStats} (RShift+L)
 show squad server: {this.showSquadServerRaw} (RShift+S)
 show testing server: {this.showTestingServerRaw} (RShift+T)
+shift to crouch: {this.shiftToCrouch} (RShift+C)
 Reset Everything: (RShift+R)"
 	);
 			}
@@ -136,7 +149,7 @@ Reset Everything: (RShift+R)"
 				new Rect(this.GUIOffsetX, this.GUIOffsetY, 220, 60),
 				@"War Brokers Mods
 Made by [LP] POMP
-v0.7.0.0"
+v0.8.0.0"
 			);
 
 			if (this.localPlayerIndex >= 0)
@@ -280,6 +293,8 @@ total kills: {teamTotalKills}"
 			PlayerPrefs.SetInt(PrefNames.showWeaponStats, Convert.ToInt32(this.showWeaponStats));
 			PlayerPrefs.SetInt(PrefNames.showTeammateStats, Convert.ToInt32(this.showTeammateStats));
 			PlayerPrefs.SetInt(PrefNames.showElo, Convert.ToInt32(this.showEloRaw));
+			PlayerPrefs.SetInt(PrefNames.shiftToCrouch, Convert.ToInt32(this.shiftToCrouch));
+
 			PlayerPrefs.Save();
 		}
 	}

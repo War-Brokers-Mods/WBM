@@ -1,6 +1,5 @@
 using System.Reflection;
 using System.Collections;
-using UnityEngine;
 
 namespace WBM
 {
@@ -11,8 +10,6 @@ namespace WBM
 		private IEnumerator UpdateValues;
 		// private ushort serverPort = 24601;
 
-		public Texture2D crouchIcon;
-
 		private bool showConfig = false;
 		private int GUIOffsetX;
 		private int DefaultGUIOffsetX = 38;
@@ -22,6 +19,7 @@ namespace WBM
 		private bool showPlayerStats;
 		private bool showWeaponStats;
 		private bool showTeammateStats;
+		private bool shiftToCrouch;
 
 		private FieldInfo showEloRef;
 		private bool showEloRaw

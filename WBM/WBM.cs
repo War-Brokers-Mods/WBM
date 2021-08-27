@@ -122,7 +122,7 @@ namespace WBM
 			if (this.showConfig)
 			{
 				GUI.Box(
-		new Rect(Screen.width - 340, 80, 320, 285),
+		new Rect(Screen.width - 340, 80, 320, 300),
 		$@"Configuration
 
 (LCtrl+Arrow) to move GUI one step at a time

@@ -49,7 +49,7 @@ Officially supported platforms: Windows, MacOS, and Linux
 
    https://docs.bepinex.dev/v5.4.11/articles/advanced/steam_interop.html
 
-4. **IMPORTNT** Run the game at least once to generate the plugins folder as well as other necessary files.
+4. **[ IMPORTNT ]** Run the game at least once to generate the plugins folder as well as other necessary files.
 
 ### Installing WBM
 

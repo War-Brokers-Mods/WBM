@@ -42,13 +42,14 @@ Officially supported platforms: Windows, MacOS, and Linux
 
 2. Extract (Unzip) the content**s** to where the game executable is located.
 
+   How to find game location:
    ![how to find game location](./images/local_files.png)
 
 3. If you are using Linux or MacOS, you must also perform the following setup:
 
    https://docs.bepinex.dev/v5.4.11/articles/advanced/steam_interop.html
 
-4. Run the game at least once to generate the plugins folder as well as other necessary files.
+4. **IMPORTNT** Run the game at least once to generate the plugins folder as well as other necessary files.
 
 ### Installing WBM
 
@@ -67,25 +68,25 @@ Simply replace the existing dll file with the latest version.
 
 ## Usage
 
-- You can only move GUI one step at a time. To move the GUI multiple steps (i.e. long press), press the <kbd>LShift</kbd> key too.
 - Hold down <kbd>LCtrl</kbd> or <kbd>RShift</kbd> to show shortcuts in-game.
 
-| Function                            | Shortcut                       |
-| ----------------------------------- | ------------------------------ |
-| Move GUI one step up                | <kbd>LCtrl</kbd>+<kbd>↑</kbd>  |
-| Move GUI one step down              | <kbd>LCtrl</kbd>+<kbd>↓</kbd>  |
-| Move GUI one step left              | <kbd>LCtrl</kbd>+<kbd>←</kbd>  |
-| Move GUI one step right             | <kbd>LCtrl</kbd>+<kbd>→</kbd>  |
-| Reset GUI position                  | <kbd>LCtrl</kbd>+<kbd>R</kbd>  |
-| Toggle All GUI visibility           | <kbd>RShift</kbd>+<kbd>A</kbd> |
-| Toggle Player statistics visibility | <kbd>RShift</kbd>+<kbd>P</kbd> |
-| Toggle Weapon statistics visibility | <kbd>RShift</kbd>+<kbd>W</kbd> |
-| Toggle Team statistics visibility   | <kbd>RShift</kbd>+<kbd>L</kbd> |
-| Toggle Elo on leaderboard           | <kbd>RShift</kbd>+<kbd>E</kbd> |
-| Squad server visibility             | <kbd>RShift</kbd>+<kbd>S</kbd> |
-| Testing servers visibility          | <kbd>RShift</kbd>+<kbd>T</kbd> |
-| Toggle shift to crouch feature      | <kbd>RShift</kbd>+<kbd>C</kbd> |
-| Reset All                           | <kbd>RShift</kbd>+<kbd>R</kbd> |
+| Function                             | Shortcut                                            |
+| ------------------------------------ | --------------------------------------------------- |
+| Move GUI by one pixel at a time      | <kbd>LCtrl</kbd>+<kbd>Arrow</kbd>                   |
+| Move GUI (long press)                | <kbd>LCtrl</kbd>+<kbd>LShift</kbd>+<kbd>Arrow</kbd> |
+| Reset GUI position                   | <kbd>LCtrl</kbd>+<kbd>R</kbd>                       |
+|                                      |                                                     |
+| Toggle All GUI visibility            | <kbd>RShift</kbd>+<kbd>A</kbd>                      |
+| Toggle Player statistics visibility  | <kbd>RShift</kbd>+<kbd>P</kbd>                      |
+| Toggle Weapon statistics visibility  | <kbd>RShift</kbd>+<kbd>W</kbd>                      |
+| Toggle Team statistics visibility    | <kbd>RShift</kbd>+<kbd>L</kbd>                      |
+| Toggle Elo visibility on leaderboard | <kbd>RShift</kbd>+<kbd>E</kbd>                      |
+| Squad server visibility              | <kbd>RShift</kbd>+<kbd>S</kbd>                      |
+| Testing servers visibility           | <kbd>RShift</kbd>+<kbd>T</kbd>                      |
+|                                      |                                                     |
+| Toggle shift to crouch               | <kbd>RShift</kbd>+<kbd>C</kbd>                      |
+|                                      |                                                     |
+| Reset everything                     | <kbd>RShift</kbd>+<kbd>R</kbd>                      |
 
 ## Features
 
@@ -94,8 +95,6 @@ Full list of features:
 - [x] in-game overlays
 - [x] quick shortcuts
 - [ ] OBS overlays
-- [ ] design custom OBS overlays
-- [ ] customize game assets (audio, textures, text, models, etc.)
 
 - in-game overlay
 
@@ -120,6 +119,7 @@ Full list of features:
 
 - OBS (includes everything in in-game overlay)
 
+  - design custom OBS overlays
   - **WIP**
 
   <!-- - [ ] top player per criteria (kills, longest kills, points, etc.)

@@ -6,7 +6,7 @@ using System.Collections;
 
 namespace WBM
 {
-	[BepInPlugin("com.developomp.wbm", "War Brokers Mods", "0.8.0.0")]
+	[BepInPlugin("com.developomp.wbm", "War Brokers Mods", "0.9.0.0")]
 	public partial class WBM : BaseUnityPlugin
 	{
 		private void Start()
@@ -149,7 +149,7 @@ Reset Everything: (RShift+R)"
 				new Rect(this.GUIOffsetX, this.GUIOffsetY, 220, 60),
 				@"War Brokers Mods
 Made by [LP] POMP
-v0.8.0.0"
+v0.9.0.0"
 			);
 
 			if (this.localPlayerIndex >= 0)
@@ -205,8 +205,6 @@ zoom: {Util.getGunZoom(this.personGun)}"
 				{
 					try
 					{
-						GUI.Box(new Rect(Screen.width - 320, this.GUIOffsetY + 60, 300, 270), "Team Stats");
-
 						string teamNames = "Nickname\n\n";
 						string teamKDR = "KDR\n\n";
 						string teamPoints = "pts\n\n";
@@ -234,10 +232,11 @@ zoom: {Util.getGunZoom(this.personGun)}"
 							}
 						}
 
-						GUI.Label(new Rect(Screen.width - 315, this.GUIOffsetY + 85, 105, 250), teamNames);
-						GUI.Label(new Rect(Screen.width - 200, this.GUIOffsetY + 85, 40, 250), teamKDR);
-						GUI.Label(new Rect(Screen.width - 150, this.GUIOffsetY + 85, 40, 250), teamPoints);
-						GUI.Label(new Rect(Screen.width - 100, this.GUIOffsetY + 85, 70, 250), teamDamage);
+						GUI.Box(new Rect(Screen.width - 320, this.GUIOffsetY + 60, 300, 270), "Team Stats");
+						GUI.Label(new Rect(Screen.width - 315, this.GUIOffsetY + 85, 105, 190), teamNames);
+						GUI.Label(new Rect(Screen.width - 200, this.GUIOffsetY + 85, 40, 190), teamKDR);
+						GUI.Label(new Rect(Screen.width - 150, this.GUIOffsetY + 85, 40, 190), teamPoints);
+						GUI.Label(new Rect(Screen.width - 100, this.GUIOffsetY + 85, 70, 190), teamDamage);
 
 						GUI.Label(
 							new Rect(Screen.width - 315, this.GUIOffsetY + 270, 300, 55),

@@ -76,38 +76,16 @@ namespace WBM
 		[DataContract]
 		public class SerializableData
 		{
+			// game version
+			// gamemode
+			// gamemode
+			// teammate list
+			// team rank (array of player index)
+
 			[DataMember] public int localPlayerIndex = -1;
-			[DataMember] public string[] nickList;
+			[DataMember] public string[] nickList = new string[] { };
 			[DataMember] public PlayerStatsStruct[] playerStatsArray = new PlayerStatsStruct[] { };
 			[DataMember] public WBMConfig config = new WBMConfig();
-
-			/*
-			{
-				gameVersion: "",
-				gameMode: "",
-				teammates: {
-					"": {
-						nick: "",
-						isBot: false,
-						stats: {
-							kills: 0,
-							deaths: 0,
-							kdr: 0.0,
-							killsElo: 0,
-							gamesElo: 0,
-							killsEloDelta: 0,
-							gamesEloDelta: 0,
-						}
-					}
-				},
-				teamRank: {
-					"kills": [
-						0,
-						0,
-					]
-				}
-			}
-			*/
 		}
 	}
 }

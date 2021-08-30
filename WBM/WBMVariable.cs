@@ -111,9 +111,8 @@ namespace WBM
 				return (Data.TeamEnum[])teamListRef.GetValue(this.webguy);
 			}
 		}
-		private Data.TeamEnum myTeam;
-
 		private Data.TeamEnum[] teamList;
+		private Data.TeamEnum myTeam;
 
 		private FieldInfo localPlayerIndexRef;
 		private int localPlayerIndexRaw

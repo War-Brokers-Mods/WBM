@@ -8,9 +8,6 @@
   <img src="images/WBM.png" alt="WBM logo"/>
 </p>
 
-> **WARNING**<br />
-> WBM only works with steam clients. It is **NOT compatible with browsers**.
-
 **W**ar **B**rokers **M**ods, AKA **WBM** is a unofficial mod for [War Brokers](https://store.steampowered.com/app/750470).<br />
 
 <details>
@@ -26,7 +23,7 @@
 
 ## Installation
 
-Officially supported platforms: Windows, MacOS, and Linux
+Only Windows, MacOS, and Linux are officially supported. It is Not compatible with browsers.
 
 > **WARNING**<br />
 > I do not upload WBM anywhere other than github. If you find it elsewhere, IT IS NOT UPLOADED BY ME.
@@ -62,7 +59,7 @@ Officially supported platforms: Windows, MacOS, and Linux
 
    ![OBS source](./images/obs_source.png)
 
-2. Check `Local file` checkbox and set the file to index.html of the overlay you want to use. Width and height of the overlays can be found [here](#obs-overlay)
+2. Check the `Local file` checkbox and set the file to `index.html` of the overlay you want to use. Width and height of the overlays can be found [here](#obs-overlay)
 
    ![OBS source property](./images/obs_source_props.png)
 
@@ -94,13 +91,7 @@ Simply replace the existing dll file with the latest version.
 
 ## Features
 
-Full list of features:
-
-- [x] in-game overlays
-- [x] quick shortcuts
-- [ ] OBS overlays
-
-### in-game overlay
+### in-game overlays
 
 - Tab Leaderboard
 
@@ -121,9 +112,9 @@ Full list of features:
 
   - total headshot count
 
-### OBS overlay
+### OBS overlays
 
-- kills and games Elo
+- kills and games Elo (size: 355, 140)
 
 ![Elo overlay](./images/elo.png)
 
@@ -143,9 +134,9 @@ Full list of features:
 - Daily and history record
 -->
 
-- Controls
+### Controls
 
-  - Shift to crouch
+- Shift to crouch
 
 # Building
 

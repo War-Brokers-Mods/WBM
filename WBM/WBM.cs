@@ -4,6 +4,8 @@ using UnityEngine;
 using System;
 using System.Collections;
 
+using WebSocketSharp.Server;
+
 namespace WBM
 {
 	[BepInPlugin("com.developomp.wbm", "War Brokers Mods", "0.9.0.0")]
@@ -16,7 +18,7 @@ namespace WBM
 
 			System.Type webguyType = typeof(webguy);
 
-			this.showEloRef = webguyType.GetField("KDOBENAOLLF", bindFlags);
+			this.showEloOnLeaderboardRef = webguyType.GetField("KDOBENAOLLF", bindFlags);
 			this.showSquadServerRef = webguyType.GetField("PHPIBBCFKFI", bindFlags);
 			this.showTestingServerRef = webguyType.GetField("LHHEGFHLNJE", bindFlags);
 			this.playerStatsArrayRef = webguyType.GetField("NAFCGDLLFJC", bindFlags);
@@ -32,14 +34,18 @@ namespace WBM
 			this.showTestingServerRaw = Convert.ToBoolean(PlayerPrefs.GetInt(PrefNames.showTestingServer, 1));
 			this.GUIOffsetX = PlayerPrefs.GetInt(PrefNames.GUIOffsetX, this.DefaultGUIOffsetX);
 			this.GUIOffsetY = PlayerPrefs.GetInt(PrefNames.GUIOffsetY, this.DefaultGUIOffsetY);
-			this.showGUI = Convert.ToBoolean(PlayerPrefs.GetInt(PrefNames.showGUI, 1));
-			this.showPlayerStats = Convert.ToBoolean(PlayerPrefs.GetInt(PrefNames.showPlayerStats, 1));
-			this.showWeaponStats = Convert.ToBoolean(PlayerPrefs.GetInt(PrefNames.showWeaponStats, 1));
-			this.showTeammateStats = Convert.ToBoolean(PlayerPrefs.GetInt(PrefNames.showTeammateStats, 1));
-			this.showEloRaw = Convert.ToBoolean(PlayerPrefs.GetInt(PrefNames.showElo, Convert.ToInt32(this.showEloRaw)));
-			this.shiftToCrouch = Convert.ToBoolean(PlayerPrefs.GetInt(PrefNames.shiftToCrouch, 1));
+			this.data.config.showGUI = Convert.ToBoolean(PlayerPrefs.GetInt(PrefNames.showGUI, 1));
+			this.data.config.showPlayerStats = Convert.ToBoolean(PlayerPrefs.GetInt(PrefNames.showPlayerStats, 1));
+			this.data.config.showWeaponStats = Convert.ToBoolean(PlayerPrefs.GetInt(PrefNames.showWeaponStats, 1));
+			this.data.config.showTeammateStats = Convert.ToBoolean(PlayerPrefs.GetInt(PrefNames.showTeammateStats, 1));
+			this.showEloOnLeaderboardRaw = Convert.ToBoolean(PlayerPrefs.GetInt(PrefNames.showElo, 1));
+			this.data.config.shiftToCrouch = Convert.ToBoolean(PlayerPrefs.GetInt(PrefNames.shiftToCrouch, 1));
 
-			StartCoroutine(UpdateValuesFunction(0f));
+			server = new WebSocketServer($"ws://127.0.0.1:{this.serverPort}");
+			server.AddWebSocketService<WSJSONService>("/json");
+			server.Start();
+
+			StartCoroutine(UpdateValuesFunction());
 
 			Logger.LogDebug("WBM: Ready!");
 		}
@@ -75,27 +81,27 @@ namespace WBM
 			}
 			if (Input.GetKey(KeyCode.RightShift))
 			{
-				if (Input.GetKeyDown(KeyCode.A)) this.showGUI = !this.showGUI;
-				if (Input.GetKeyDown(KeyCode.P)) this.showPlayerStats = !this.showPlayerStats;
-				if (Input.GetKeyDown(KeyCode.W)) this.showWeaponStats = !this.showWeaponStats;
-				if (Input.GetKeyDown(KeyCode.L)) this.showTeammateStats = !this.showTeammateStats;
-				if (Input.GetKeyDown(KeyCode.E)) this.showEloRaw = !this.showEloRaw;
+				if (Input.GetKeyDown(KeyCode.A)) this.data.config.showGUI = !this.data.config.showGUI;
+				if (Input.GetKeyDown(KeyCode.P)) this.data.config.showPlayerStats = !this.data.config.showPlayerStats;
+				if (Input.GetKeyDown(KeyCode.W)) this.data.config.showWeaponStats = !this.data.config.showWeaponStats;
+				if (Input.GetKeyDown(KeyCode.L)) this.data.config.showTeammateStats = !this.data.config.showTeammateStats;
+				if (Input.GetKeyDown(KeyCode.E)) this.showEloOnLeaderboardRaw = !this.showEloOnLeaderboardRaw;
 				if (Input.GetKeyDown(KeyCode.S)) this.showSquadServerRaw = !this.showSquadServerRaw;
 				if (Input.GetKeyDown(KeyCode.T)) this.showTestingServerRaw = !this.showTestingServerRaw;
-				if (Input.GetKeyDown(KeyCode.C)) this.shiftToCrouch = !this.shiftToCrouch;
+				if (Input.GetKeyDown(KeyCode.C)) this.data.config.shiftToCrouch = !this.data.config.shiftToCrouch;
 				if (Input.GetKeyDown(KeyCode.R))
 				{
 					this.GUIOffsetX = this.DefaultGUIOffsetX;
 					this.GUIOffsetY = this.DefaultGUIOffsetY;
 
-					this.showGUI = true;
-					this.showPlayerStats = true;
-					this.showWeaponStats = true;
-					this.showTeammateStats = true;
-					this.showEloRaw = true;
+					this.data.config.showGUI = true;
+					this.data.config.showPlayerStats = true;
+					this.data.config.showWeaponStats = true;
+					this.data.config.showTeammateStats = true;
+					this.showEloOnLeaderboardRaw = true;
 					this.showSquadServerRaw = true;
 					this.showTestingServerRaw = true;
-					this.shiftToCrouch = true;
+					this.data.config.shiftToCrouch = true;
 
 					this.showConfig = true;
 				}
@@ -106,7 +112,7 @@ namespace WBM
 			if (!Input.GetKey(KeyCode.LeftControl) && !Input.GetKey(KeyCode.RightShift)) this.showConfig = false;
 
 			// only if right buttton is not held
-			if (this.shiftToCrouch && !Input.GetMouseButton(1))
+			if (this.data.config.shiftToCrouch && !Input.GetMouseButton(1))
 			{
 				if (Input.GetKeyDown(KeyCode.LeftShift)) OMOJPGNNKFN.NEELEHFDKBP.EGACOOOGDDC = true;
 				if (Input.GetKeyUp(KeyCode.LeftShift)) OMOJPGNNKFN.NEELEHFDKBP.EGACOOOGDDC = false;
@@ -131,19 +137,19 @@ namespace WBM
 
 GUI X offset: {this.GUIOffsetX}
 GUI Y offset: {this.GUIOffsetY}
-Show WBM GUI: {this.showGUI} (RShift+A)
-Show Elo on leaderboard: {this.showEloRaw} (RShift+E)
-Show player stats: {this.showPlayerStats} (RShift+P)
-Show weapon stats: {this.showWeaponStats} (RShift+W)
-Show teammate stats: {this.showTeammateStats} (RShift+L)
+Show WBM GUI: {this.data.config.showGUI} (RShift+A)
+Show Elo on leaderboard: {this.showEloOnLeaderboardRaw} (RShift+E)
+Show player stats: {this.data.config.showPlayerStats} (RShift+P)
+Show weapon stats: {this.data.config.showWeaponStats} (RShift+W)
+Show teammate stats: {this.data.config.showTeammateStats} (RShift+L)
 show squad server: {this.showSquadServerRaw} (RShift+S)
 show testing server: {this.showTestingServerRaw} (RShift+T)
-shift to crouch: {this.shiftToCrouch} (RShift+C)
+shift to crouch: {this.data.config.shiftToCrouch} (RShift+C)
 Reset Everything: (RShift+R)"
 	);
 			}
 
-			if (!this.showGUI) return;
+			if (!this.data.config.showGUI) return;
 
 			GUI.Box(
 				new Rect(this.GUIOffsetX, this.GUIOffsetY, 220, 60),
@@ -152,9 +158,9 @@ Made by [LP] POMP
 v0.9.0.0"
 			);
 
-			if (this.localPlayerIndex >= 0)
+			if (this.data.localPlayerIndex >= 0)
 			{
-				if (this.showPlayerStats)
+				if (this.data.config.showPlayerStats)
 				{
 					try
 					{
@@ -180,7 +186,7 @@ HeadShots: {this.myPlayerStats.headShots}"
 					}
 				}
 
-				if (this.showWeaponStats)
+				if (this.data.config.showWeaponStats)
 				{
 					try
 					{
@@ -201,7 +207,7 @@ zoom: {Util.getGunZoom(this.personGun)}"
 					}
 				}
 
-				if (this.showTeammateStats)
+				if (this.data.config.showTeammateStats)
 				{
 					try
 					{
@@ -214,14 +220,14 @@ zoom: {Util.getGunZoom(this.personGun)}"
 						int teamTotalDeaths = 0;
 						int teamTotalDamage = 0;
 
-						for (int i = 0; i < this.playerStatsArray.Length; i++)
+						for (int i = 0; i < this.data.playerStatsArray.Length; i++)
 						{
-							Data.PlayerStatsStruct stat = this.playerStatsArray[i];
+							Data.PlayerStatsStruct stat = this.data.playerStatsArray[i];
 
 							// if player is not a bot and if player is in my team
 							if ((stat.killsElo != 0) && (this.teamList[i] == this.myTeam))
 							{
-								teamNames += $"{this.nickList[i]}\n";
+								teamNames += $"{this.data.nickList[i]}\n";
 								teamKDR += $"{Util.formatKDR(stat.kills, stat.deaths)}\n";
 								teamPoints += $"{stat.points}\n";
 								teamDamage += $"{stat.damage}\n";
@@ -253,30 +259,36 @@ total kills: {teamTotalKills}"
 			}
 		}
 
-		private IEnumerator UpdateValuesFunction(float time)
+		private IEnumerator UpdateValuesFunction()
 		{
 			try
 			{
-				this.localPlayerIndex = this.localPlayerIndexRaw;
+				this.data.localPlayerIndex = this.localPlayerIndexRaw;
 
-				if (this.localPlayerIndex >= 0)
+				if (this.data.localPlayerIndex >= 0)
 				{
-					this.playerStatsArray = this.playerStatsArrayRaw;
-					this.myPlayerStats = this.playerStatsArray[this.localPlayerIndex];
+					this.data.playerStatsArray = this.playerStatsArrayRaw;
+					this.myPlayerStats = this.data.playerStatsArray[this.data.localPlayerIndex];
 					this.teamList = this.teamListRaw;
-					this.myTeam = this.teamList[localPlayerIndex];
+					this.myTeam = this.teamList[this.data.localPlayerIndex];
 					this.personGun = this.personGunRaw;
-					this.nickList = this.nickListRaw;
+					this.data.nickList = this.nickListRaw;
 				}
+
+				this.data.config.showSquadServer = this.showSquadServerRaw;
+				this.data.config.showTestingServer = this.showTestingServerRaw;
+				this.data.config.showEloOnLeaderboard = this.showEloOnLeaderboardRaw;
+
+				this.server.WebSocketServices["/json"].Sessions.Broadcast(Util.data2JSON(data));
 			}
 			catch (Exception e)
 			{
 				Logger.LogDebug(e);
 			}
 
-			yield return new WaitForSeconds(time);
+			yield return new WaitForSeconds(0.1f);
 
-			this.UpdateValues = UpdateValuesFunction(0.1f);
+			this.UpdateValues = UpdateValuesFunction();
 			StartCoroutine(this.UpdateValues);
 		}
 
@@ -287,12 +299,12 @@ total kills: {teamTotalKills}"
 			PlayerPrefs.SetInt(PrefNames.showTestingServer, Convert.ToInt32(this.showTestingServerRaw));
 			PlayerPrefs.SetInt(PrefNames.GUIOffsetX, this.GUIOffsetX);
 			PlayerPrefs.SetInt(PrefNames.GUIOffsetY, this.GUIOffsetY);
-			PlayerPrefs.SetInt(PrefNames.showGUI, Convert.ToInt32(this.showGUI));
-			PlayerPrefs.SetInt(PrefNames.showPlayerStats, Convert.ToInt32(this.showPlayerStats));
-			PlayerPrefs.SetInt(PrefNames.showWeaponStats, Convert.ToInt32(this.showWeaponStats));
-			PlayerPrefs.SetInt(PrefNames.showTeammateStats, Convert.ToInt32(this.showTeammateStats));
-			PlayerPrefs.SetInt(PrefNames.showElo, Convert.ToInt32(this.showEloRaw));
-			PlayerPrefs.SetInt(PrefNames.shiftToCrouch, Convert.ToInt32(this.shiftToCrouch));
+			PlayerPrefs.SetInt(PrefNames.showGUI, Convert.ToInt32(this.data.config.showGUI));
+			PlayerPrefs.SetInt(PrefNames.showPlayerStats, Convert.ToInt32(this.data.config.showPlayerStats));
+			PlayerPrefs.SetInt(PrefNames.showWeaponStats, Convert.ToInt32(this.data.config.showWeaponStats));
+			PlayerPrefs.SetInt(PrefNames.showTeammateStats, Convert.ToInt32(this.data.config.showTeammateStats));
+			PlayerPrefs.SetInt(PrefNames.showElo, Convert.ToInt32(this.showEloOnLeaderboardRaw));
+			PlayerPrefs.SetInt(PrefNames.shiftToCrouch, Convert.ToInt32(this.data.config.shiftToCrouch));
 
 			PlayerPrefs.Save();
 		}

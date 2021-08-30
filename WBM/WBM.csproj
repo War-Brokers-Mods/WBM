@@ -31,6 +31,9 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="WebSocketSharp">
+      <HintPath>dll\websocket-sharp.dll</HintPath>
+    </Reference>
     <Reference Include="BepInEx">
       <HintPath>dll\BepInEx.dll</HintPath>
     </Reference>
@@ -115,7 +118,7 @@
     <Reference Include="UnityEngine.InputModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>dll\UnityEngine.InputModule.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.JSONSerializeModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <Reference Include="UnityEngine.JSONSerializeModule">
       <HintPath>dll\UnityEngine.JSONSerializeModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.LocalizationModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">

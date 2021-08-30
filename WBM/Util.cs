@@ -1,9 +1,24 @@
 using System;
+using System.Text;
+using System.IO;
+using System.Runtime.Serialization.Json;
 
 namespace WBM
 {
 	public class Util
 	{
+		public static string data2JSON(Data.SerializableData data)
+		{
+			MemoryStream stream = new MemoryStream();
+			DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(Data.SerializableData));
+
+			serializer.WriteObject(stream, data);
+			byte[] json = stream.ToArray();
+			stream.Close();
+
+			return Encoding.UTF8.GetString(json, 0, json.Length);
+		}
+
 		public static string formatKDR(int kills, int deaths)
 		{
 			return deaths == 0 ? "inf" : String.Format("{0:0.0}", (float)kills / (float)deaths);

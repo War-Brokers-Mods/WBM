@@ -1,6 +1,8 @@
 using System.Reflection;
 using System.Collections;
 
+using WebSocketSharp.Server;
+
 namespace WBM
 {
 	public partial class WBM
@@ -8,29 +10,27 @@ namespace WBM
 		private static BindingFlags bindFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static;
 		private webguy webguy;
 		private IEnumerator UpdateValues;
-		// private ushort serverPort = 24601;
+		private WebSocketServer server;
+		private ushort serverPort = 24601;
+
+		public Data.SerializableData data = new Data.SerializableData();
 
 		private bool showConfig = false;
 		private int GUIOffsetX;
 		private int DefaultGUIOffsetX = 38;
 		private int GUIOffsetY;
 		private int DefaultGUIOffsetY = 325;
-		private bool showGUI;
-		private bool showPlayerStats;
-		private bool showWeaponStats;
-		private bool showTeammateStats;
-		private bool shiftToCrouch;
 
-		private FieldInfo showEloRef;
-		private bool showEloRaw
+		private FieldInfo showEloOnLeaderboardRef;
+		private bool showEloOnLeaderboardRaw
 		{
 			get
 			{
-				return (bool)showEloRef.GetValue(this.webguy);
+				return (bool)showEloOnLeaderboardRef.GetValue(this.webguy);
 			}
 			set
 			{
-				showEloRef.SetValue(this.webguy, value);
+				showEloOnLeaderboardRef.SetValue(this.webguy, value);
 			}
 		}
 
@@ -92,7 +92,6 @@ namespace WBM
 				return result;
 			}
 		}
-		private Data.PlayerStatsStruct[] playerStatsArray;
 		private Data.PlayerStatsStruct myPlayerStats;
 
 		private FieldInfo currentAreaRef;
@@ -124,7 +123,6 @@ namespace WBM
 				return (int)localPlayerIndexRef.GetValue(this.webguy);
 			}
 		}
-		private int localPlayerIndex;
 
 		private FieldInfo personGunRef;
 		private NGNJNHEFLHB personGunRaw
@@ -144,6 +142,5 @@ namespace WBM
 				return (string[])nickListRef.GetValue(this.webguy);
 			}
 		}
-		private string[] nickList;
 	}
 }

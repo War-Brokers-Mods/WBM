@@ -58,9 +58,13 @@ Officially supported platforms: Windows, MacOS, and Linux
 
 ### Setting up OBS
 
-WIP...
+1. Create a new browser source
 
-That's it! Now you're a proud user of WBM!
+   ![OBS source](./images/obs_source.png)
+
+2. Check `Local file` checkbox and set the file to index.html of the overlay you want to use. Width and height of the overlays can be found [here](#obs-overlay)
+
+   ![OBS source property](./images/obs_source_props.png)
 
 ### Updating
 
@@ -96,45 +100,48 @@ Full list of features:
 - [x] quick shortcuts
 - [ ] OBS overlays
 
-- in-game overlay
+### in-game overlay
 
-  - Tab Leaderboard
+- Tab Leaderboard
 
-    - show kills Elo
+  - show kills Elo
 
-  - Player statistics
+- Player statistics
 
-    - KDR
-    - kills Elo
-    - kills Elo earned/lost
-    - games Elo
-    - games Elo earned/lost
-    - total damage dealt
-    - longest kill
-    - points earned
+  - KDR
+  - kills Elo
+  - kills Elo earned/lost
+  - games Elo
+  - games Elo earned/lost
+  - total damage dealt
+  - longest kill
+  - points earned
 
-  - Weapon statistics
+- Weapon statistics
 
-    - total headshot count
+  - total headshot count
 
-- OBS (includes everything in in-game overlay)
+### OBS overlay
 
-  - design custom OBS overlays
-  - **WIP**
+- kills and games Elo
 
-  <!-- - [ ] top player per criteria (kills, longest kills, points, etc.)
-  - [ ] kill streak
-  - [ ] hit accuracy
-  - [ ] game mode
-  - [ ] team score
-  - [ ] server id
-  - [ ] streamer ID
-  - [ ] survivors left in a BR match
-  - [ ] teammate name
-  - [ ] played game history (win, lose, and by how much)
-  - [ ] ping in millisecond per player
-  - [ ] if a player is a bot or not
-  - [ ] Daily and history record -->
+![Elo overlay](./images/elo.png)
+
+<!--
+- top player per criteria (kills, longest kills, points, etc.)
+- kill streak
+- hit accuracy
+- game mode
+- team score
+- server id
+- streamer ID
+- survivors left in a BR match
+- teammate name
+- played game history (win, lose, and by how much)
+- ping in millisecond per player
+- if a player is a bot or not
+- Daily and history record
+-->
 
 - Controls
 

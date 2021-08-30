@@ -60,6 +60,14 @@ namespace WBM
 			Count
 		}
 
+		public enum GameStateEnum
+		{
+			WaitingOnPlayers,
+			Countdown,
+			GameInProgress,
+			Results
+		}
+
 		[DataContract]
 		public class WBMConfig
 		{
@@ -78,7 +86,6 @@ namespace WBM
 		{
 			// game version
 			// gamemode
-			// gamemode
 			// teammate list
 			// team rank (array of player index)
 
@@ -86,6 +93,7 @@ namespace WBM
 			[DataMember] public string[] nickList = new string[] { };
 			[DataMember] public PlayerStatsStruct[] playerStatsArray = new PlayerStatsStruct[] { };
 			[DataMember] public WBMConfig config = new WBMConfig();
+			[DataMember] public Data.GameStateEnum gameState;
 		}
 	}
 }

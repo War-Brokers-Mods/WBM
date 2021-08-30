@@ -141,5 +141,14 @@ namespace WBM
 				return (string[])nickListRef.GetValue(this.webguy);
 			}
 		}
+
+		private FieldInfo gameStateRef;
+		private Data.GameStateEnum gameStateRaw
+		{
+			get
+			{
+				return (Data.GameStateEnum)gameStateRef.GetValue(this.webguy);
+			}
+		}
 	}
 }

@@ -60,7 +60,7 @@ Only Windows, MacOS, and Linux are officially supported. It is Not compatible wi
 
    ![OBS source](./images/obs_source.png)
 
-3. Check the `Local file` checkbox and set the file to `index.html` of the overlay you want to use. Width and height of the overlays can be found [here](#obs-overlays).
+3. Check the `Local file` checkbox and use a `.html` file of the overlay you want to use. Width and height of the overlays can be found [here](#obs-overlays).
 
    ![OBS source property](./images/obs_source_props.png)
 

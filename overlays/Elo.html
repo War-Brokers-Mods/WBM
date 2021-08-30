@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta
+      http-equiv="Cache-Control"
+      content="no-cache, no-store, must-revalidate"
+    />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      :root {
+        --width: 325px;
+        --height: 100px;
+        --border-radius: 15px;
+        --bg: linear-gradient(90deg, #313131, #161616);
+        --accent: rgb(88, 55, 236);
+        --accent2: rgb(48, 29, 131);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      body {
+        margin: 10px;
+        padding: 10px;
+        overflow: hidden;
+      }
+
+      /* Box Container */
+
+      .box {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        width: var(--width);
+        height: var(--height);
+        position: relative;
+        border-radius: var(--border-radius);
+        background: var(--bg);
+        transition: width 500ms ease, opacity 300ms, ease;
+      }
+
+      /* Progress Line */
+
+      #line {
+        box-shadow: 0px 5px 20px #000;
+        z-index: -1;
+        width: var(--width);
+        height: var(--height);
+        position: absolute;
+        border-radius: var(--border-radius);
+        transform: translate(0px, 3px);
+        overflow: hidden;
+      }
+
+      #line::before,
+      #line::after {
+        position: absolute;
+        content: "";
+        z-index: -1;
+        height: 100%;
+        width: 100%;
+        border-radius: var(--border-radius);
+        animation: slide 5s linear infinite alternate;
+        background-color: gray;
+      }
+
+      /* Elo data */
+
+      #elo-container {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        border-radius: var(--border-radius);
+        display: flex;
+        justify-content: space-between;
+        align-self: center;
+        transition: top 500ms ease;
+        overflow: hidden;
+      }
+
+      .killsElo,
+      .gamesElo {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        flex-direction: column;
+        position: relative;
+        width: 200px;
+        height: 100%;
+        font-size: 44px;
+      }
+
+      /* Data descriptor */
+
+      .descriptor {
+        font-size: 20px;
+      }
+
+      /* Delta */
+
+      #delta-container {
+        width: var(--width);
+        height: var(--height);
+        position: absolute;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        font-size: 20px;
+        top: -15px;
+        z-index: 10;
+        color: white;
+      }
+
+      #killsEloDelta,
+      #gamesEloDelta {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 25px;
+        width: 50px;
+        padding: 0 10px 0 10px;
+        border-radius: 10px;
+        transition: transform 200ms ease, opacity 300ms ease;
+      }
+
+      #killsEloDelta {
+        background: linear-gradient(to right, var(--accent), var(--accent2));
+        box-shadow: 0 2px 5px var(--accent);
+      }
+
+      #gamesEloDelta {
+        background: linear-gradient(to right, gray, #313131);
+        box-shadow: 0 2px 5px rgb(77, 77, 77);
+      }
+
+      .positive::before {
+        content: "+";
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="box">
+      <div id="line"></div>
+
+      <div id="delta-container">
+        <span class="positive" id="killsEloDelta">0</span>
+        <span class="positive" id="gamesEloDelta">0</span>
+      </div>
+
+      <div id="elo-container">
+        <div class="killsElo">
+          <span id="killsElo">0000</span>
+          <p class="descriptor">kills Elo</p>
+        </div>
+        <div class="gamesElo">
+          <span id="gamesElo">0000</span>
+          <p class="descriptor">games Elo</p>
+        </div>
+      </div>
+    </div>
+
+    <script src="deps/reconnecting-websocket.min.js"></script>
+    <script type="module">
+      import { CountUp } from "./deps/countUp.min.js";
+
+      let socket = new ReconnectingWebSocket("ws://127.0.0.1:24601/json");
+
+      socket.onopen = () => console.log("Socket Connected!");
+
+      let killsEloDelta = document.getElementById("killsEloDelta");
+      let gamesEloDelta = document.getElementById("gamesEloDelta");
+
+      let killsEloCountUp = new CountUp("killsElo", 0, 0, 0, 0.5, {
+        useEasing: true,
+        useGrouping: true,
+        separator: " ",
+        decimal: ".",
+      });
+      let gamesEloCountUp = new CountUp("gamesElo", 0, 0, 0, 0.5, {
+        useEasing: true,
+        useGrouping: true,
+        separator: " ",
+        decimal: ".",
+      });
+      let killsEloDeltaCountUp = new CountUp("killsEloDelta", 0, 0, 0, 0.5, {
+        useEasing: true,
+        useGrouping: true,
+        separator: " ",
+        decimal: ".",
+      });
+      let gamesEloDeltaCountUp = new CountUp("gamesEloDelta", 0, 0, 0, 0.5, {
+        useEasing: true,
+        useGrouping: true,
+        separator: " ",
+        decimal: ".",
+      });
+
+      socket.onmessage = (event) => {
+        let data = JSON.parse(event.data);
+
+        if (data.playerStatsArray[data.localPlayerIndex].killsEloDelta < 0) {
+          killsEloDelta.classList.remove("positive");
+        } else {
+          killsEloDelta.classList.add("positive");
+        }
+
+        if (data.playerStatsArray[data.localPlayerIndex].gamesEloDelta < 0) {
+          gamesEloDelta.classList.remove("positive");
+        } else {
+          gamesEloDelta.classList.add("positive");
+        }
+
+        killsEloCountUp.update(
+          data.playerStatsArray[data.localPlayerIndex].killsElo
+        );
+
+        killsEloDeltaCountUp.update(
+          data.playerStatsArray[data.localPlayerIndex].killsEloDelta
+        );
+
+        gamesEloCountUp.update(
+          data.playerStatsArray[data.localPlayerIndex].gamesElo
+        );
+
+        gamesEloDeltaCountUp.update(
+          data.playerStatsArray[data.localPlayerIndex].gamesEloDelta
+        );
+      };
+    </script>
+  </body>
+</html>

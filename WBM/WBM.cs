@@ -8,7 +8,7 @@ using WebSocketSharp.Server;
 
 namespace WBM
 {
-	[BepInPlugin("com.developomp.wbm", "War Brokers Mods", "0.9.0.0")]
+	[BepInPlugin("com.developomp.wbm", "War Brokers Mods", "0.10.0.0")]
 	public partial class WBM : BaseUnityPlugin
 	{
 		private void Start()
@@ -27,7 +27,7 @@ namespace WBM
 			this.localPlayerIndexRef = webguyType.GetField("ALEJJPEPFOG", bindFlags);
 			this.personGunRef = webguyType.GetField("IEGLIMLBDPH", bindFlags);
 			this.nickListRef = webguyType.GetField("CLLDJOMEKIP", bindFlags);
-			// modList
+			this.gameStateRef = webguyType.GetField("MCGMEPGBCKK", bindFlags);
 
 			// Load configurations
 			this.showSquadServerRaw = Convert.ToBoolean(PlayerPrefs.GetInt(PrefNames.showSquadServer, 1));
@@ -155,7 +155,7 @@ Reset Everything: (RShift+R)"
 				new Rect(this.GUIOffsetX, this.GUIOffsetY, 220, 60),
 				@"War Brokers Mods
 Made by [LP] POMP
-v0.9.0.0"
+v0.10.0.0"
 			);
 
 			if (this.data.localPlayerIndex >= 0)
@@ -238,14 +238,15 @@ zoom: {Util.getGunZoom(this.personGun)}"
 							}
 						}
 
-						GUI.Box(new Rect(Screen.width - 320, this.GUIOffsetY + 60, 300, 270), "Team Stats");
-						GUI.Label(new Rect(Screen.width - 315, this.GUIOffsetY + 85, 105, 190), teamNames);
-						GUI.Label(new Rect(Screen.width - 200, this.GUIOffsetY + 85, 40, 190), teamKDR);
-						GUI.Label(new Rect(Screen.width - 150, this.GUIOffsetY + 85, 40, 190), teamPoints);
-						GUI.Label(new Rect(Screen.width - 100, this.GUIOffsetY + 85, 70, 190), teamDamage);
+						int teamStatOffset = (this.data.gameState == Data.GameStateEnum.Results) ? 400 : 0;
+						GUI.Box(new Rect(Screen.width - 320, 385 + teamStatOffset, 300, 270), "Team Stats");
+						GUI.Label(new Rect(Screen.width - 315, 410 + teamStatOffset, 105, 190), teamNames);
+						GUI.Label(new Rect(Screen.width - 200, 410 + teamStatOffset, 40, 190), teamKDR);
+						GUI.Label(new Rect(Screen.width - 150, 410 + teamStatOffset, 40, 190), teamPoints);
+						GUI.Label(new Rect(Screen.width - 100, 410 + teamStatOffset, 70, 190), teamDamage);
 
 						GUI.Label(
-							new Rect(Screen.width - 315, this.GUIOffsetY + 270, 300, 55),
+							new Rect(Screen.width - 315, 595 + teamStatOffset, 300, 55),
 							$@"total damage: {teamTotalDamage}
 total deaths: {teamTotalDeaths}
 total kills: {teamTotalKills}"
@@ -273,6 +274,7 @@ total kills: {teamTotalKills}"
 					this.myTeam = this.teamList[this.data.localPlayerIndex];
 					this.personGun = this.personGunRaw;
 					this.data.nickList = this.nickListRaw;
+					this.data.gameState = this.gameStateRaw;
 				}
 
 				this.data.config.showSquadServer = this.showSquadServerRaw;

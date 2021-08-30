@@ -8,7 +8,7 @@ using WebSocketSharp.Server;
 
 namespace WBM
 {
-	[BepInPlugin("com.developomp.wbm", "War Brokers Mods", "0.10.0.0")]
+	[BepInPlugin("com.developomp.wbm", "War Brokers Mods", "1.0.0.0")]
 	public partial class WBM : BaseUnityPlugin
 	{
 		private void Start()
@@ -155,7 +155,7 @@ Reset Everything: (RShift+R)"
 				new Rect(this.GUIOffsetX, this.GUIOffsetY, 220, 60),
 				@"War Brokers Mods
 Made by [LP] POMP
-v0.10.0.0"
+v1.0.0.0"
 			);
 
 			if (this.data.localPlayerIndex >= 0)

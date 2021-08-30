@@ -115,7 +115,7 @@ Simply replace the existing dll file with the latest version.
 
 ### OBS overlays
 
-- kills and games Elo (size: 355, 140)
+- kills and games Elo (size: 355x140)
 
 ![Elo overlay](./images/elo.png)
 

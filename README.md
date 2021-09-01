@@ -203,7 +203,7 @@ If you have a cool idea that will make WBM better, or if WBM misbehaves in any w
 ## Special thanks
 
 - [inorganik](https://github.com/inorganik) for [countUp.js](https://github.com/inorganik/countUp.js)
-- [l3lackShark] for [inspiration](https://github.com/l3lackShark/gosumemory)
+- [l3lackShark](https://github.com/l3lackShark) for [inspiration](https://github.com/l3lackShark/gosumemory)
 - [jassper0](https://github.com/jassper0) for [Elo overlay design](https://github.com/l3lackShark/static/tree/master/Simplistic)
 
 ## License

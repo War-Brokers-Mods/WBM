@@ -1,6 +1,6 @@
-# [War Brokers Mods (WBM)](https://github.com/developomp/WBM)
+# [War Brokers Mods (WBM)](https://github.com/War-Brokers-Mods/WBM)
 
-![License: MIT](https://img.shields.io/github/license/developomp/WBM?style=flat-square&color=blue)
+![License: MIT](https://img.shields.io/github/license/War-Brokers-Mods/WBM?style=flat-square&color=blue)
 
 > **IF YOU USE THIS TO DEVELOP HACKS YOUR MOM IS GAY.**
 
@@ -50,12 +50,12 @@ Only Windows, MacOS, and Linux are officially supported. It is Not compatible wi
 
 ### Installing WBM
 
-1. [Download](https://github.com/developomp/WBM/releases/latest) the latest version of WBM (a .dll file).
+1. [Download](https://github.com/War-Brokers-Mods/WBM/releases/latest) the latest version of WBM (a .dll file).
 2. Put the dll file in the `<Game folder>/BepInEx/plugins` folder.
 
 ### Setting up OBS
 
-1. [Download](https://github.com/developomp/WBM/releases/latest) `overlays.zip`. and Unzip it anywhere.
+1. [Download](https://github.com/War-Brokers-Mods/WBM/releases/latest) `overlays.zip`. and Unzip it anywhere.
 2. Create a new browser source in OBS studio.
 
    ![OBS source](./images/obs_source.png)
@@ -193,7 +193,7 @@ If you are a casual user, this is completely unnecessary. **This is only recomme
 
 ## Bug reports / Suggestions
 
-If you have a cool idea that will make WBM better, or if WBM misbehaves in any way (no matter how minor the problem is), feel free go to the [Issues page](https://github.com/developomp/WBM/issues) and open a new issue!
+If you have a cool idea that will make WBM better, or if WBM misbehaves in any way (no matter how minor the problem is), feel free go to the [Issues page](https://github.com/War-Brokers-Mods/WBM/issues) and open a new issue!
 
 ## Contributing
 

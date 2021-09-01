@@ -55,7 +55,7 @@ Only Windows, MacOS, and Linux are officially supported. It is Not compatible wi
 
 ### Setting up OBS
 
-1. [Download](https://github.com/War-Brokers-Mods/WBM/releases/latest) `overlays.zip`. and Unzip it anywhere.
+1. [Download](https://github.com/War-Brokers-Mods/WBM-Overlays/archive/refs/heads/master.zip) the overlays and Unzip it anywhere. (Source code can be found [here](https://github.com/War-Brokers-Mods/WBM-Overlays))
 2. Create a new browser source in OBS studio.
 
    ![OBS source](./images/obs_source.png)

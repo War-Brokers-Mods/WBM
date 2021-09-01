@@ -8,7 +8,7 @@ using WebSocketSharp.Server;
 
 namespace WBM
 {
-	[BepInPlugin("com.developomp.wbm", "War Brokers Mods", "1.0.0.0")]
+	[BepInPlugin("com.developomp.wbm", "War Brokers Mods", "1.1.0.0")]
 	public partial class WBM : BaseUnityPlugin
 	{
 		private void Start()
@@ -79,6 +79,8 @@ namespace WBM
 				}
 				this.showConfig = true;
 			}
+
+			// Configuration shortbut
 			if (Input.GetKey(KeyCode.RightShift))
 			{
 				if (Input.GetKeyDown(KeyCode.A)) this.data.config.showGUI = !this.data.config.showGUI;
@@ -102,13 +104,12 @@ namespace WBM
 					this.showSquadServerRaw = true;
 					this.showTestingServerRaw = true;
 					this.data.config.shiftToCrouch = true;
-
-					this.showConfig = true;
 				}
 
 				this.showConfig = true;
 			}
 
+			// hide config
 			if (!Input.GetKey(KeyCode.LeftControl) && !Input.GetKey(KeyCode.RightShift)) this.showConfig = false;
 
 			// only if right buttton is not held
@@ -155,7 +156,7 @@ Reset Everything: (RShift+R)"
 				new Rect(this.GUIOffsetX, this.GUIOffsetY, 220, 60),
 				@"War Brokers Mods
 Made by [LP] POMP
-v1.0.0.0"
+v1.1.0.0"
 			);
 
 			if (this.data.localPlayerIndex >= 0)
@@ -238,7 +239,7 @@ zoom: {Util.getGunZoom(this.personGun)}"
 							}
 						}
 
-						int teamStatOffset = (this.data.gameState == Data.GameStateEnum.Results) ? 400 : 0;
+						int teamStatOffset = (this.data.gameState == Data.GameStateEnum.Results) ? 340 : 0;
 						GUI.Box(new Rect(Screen.width - 320, 385 + teamStatOffset, 300, 270), "Team Stats");
 						GUI.Label(new Rect(Screen.width - 315, 410 + teamStatOffset, 105, 190), teamNames);
 						GUI.Label(new Rect(Screen.width - 200, 410 + teamStatOffset, 40, 190), teamKDR);

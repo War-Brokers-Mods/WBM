@@ -1,17 +1,20 @@
 ﻿using BepInEx;
 using UnityEngine;
+using UnityEngine.Networking;
 
 using System;
+using System.IO;
 using System.Collections;
+using System.Threading.Tasks;
 
 using WebSocketSharp.Server;
 
 namespace WBM
 {
-	[BepInPlugin("com.developomp.wbm", "War Brokers Mods", "1.1.0.0")]
+	[BepInPlugin("com.developomp.wbm", "War Brokers Mods", "1.2.0.0")]
 	public partial class WBM : BaseUnityPlugin
 	{
-		private void Start()
+		private async void Start()
 		{
 			Logger.LogDebug("WBM: Initializing");
 			this.webguy = FindObjectOfType<webguy>();
@@ -28,6 +31,7 @@ namespace WBM
 			this.personGunRef = webguyType.GetField("IEGLIMLBDPH", bindFlags);
 			this.nickListRef = webguyType.GetField("CLLDJOMEKIP", bindFlags);
 			this.gameStateRef = webguyType.GetField("MCGMEPGBCKK", bindFlags);
+			this.addMessageFuncRef = webguyType.GetMethod("NBPKLIOLLEI", bindFlags);
 
 			// Load configurations
 			this.showSquadServerRaw = Convert.ToBoolean(PlayerPrefs.GetInt(PrefNames.showSquadServer, 1));
@@ -40,6 +44,43 @@ namespace WBM
 			this.data.config.showTeammateStats = Convert.ToBoolean(PlayerPrefs.GetInt(PrefNames.showTeammateStats, 1));
 			this.showEloOnLeaderboardRaw = Convert.ToBoolean(PlayerPrefs.GetInt(PrefNames.showElo, 1));
 			this.data.config.shiftToCrouch = Convert.ToBoolean(PlayerPrefs.GetInt(PrefNames.shiftToCrouch, 1));
+
+			this.killStreakAudioSource = this.gameObject.AddComponent<AudioSource>();
+
+			if (!Directory.Exists(this.audioPath))
+			{
+				Logger.LogError($"Directory {this.audioPath} does not exist. Aborting!");
+				GameObject.Destroy(this);
+			}
+
+			foreach (string fileName in Directory.GetFiles(this.audioPath))
+			{
+				Logger.LogDebug(Path.GetFileNameWithoutExtension(fileName));
+
+				using (UnityWebRequest uwr = UnityWebRequestMultimedia.GetAudioClip("file://" + Path.Combine(this.audioPath, fileName), AudioType.WAV))
+				{
+					uwr.SendWebRequest();
+
+					try
+					{
+						while (!uwr.isDone) await Task.Delay(5);
+
+						if (uwr.result == UnityWebRequest.Result.ProtocolError) Logger.LogError($"{uwr.error}");
+						else
+						{
+							this.killStreakAudioDict.Add(
+								Path.GetFileNameWithoutExtension(fileName),
+								DownloadHandlerAudioClip.GetContent(uwr)
+							);
+
+						}
+					}
+					catch (Exception err)
+					{
+						Logger.LogError($"{err.Message}, {err.StackTrace}");
+					}
+				}
+			}
 
 			server = new WebSocketServer($"ws://127.0.0.1:{this.serverPort}");
 			server.AddWebSocketService<WSJSONService>("/json");
@@ -156,7 +197,7 @@ Reset Everything: (RShift+R)"
 				new Rect(this.GUIOffsetX, this.GUIOffsetY, 220, 60),
 				@"War Brokers Mods
 Made by [LP] POMP
-v1.1.0.0"
+v1.2.0.0"
 			);
 
 			if (this.data.localPlayerIndex >= 0)
@@ -169,7 +210,7 @@ v1.1.0.0"
 						string gamesEloDeltaSign = this.myPlayerStats.gamesEloDelta >= 0 ? "+" : "";
 
 						GUI.Box(
-							new Rect(this.GUIOffsetX, this.GUIOffsetY + 65, 220, 160),
+							new Rect(this.GUIOffsetX, this.GUIOffsetY + 65, 220, 180),
 							$@"Player stats
 
 KDR: {Util.formatKDR(this.myPlayerStats.kills, this.myPlayerStats.deaths)}
@@ -178,12 +219,13 @@ games Elo: {this.myPlayerStats.gamesElo} {gamesEloDeltaSign}{this.myPlayerStats.
 Damage dealt: {this.myPlayerStats.damage}
 Longest Kill: {this.myPlayerStats.longestKill}m
 Points: {this.myPlayerStats.points}
-HeadShots: {this.myPlayerStats.headShots}"
+Headshots: {this.myPlayerStats.headShots}
+Kill streak: {this.killStreak}"
 						);
 					}
 					catch (Exception e)
 					{
-						Logger.LogDebug(e);
+						Logger.LogError(e);
 					}
 				}
 
@@ -192,7 +234,7 @@ HeadShots: {this.myPlayerStats.headShots}"
 					try
 					{
 						GUI.Box(
-							new Rect(this.GUIOffsetX, this.GUIOffsetY + 230, 230, 130),
+							new Rect(this.GUIOffsetX, this.GUIOffsetY + 250, 230, 130),
 							$@"Weapon stats
 
 fire Timer: {String.Format("{0:0.00}", Util.getGunFireTimer(this.personGun))}s (max: {String.Format("{0:0.00}", Util.getGunFireRate(this.personGun))}s)
@@ -204,7 +246,7 @@ zoom: {Util.getGunZoom(this.personGun)}"
 					}
 					catch (Exception e)
 					{
-						Logger.LogDebug(e);
+						Logger.LogError(e);
 					}
 				}
 
@@ -255,7 +297,7 @@ total kills: {teamTotalKills}"
 					}
 					catch (Exception e)
 					{
-						Logger.LogDebug(e);
+						Logger.LogError(e);
 					}
 				}
 			}
@@ -276,6 +318,34 @@ total kills: {teamTotalKills}"
 					this.personGun = this.personGunRaw;
 					this.data.nickList = this.nickListRaw;
 					this.data.gameState = this.gameStateRaw;
+
+					// check if deaths has changed since the last value update
+					if (this.prevDeaths == this.myPlayerStats.deaths)
+					{
+						this.killStreak = this.myPlayerStats.kills - this.killCountBeforeDeath;
+
+						if (this.prevKills != this.myPlayerStats.kills)
+						{
+							Logger.LogDebug(this.killStreakAudioDict);
+
+							if (this.killStreakSFXDictionary.ContainsKey(this.killStreak))
+							{
+								this.killStreakAudioSource.clip = this.killStreakAudioDict[this.killStreakSFXDictionary[this.killStreak]];
+								this.killStreakAudioSource.Play();
+
+								this.addMessageFuncRef.Invoke(this.webguy, new object[] { $"You are on a {this.killStreak} kill streak", -1 });
+							}
+						}
+					}
+					else
+					{
+						// reset kill streak when death count changes
+
+						this.killCountBeforeDeath = this.myPlayerStats.kills;
+						this.prevDeaths = this.myPlayerStats.deaths;
+						this.killStreak = 0;
+					}
+					this.prevKills = this.myPlayerStats.kills;
 				}
 
 				this.data.config.showSquadServer = this.showSquadServerRaw;
@@ -286,7 +356,7 @@ total kills: {teamTotalKills}"
 			}
 			catch (Exception e)
 			{
-				Logger.LogDebug(e);
+				Logger.LogError(e);
 			}
 
 			yield return new WaitForSeconds(0.1f);

@@ -1,5 +1,9 @@
+using UnityEngine;
+
+using System.IO;
 using System.Reflection;
 using System.Collections;
+using System.Collections.Generic;
 
 using WebSocketSharp.Server;
 
@@ -20,6 +24,17 @@ namespace WBM
 		private int DefaultGUIOffsetX = 38;
 		private int GUIOffsetY;
 		private int DefaultGUIOffsetY = 325;
+
+		private Dictionary<string, AudioClip> killStreakAudioDict = new Dictionary<string, AudioClip>();
+		private string audioPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "assets/audio");
+		private AudioSource killStreakAudioSource;
+		private Dictionary<int, string> killStreakSFXDictionary = new Dictionary<int, string>()
+		{
+			{10, "rampage"},
+			{20,"killing spree"},
+			{30, "unstoppable"},
+			{50, "godlike"}
+		};
 
 		private FieldInfo showEloOnLeaderboardRef;
 		private bool showEloOnLeaderboardRaw
@@ -93,6 +108,10 @@ namespace WBM
 			}
 		}
 		private Data.PlayerStatsStruct myPlayerStats;
+		private int prevDeaths = 0;
+		private int prevKills = 0;
+		private int killCountBeforeDeath = 0;
+		private int killStreak = 0;
 
 		private FieldInfo currentAreaRef;
 		private int currentAreaRaw
@@ -150,5 +169,7 @@ namespace WBM
 				return (Data.GameStateEnum)gameStateRef.GetValue(this.webguy);
 			}
 		}
+
+		private MethodInfo addMessageFuncRef;
 	}
 }

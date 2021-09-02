@@ -50,8 +50,19 @@ Only Windows, MacOS, and Linux are officially supported. It is Not compatible wi
 
 ### Installing WBM
 
-1. [Download](https://github.com/War-Brokers-Mods/WBM/releases/latest) the latest version of WBM (a .dll file).
-2. Put the dll file in the `<Game folder>/BepInEx/plugins` folder.
+1. [Download](https://github.com/War-Brokers-Mods/WBM/releases/latest) the latest version of WBM. (`WBM.zip` file)
+2. Unzip it in the `<Game folder>/BepInEx/plugins` folder.
+
+   It should look like this:
+
+   ```
+   plugins
+   └── WBM
+       ├── assets
+       │   └── audio
+       │       └── ...
+       └── WBM.dll
+   ```
 
 ### Setting up OBS
 
@@ -172,24 +183,18 @@ If you are a casual user, this is completely unnecessary. **This is only recomme
    - `Assembly-CSharp-firstpass.dll`
    - `UnityEngine.*.dll`
 
-4. Run the build command.
-
-   Build in debug mode
+4. Create `scripts/config.sh`.
 
    ```bash
-   dotnet build
+   #!/bin/bash
+
+   WB_PLUGINS_DIR="<PATH_TO_PLUGINS_DIRECTORY_HERE>"
    ```
 
-   Build in release mode
+5. Now you can run the scipts.
 
-   ```bash
-   dotnet build --configuration Release
-   ```
-
-5. The built dll can be found at:
-
-   - `./WBM/bin/Debug/net48/WBM.dll`
-   - `./WBM/bin/Release/net48/WBM.dll`
+   - `scripts/debug.sh`: Build WBM in debug mode and copy the files to the plugins directory.
+   - `scripts/release.sh`: Create a zip file that can be uploaded in the gh release section.
 
 ## Bug reports / Suggestions
 

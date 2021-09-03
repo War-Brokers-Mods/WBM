@@ -21,7 +21,12 @@ namespace WBM
 
 		public static string formatKDR(int kills, int deaths)
 		{
-			return deaths == 0 ? "inf" : String.Format("{0:0.0}", (float)kills / (float)deaths);
+			return deaths == 0 ? "inf" : formatDecimal((float)kills / (float)deaths);
+		}
+
+		public static string formatDecimal(float number)
+		{
+			return String.Format("{0:0.0}", number);
 		}
 
 		public static float getGunZoom(NGNJNHEFLHB gun)

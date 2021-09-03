@@ -11,7 +11,7 @@ using WebSocketSharp.Server;
 
 namespace WBM
 {
-	[BepInPlugin("com.developomp.wbm", "War Brokers Mods", "1.2.0.0")]
+	[BepInPlugin("com.developomp.wbm", "War Brokers Mods", "1.3.0.0")]
 	public partial class WBM : BaseUnityPlugin
 	{
 		private async void Start()
@@ -197,7 +197,7 @@ Reset Everything: (RShift+R)"
 				new Rect(this.GUIOffsetX, this.GUIOffsetY, 220, 60),
 				@"War Brokers Mods
 Made by [LP] POMP
-v1.2.0.0"
+v1.3.0.0"
 			);
 
 			if (this.data.localPlayerIndex >= 0)
@@ -214,8 +214,8 @@ v1.2.0.0"
 							$@"Player stats
 
 KDR: {Util.formatKDR(this.myPlayerStats.kills, this.myPlayerStats.deaths)}
-kills Elo: {this.myPlayerStats.killsElo} {killsEloDeltaSign}{this.myPlayerStats.killsEloDelta}
-games Elo: {this.myPlayerStats.gamesElo} {gamesEloDeltaSign}{this.myPlayerStats.gamesEloDelta}
+kills Elo: {this.myPlayerStats.killsElo} {killsEloDeltaSign}{Util.formatDecimal(this.myPlayerStats.killsEloDelta / 10)}
+games Elo: {this.myPlayerStats.gamesElo} {gamesEloDeltaSign}{Util.formatDecimal(this.myPlayerStats.gamesEloDelta / 10)}
 Damage dealt: {this.myPlayerStats.damage}
 Longest Kill: {this.myPlayerStats.longestKill}m
 Points: {this.myPlayerStats.points}

@@ -1,6 +1,7 @@
 # [War Brokers Mods (WBM)](https://github.com/War-Brokers-Mods/WBM)
 
 ![License: MIT](https://img.shields.io/github/license/War-Brokers-Mods/WBM?style=flat-square&color=blue)
+[![discord invite](https://img.shields.io/badge/Discord-5865F2?style=flat-square&logo=discord&logoColor=white)](https://discord.gg/aQqamSCUcS)
 
 > **IF YOU USE THIS TO DEVELOP HACKS YOUR MOM IS GAY.**
 
@@ -28,7 +29,7 @@ Only Windows, MacOS, and Linux are officially supported. It is Not compatible wi
 > **WARNING**<br />
 > I do not upload WBM anywhere other than github. If you find it elsewhere, IT IS NOT UPLOADED BY ME.
 
-### Installing BepInEx
+### 1. Install BepInEx
 
 1. Download the latest version of BepInEx **version 5** from [here](https://github.com/BepInEx/BepInEx/releases).
 
@@ -48,7 +49,7 @@ Only Windows, MacOS, and Linux are officially supported. It is Not compatible wi
 
 4. **[ IMPORTNT ]** Run the game at least once to generate the plugins folder as well as other necessary files.
 
-### Installing WBM
+### 2. Install WBM
 
 1. [Download](https://github.com/War-Brokers-Mods/WBM/releases/latest) the latest version of WBM. (`WBM.zip` file)
 2. Unzip it in the `<Game folder>/BepInEx/plugins` folder.
@@ -64,7 +65,7 @@ Only Windows, MacOS, and Linux are officially supported. It is Not compatible wi
        └── WBM.dll
    ```
 
-### Setting up OBS
+### 3. Set up OBS (optional)
 
 1. [Download](https://github.com/War-Brokers-Mods/WBM-Overlays/archive/refs/heads/master.zip) the overlays and Unzip it anywhere. (Source code can be found [here](https://github.com/War-Brokers-Mods/WBM-Overlays))
 2. Create a new browser source in OBS studio.
@@ -77,7 +78,7 @@ Only Windows, MacOS, and Linux are officially supported. It is Not compatible wi
 
 ### Updating
 
-Simply replace the existing dll file with the latest version.
+Simply go through the installation process again and replace existing files. You don't have to reinstall BepInEx to reinstall WBM.
 
 ## Usage
 
@@ -88,7 +89,7 @@ Simply replace the existing dll file with the latest version.
 | Move GUI by one pixel at a time      | <kbd>LCtrl</kbd>+<kbd>Arrow</kbd>                   |
 | Move GUI (long press)                | <kbd>LCtrl</kbd>+<kbd>LShift</kbd>+<kbd>Arrow</kbd> |
 | Reset GUI position                   | <kbd>LCtrl</kbd>+<kbd>R</kbd>                       |
-|                                      |                                                     |
+| <br />                               |                                                     |
 | Toggle All GUI visibility            | <kbd>RShift</kbd>+<kbd>A</kbd>                      |
 | Toggle Player statistics visibility  | <kbd>RShift</kbd>+<kbd>P</kbd>                      |
 | Toggle Weapon statistics visibility  | <kbd>RShift</kbd>+<kbd>W</kbd>                      |
@@ -96,9 +97,9 @@ Simply replace the existing dll file with the latest version.
 | Toggle Elo visibility on leaderboard | <kbd>RShift</kbd>+<kbd>E</kbd>                      |
 | Squad server visibility              | <kbd>RShift</kbd>+<kbd>S</kbd>                      |
 | Testing servers visibility           | <kbd>RShift</kbd>+<kbd>T</kbd>                      |
-|                                      |                                                     |
+| <br />                               |                                                     |
 | Toggle shift to crouch               | <kbd>RShift</kbd>+<kbd>C</kbd>                      |
-|                                      |                                                     |
+| <br />                               |                                                     |
 | Reset everything                     | <kbd>RShift</kbd>+<kbd>R</kbd>                      |
 
 ## Features
@@ -157,32 +158,8 @@ If you are a casual user, this is completely unnecessary. **This is only recomme
 > Assumes that working directory is project root.
 
 1. Install .NET sdk.
-
-   MacOS:
-
-   https://docs.microsoft.com/en-us/dotnet/core/install/macos
-
-   Windows:
-
-   https://docs.microsoft.com/en-us/dotnet/core/install/windows
-
-   Linux:
-
-   https://docs.microsoft.com/en-us/dotnet/core/install/linux
-
-   Arch linux:
-
-   ```bash
-   pacman -S dotnet-sdk
-   ```
-
 2. Clone this repository.
-3. Copy the following DLL files from `<WB install path>/war_brokers_Data/Managed` (in WB) to `./WBM/dll`. Create directory if it does not exist.
-
-   - `Assembly-CSharp.dll`
-   - `Assembly-CSharp-firstpass.dll`
-   - `UnityEngine.*.dll`
-
+3. Copy all DLL files from `<WB install path>/war_brokers_Data/Managed/` to `./WBM/dll/`. Create directory if it does not exist.
 4. Create `scripts/config.sh`.
 
    ```bash
@@ -191,7 +168,7 @@ If you are a casual user, this is completely unnecessary. **This is only recomme
    WB_PLUGINS_DIR="<PATH_TO_PLUGINS_DIRECTORY_HERE>"
    ```
 
-5. Now you can run the scipts.
+5. Now you can run the scripts.
 
    - `scripts/debug.sh`: Build WBM in debug mode and copy the files to the plugins directory.
    - `scripts/release.sh`: Create a zip file that can be uploaded in the gh release section.

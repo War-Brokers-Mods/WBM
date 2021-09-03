@@ -118,10 +118,26 @@ Simply go through the installation process again and replace existing files. You
   - total damage dealt
   - longest kill
   - points earned
+  - headshot count
+  - kill streak
 
 - Weapon statistics
 
-  - total headshot count
+  - fire timer
+  - reload timer
+  - cooldown timer
+  - bullet speed
+  - current zoom
+
+- Team statistics
+
+  - in-game nick
+  - kdr
+  - points earned
+  - damage dealt
+  - total damage dealt
+  - total deaths
+  - total kills
 
 ### OBS overlays
 
@@ -129,25 +145,15 @@ Simply go through the installation process again and replace existing files. You
 
 ![Elo overlay](./images/elo.png)
 
-<!--
-- top player per criteria (kills, longest kills, points, etc.)
-- kill streak
-- hit accuracy
-- game mode
-- team score
-- server id
-- streamer ID
-- survivors left in a BR match
-- teammate name
-- played game history (win, lose, and by how much)
-- ping in millisecond per player
-- if a player is a bot or not
-- Daily and history record
--->
-
 ### Controls
 
 - Shift to crouch
+
+### Etc
+
+- persistent configuration
+- kill streak sound effect
+- Quickly change settings with keyboard shortcut
 
 # Building
 

@@ -18,8 +18,6 @@
 
 ![Example 2](./images/example2.png)
 
-![Example 3](./images/example3.png)
-
 </details>
 
 ## Installation

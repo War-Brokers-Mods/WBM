@@ -31,9 +31,10 @@ namespace WBM
 		private Dictionary<int, string> killStreakSFXDictionary = new Dictionary<int, string>()
 		{
 			{10, "rampage"},
-			{20,"killing spree"},
+			{20, "killing spree"},
 			{30, "unstoppable"},
-			{50, "godlike"}
+			{50, "godlike"},
+			{69, "nice"},
 		};
 
 		private FieldInfo showEloOnLeaderboardRef;

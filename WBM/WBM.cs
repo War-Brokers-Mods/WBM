@@ -214,8 +214,8 @@ v1.3.0.0"
 							$@"Player stats
 
 KDR: {Util.formatKDR(this.myPlayerStats.kills, this.myPlayerStats.deaths)}
-kills Elo: {this.myPlayerStats.killsElo} {killsEloDeltaSign}{Util.formatDecimal(this.myPlayerStats.killsEloDelta / 10)}
-games Elo: {this.myPlayerStats.gamesElo} {gamesEloDeltaSign}{Util.formatDecimal(this.myPlayerStats.gamesEloDelta / 10)}
+kills Elo: {this.myPlayerStats.killsElo} {killsEloDeltaSign}{Util.formatDecimal((float)this.myPlayerStats.killsEloDelta / 10)}
+games Elo: {this.myPlayerStats.gamesElo} {gamesEloDeltaSign}{Util.formatDecimal((float)this.myPlayerStats.gamesEloDelta / 10)}
 Damage dealt: {this.myPlayerStats.damage}
 Longest Kill: {this.myPlayerStats.longestKill}m
 Points: {this.myPlayerStats.points}

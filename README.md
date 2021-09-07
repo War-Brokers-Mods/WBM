@@ -139,15 +139,23 @@ Simply go through the installation process again and replace existing files. You
   - total deaths
   - total kills
 
+### Controls
+
+- Shift to crouch
+
+### Sound effects
+
+- 10 kill streak: "rampage"
+- 20 kill streak: "killing spree"
+- 30 kill streak: "unstoppable"
+- 50 kill streak: "godlike"
+- 69 kill streak: "nice"
+
 ### OBS overlays
 
 - kills and games Elo (size: 355x140)
 
 ![Elo overlay](./images/elo.png)
-
-### Controls
-
-- Shift to crouch
 
 ### Etc
 

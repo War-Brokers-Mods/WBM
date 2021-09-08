@@ -163,7 +163,13 @@ Simply go through the installation process again and replace existing files. You
 - kill streak sound effect
 - Quickly change settings with keyboard shortcut
 
-# Building
+## Limitations
+
+WBM is not a hack. WBM will not include any features that will give unfair advantage. These features include but not limited to: extended minimap zoom, quick weapon swap, instant zoom, extended field of view, audio filter, etc.
+
+WBM will not include any custom skins. Micro-transaction accounts for a significant portion of the developers' income and WBM will not include any feature that will damage it.
+
+## Building
 
 If you are a casual user, this is completely unnecessary. **This is only recommended for developers.**
 

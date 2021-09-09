@@ -1,30 +1,71 @@
+using BepInEx.Configuration;
 using UnityEngine;
 
+using System;
 using System.IO;
 using System.Reflection;
 using System.Collections;
 using System.Collections.Generic;
 
-using WebSocketSharp.Server;
-
 namespace WBM
 {
 	public partial class WBM
 	{
-		private static BindingFlags bindFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static;
+		// important boy
 		private webguy webguy;
 		private IEnumerator UpdateValues;
-		private WebSocketServer server;
+
+		// websocket data stuff
+		private WebSocketSharp.Server.WebSocketServer server;
 		private ushort serverPort = 24601;
+		private Data.SerializableData data = new Data.SerializableData();
 
-		public Data.SerializableData data = new Data.SerializableData();
+		// internal or temporary
+		private bool _showConfig;
 
-		private bool showConfig = false;
-		private int GUIOffsetX;
-		private int DefaultGUIOffsetX = 38;
-		private int GUIOffsetY;
-		private int DefaultGUIOffsetY = 325;
+		// Configurations
+		private ConfigEntry<bool> showGUI;
+		private ConfigEntry<KeyboardShortcut> showGUIShortcut;
 
+		private ConfigEntry<int> GUIOffsetX;
+		private ConfigEntry<int> GUIOffsetY;
+		private ConfigEntry<KeyboardShortcut> resetGUIShortcut;
+
+		private ConfigEntry<bool> shiftToCrouch;
+		private ConfigEntry<KeyboardShortcut> shiftToCrouchShortcut;
+
+		private ConfigEntry<bool> killStreakSFX;
+		private ConfigEntry<KeyboardShortcut> killStreakSFXShortcut;
+
+		private ConfigEntry<bool> showPlayerStats;
+		private ConfigEntry<KeyboardShortcut> showPlayerStatsShortcut;
+		private ConfigEntry<bool> showWeaponStats;
+		private ConfigEntry<KeyboardShortcut> showWeaponStatsShortcut;
+		private ConfigEntry<bool> showTeamStats;
+		private ConfigEntry<KeyboardShortcut> showTeamStatsShortcut;
+
+		private ConfigEntry<bool> showEloOnLeaderboard;
+		private void showEloOnLeaderboardChanged(object sender, EventArgs e)
+		{
+			this.showEloOnLeaderboardRaw = this.showEloOnLeaderboard.Value;
+		}
+		private ConfigEntry<KeyboardShortcut> showEloOnLeaderboardShortcut;
+
+		private ConfigEntry<bool> showSquadServer;
+		private void showSquadServerChanged(object sender, EventArgs e)
+		{
+			this.showSquadServerRaw = this.showSquadServer.Value;
+		}
+		private ConfigEntry<KeyboardShortcut> showSquadServerShortcut;
+
+		private ConfigEntry<bool> showTestingServer;
+		private void showTestingServerChanged(object sender, EventArgs e)
+		{
+			this.showTestingServerRaw = this.showTestingServer.Value;
+		}
+		private ConfigEntry<KeyboardShortcut> showTestingServerShortcut;
+
+		// Audio
 		private Dictionary<string, AudioClip> killStreakAudioDict = new Dictionary<string, AudioClip>();
 		private string audioPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "assets/audio");
 		private AudioSource killStreakAudioSource;
@@ -37,16 +78,19 @@ namespace WBM
 			{69, "nice"},
 		};
 
+		// memory stuff
+		private static BindingFlags bindFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static;
+
 		private FieldInfo showEloOnLeaderboardRef;
 		private bool showEloOnLeaderboardRaw
 		{
 			get
 			{
-				return (bool)showEloOnLeaderboardRef.GetValue(this.webguy);
+				return (bool)this.showEloOnLeaderboardRef.GetValue(this.webguy);
 			}
 			set
 			{
-				showEloOnLeaderboardRef.SetValue(this.webguy, value);
+				this.showEloOnLeaderboardRef.SetValue(this.webguy, value);
 			}
 		}
 
@@ -55,11 +99,11 @@ namespace WBM
 		{
 			get
 			{
-				return (bool)showSquadServerRef.GetValue(this.webguy);
+				return (bool)this.showSquadServerRef.GetValue(this.webguy);
 			}
 			set
 			{
-				showSquadServerRef.SetValue(this.webguy, value);
+				this.showSquadServerRef.SetValue(this.webguy, value);
 			}
 		}
 
@@ -68,11 +112,11 @@ namespace WBM
 		{
 			get
 			{
-				return (bool)showTestingServerRef.GetValue(this.webguy);
+				return (bool)this.showTestingServerRef.GetValue(this.webguy);
 			}
 			set
 			{
-				showTestingServerRef.SetValue(this.webguy, value);
+				this.showTestingServerRef.SetValue(this.webguy, value);
 			}
 		}
 
@@ -81,7 +125,7 @@ namespace WBM
 		{
 			get
 			{
-				PDEMAFHPNBD[] rawPlayerStatsArray = (PDEMAFHPNBD[])playerStatsArrayRef.GetValue(this.webguy);
+				PDEMAFHPNBD[] rawPlayerStatsArray = (PDEMAFHPNBD[])this.playerStatsArrayRef.GetValue(this.webguy);
 				Data.PlayerStatsStruct[] result = new Data.PlayerStatsStruct[rawPlayerStatsArray.Length];
 
 				for (int i = 0; i < rawPlayerStatsArray.Length; i++)
@@ -119,7 +163,7 @@ namespace WBM
 		{
 			get
 			{
-				return (int)currentAreaRef.GetValue(this.webguy);
+				return (int)this.currentAreaRef.GetValue(this.webguy);
 			}
 		}
 
@@ -128,7 +172,7 @@ namespace WBM
 		{
 			get
 			{
-				return (Data.TeamEnum[])teamListRef.GetValue(this.webguy);
+				return (Data.TeamEnum[])this.teamListRef.GetValue(this.webguy);
 			}
 		}
 		private Data.TeamEnum[] teamList;
@@ -139,7 +183,7 @@ namespace WBM
 		{
 			get
 			{
-				return (int)localPlayerIndexRef.GetValue(this.webguy);
+				return (int)this.localPlayerIndexRef.GetValue(this.webguy);
 			}
 		}
 
@@ -148,7 +192,7 @@ namespace WBM
 		{
 			get
 			{
-				return (NGNJNHEFLHB)personGunRef.GetValue(this.webguy);
+				return (NGNJNHEFLHB)this.personGunRef.GetValue(this.webguy);
 			}
 		}
 		private NGNJNHEFLHB personGun;
@@ -158,7 +202,7 @@ namespace WBM
 		{
 			get
 			{
-				return (string[])nickListRef.GetValue(this.webguy);
+				return (string[])this.nickListRef.GetValue(this.webguy);
 			}
 		}
 
@@ -167,7 +211,7 @@ namespace WBM
 		{
 			get
 			{
-				return (Data.GameStateEnum)gameStateRef.GetValue(this.webguy);
+				return (Data.GameStateEnum)this.gameStateRef.GetValue(this.webguy);
 			}
 		}
 

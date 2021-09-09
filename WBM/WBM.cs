@@ -1,4 +1,5 @@
 ﻿using BepInEx;
+using BepInEx.Configuration;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -7,16 +8,14 @@ using System.IO;
 using System.Collections;
 using System.Threading.Tasks;
 
-using WebSocketSharp.Server;
-
 namespace WBM
 {
-	[BepInPlugin("com.developomp.wbm", "War Brokers Mods", "1.3.1.0")]
+	[BepInPlugin("com.developomp.wbm", "War Brokers Mods", "1.4.0.0")]
 	public partial class WBM : BaseUnityPlugin
 	{
 		private async void Start()
 		{
-			Logger.LogDebug("WBM: Initializing");
+			Logger.LogDebug("Initializing");
 			this.webguy = FindObjectOfType<webguy>();
 
 			System.Type webguyType = typeof(webguy);
@@ -33,17 +32,40 @@ namespace WBM
 			this.gameStateRef = webguyType.GetField("MCGMEPGBCKK", bindFlags);
 			this.addMessageFuncRef = webguyType.GetMethod("NBPKLIOLLEI", bindFlags);
 
-			// Load configurations
-			this.showSquadServerRaw = Convert.ToBoolean(PlayerPrefs.GetInt(PrefNames.showSquadServer, 1));
-			this.showTestingServerRaw = Convert.ToBoolean(PlayerPrefs.GetInt(PrefNames.showTestingServer, 1));
-			this.GUIOffsetX = PlayerPrefs.GetInt(PrefNames.GUIOffsetX, this.DefaultGUIOffsetX);
-			this.GUIOffsetY = PlayerPrefs.GetInt(PrefNames.GUIOffsetY, this.DefaultGUIOffsetY);
-			this.data.config.showGUI = Convert.ToBoolean(PlayerPrefs.GetInt(PrefNames.showGUI, 1));
-			this.data.config.showPlayerStats = Convert.ToBoolean(PlayerPrefs.GetInt(PrefNames.showPlayerStats, 1));
-			this.data.config.showWeaponStats = Convert.ToBoolean(PlayerPrefs.GetInt(PrefNames.showWeaponStats, 1));
-			this.data.config.showTeammateStats = Convert.ToBoolean(PlayerPrefs.GetInt(PrefNames.showTeammateStats, 1));
-			this.showEloOnLeaderboardRaw = Convert.ToBoolean(PlayerPrefs.GetInt(PrefNames.showElo, 1));
-			this.data.config.shiftToCrouch = Convert.ToBoolean(PlayerPrefs.GetInt(PrefNames.shiftToCrouch, 1));
+			// Configurations
+			this.showGUI = Config.Bind("Config", "show GUI", true);
+			this.showGUIShortcut = Config.Bind("Hotkeys", "show GUI Shortcut", new KeyboardShortcut(KeyCode.A, KeyCode.RightShift));
+
+			this.GUIOffsetX = Config.Bind("Config", "GUI Horizontal position", 38, new ConfigDescription("WBM GUI Horizontal position", new AcceptableValueRange<int>(0, Screen.width)));
+			this.GUIOffsetY = Config.Bind("Config", "GUI Vertical position", 325, new ConfigDescription("WBM GUI Vertical position", new AcceptableValueRange<int>(0, Screen.height)));
+			this.resetGUIShortcut = Config.Bind("Hotkeys", "reset GUI position", new KeyboardShortcut(KeyCode.R, KeyCode.LeftControl));
+
+			this.shiftToCrouch = Config.Bind("Config", "shift to crouch", true);
+			this.shiftToCrouchShortcut = Config.Bind("Hotkeys", "shift to crouch", new KeyboardShortcut(KeyCode.C, KeyCode.RightShift));
+
+			this.killStreakSFX = Config.Bind("Config", "kill streak sound effect", true);
+			this.killStreakSFXShortcut = Config.Bind("Hotkeys", "kill streak sound effect", new KeyboardShortcut(KeyCode.F, KeyCode.RightShift));
+
+			this.showPlayerStats = Config.Bind("Config", "show player statistics", true);
+			this.showPlayerStatsShortcut = Config.Bind("Hotkeys", "show player statistics", new KeyboardShortcut(KeyCode.P, KeyCode.RightShift));
+
+			this.showWeaponStats = Config.Bind("Config", "show weapon statistics", true);
+			this.showWeaponStatsShortcut = Config.Bind("Hotkeys", "show weapon statistics", new KeyboardShortcut(KeyCode.W, KeyCode.RightShift));
+
+			this.showTeamStats = Config.Bind("Config", "show team statistics", true);
+			this.showTeamStatsShortcut = Config.Bind("Hotkeys", "show team statistics", new KeyboardShortcut(KeyCode.L, KeyCode.RightShift));
+
+			this.showEloOnLeaderboard = Config.Bind("Config", "show Elo on leaderboard", true);
+			this.showEloOnLeaderboard.SettingChanged += this.showEloOnLeaderboardChanged;
+			this.showEloOnLeaderboardShortcut = Config.Bind("Hotkeys", "show Elo on leaderboard", new KeyboardShortcut(KeyCode.E, KeyCode.RightShift));
+
+			this.showSquadServer = Config.Bind("Config", "show squad server", true);
+			this.showSquadServer.SettingChanged += this.showSquadServerChanged;
+			this.showSquadServerShortcut = Config.Bind("Hotkeys", "show squad server", new KeyboardShortcut(KeyCode.S, KeyCode.RightShift));
+
+			this.showTestingServer = Config.Bind("Config", "show testing server", true);
+			this.showTestingServer.SettingChanged += this.showTestingServerChanged;
+			this.showTestingServerShortcut = Config.Bind("Hotkeys", "show testing server", new KeyboardShortcut(KeyCode.T, KeyCode.RightShift));
 
 			this.killStreakAudioSource = this.gameObject.AddComponent<AudioSource>();
 
@@ -82,13 +104,13 @@ namespace WBM
 				}
 			}
 
-			server = new WebSocketServer($"ws://127.0.0.1:{this.serverPort}");
+			server = new WebSocketSharp.Server.WebSocketServer($"ws://127.0.0.1:{this.serverPort}");
 			server.AddWebSocketService<WSJSONService>("/json");
 			server.Start();
 
 			StartCoroutine(UpdateValuesFunction());
 
-			Logger.LogDebug("WBM: Ready!");
+			Logger.LogDebug("Ready!");
 		}
 
 		private void Update()
@@ -99,62 +121,43 @@ namespace WBM
 				// move GUI
 				if (Input.GetKey(KeyCode.LeftShift))
 				{
-					if (Input.GetKey(KeyCode.UpArrow)) this.GUIOffsetY -= 1;
-					if (Input.GetKey(KeyCode.DownArrow)) this.GUIOffsetY += 1;
-					if (Input.GetKey(KeyCode.LeftArrow)) this.GUIOffsetX -= 1;
-					if (Input.GetKey(KeyCode.RightArrow)) this.GUIOffsetX += 1;
+					if (Input.GetKey(KeyCode.UpArrow)) this.GUIOffsetY.Value -= 1;
+					if (Input.GetKey(KeyCode.DownArrow)) this.GUIOffsetY.Value += 1;
+					if (Input.GetKey(KeyCode.LeftArrow)) this.GUIOffsetX.Value -= 1;
+					if (Input.GetKey(KeyCode.RightArrow)) this.GUIOffsetX.Value += 1;
 				}
 				else
 				{
-					if (Input.GetKeyDown(KeyCode.UpArrow)) this.GUIOffsetY -= 1;
-					if (Input.GetKeyDown(KeyCode.DownArrow)) this.GUIOffsetY += 1;
-					if (Input.GetKeyDown(KeyCode.LeftArrow)) this.GUIOffsetX -= 1;
-					if (Input.GetKeyDown(KeyCode.RightArrow)) this.GUIOffsetX += 1;
+					if (Input.GetKeyDown(KeyCode.UpArrow)) this.GUIOffsetY.Value -= 1;
+					if (Input.GetKeyDown(KeyCode.DownArrow)) this.GUIOffsetY.Value += 1;
+					if (Input.GetKeyDown(KeyCode.LeftArrow)) this.GUIOffsetX.Value -= 1;
+					if (Input.GetKeyDown(KeyCode.RightArrow)) this.GUIOffsetX.Value += 1;
 				}
-
-				// reset GUI location
-				if (Input.GetKeyDown(KeyCode.R))
-				{
-					this.GUIOffsetX = this.DefaultGUIOffsetX;
-					this.GUIOffsetY = this.DefaultGUIOffsetY;
-				}
-				this.showConfig = true;
 			}
 
-			// Configuration shortbut
-			if (Input.GetKey(KeyCode.RightShift))
+			// reset GUI position
+			if (this.resetGUIShortcut.Value.IsDown())
 			{
-				if (Input.GetKeyDown(KeyCode.A)) this.data.config.showGUI = !this.data.config.showGUI;
-				if (Input.GetKeyDown(KeyCode.P)) this.data.config.showPlayerStats = !this.data.config.showPlayerStats;
-				if (Input.GetKeyDown(KeyCode.W)) this.data.config.showWeaponStats = !this.data.config.showWeaponStats;
-				if (Input.GetKeyDown(KeyCode.L)) this.data.config.showTeammateStats = !this.data.config.showTeammateStats;
-				if (Input.GetKeyDown(KeyCode.E)) this.showEloOnLeaderboardRaw = !this.showEloOnLeaderboardRaw;
-				if (Input.GetKeyDown(KeyCode.S)) this.showSquadServerRaw = !this.showSquadServerRaw;
-				if (Input.GetKeyDown(KeyCode.T)) this.showTestingServerRaw = !this.showTestingServerRaw;
-				if (Input.GetKeyDown(KeyCode.C)) this.data.config.shiftToCrouch = !this.data.config.shiftToCrouch;
-				if (Input.GetKeyDown(KeyCode.R))
-				{
-					this.GUIOffsetX = this.DefaultGUIOffsetX;
-					this.GUIOffsetY = this.DefaultGUIOffsetY;
-
-					this.data.config.showGUI = true;
-					this.data.config.showPlayerStats = true;
-					this.data.config.showWeaponStats = true;
-					this.data.config.showTeammateStats = true;
-					this.showEloOnLeaderboardRaw = true;
-					this.showSquadServerRaw = true;
-					this.showTestingServerRaw = true;
-					this.data.config.shiftToCrouch = true;
-				}
-
-				this.showConfig = true;
+				this.GUIOffsetX.Value = (int)this.GUIOffsetX.DefaultValue;
+				this.GUIOffsetY.Value = (int)this.GUIOffsetY.DefaultValue;
 			}
 
-			// hide config
-			if (!Input.GetKey(KeyCode.LeftControl) && !Input.GetKey(KeyCode.RightShift)) this.showConfig = false;
+			if (this.showGUIShortcut.Value.IsDown()) this.showGUI.Value = !this.showGUI.Value;
+			if (this.shiftToCrouchShortcut.Value.IsDown()) this.shiftToCrouch.Value = !this.shiftToCrouch.Value;
+			if (this.killStreakSFXShortcut.Value.IsDown()) this.killStreakSFX.Value = !this.killStreakSFX.Value;
+			if (this.showPlayerStatsShortcut.Value.IsDown()) this.showPlayerStats.Value = !this.showPlayerStats.Value;
+			if (this.showWeaponStatsShortcut.Value.IsDown()) this.showWeaponStats.Value = !this.showWeaponStats.Value;
+			if (this.showTeamStatsShortcut.Value.IsDown()) this.showTeamStats.Value = !this.showTeamStats.Value;
+			if (this.showEloOnLeaderboardShortcut.Value.IsDown()) this.showEloOnLeaderboard.Value = !this.showEloOnLeaderboard.Value;
+			if (this.showSquadServerShortcut.Value.IsDown()) this.showSquadServer.Value = !this.showSquadServer.Value;
+			if (this.showTestingServerShortcut.Value.IsDown()) this.showTestingServer.Value = !this.showTestingServer.Value;
+
+			// config visibility
+			if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightShift)) this._showConfig = true;
+			if (!Input.GetKey(KeyCode.LeftControl) && !Input.GetKey(KeyCode.RightShift)) this._showConfig = false;
 
 			// only if right buttton is not held
-			if (this.data.config.shiftToCrouch && !Input.GetMouseButton(1))
+			if (this.shiftToCrouch.Value && !Input.GetMouseButton(1))
 			{
 				if (Input.GetKeyDown(KeyCode.LeftShift)) OMOJPGNNKFN.NEELEHFDKBP.EGACOOOGDDC = true;
 				if (Input.GetKeyUp(KeyCode.LeftShift)) OMOJPGNNKFN.NEELEHFDKBP.EGACOOOGDDC = false;
@@ -167,42 +170,42 @@ namespace WBM
 			GUI.skin.label.fontSize = 15;
 			GUI.skin.label.wordWrap = false;
 
-			if (this.showConfig)
+			if (this._showConfig)
 			{
 				GUI.Box(
 		new Rect(Screen.width - 340, 80, 320, 300),
 		$@"Configuration
 
-(LCtrl+Arrow) to move GUI one step at a time
-(LCtrl+LShift+Arrow) to move long distance
-(LCtrl+R) to reset GUI position
+move GUI: LCtrl+LShift+Arrow
+move GUI by pixel: LCtrl+Arrow
+reset GUI position: {this.resetGUIShortcut.Value}
 
-GUI X offset: {this.GUIOffsetX}
-GUI Y offset: {this.GUIOffsetY}
-Show WBM GUI: {this.data.config.showGUI} (RShift+A)
-Show Elo on leaderboard: {this.showEloOnLeaderboardRaw} (RShift+E)
-Show player stats: {this.data.config.showPlayerStats} (RShift+P)
-Show weapon stats: {this.data.config.showWeaponStats} (RShift+W)
-Show teammate stats: {this.data.config.showTeammateStats} (RShift+L)
-show squad server: {this.showSquadServerRaw} (RShift+S)
-show testing server: {this.showTestingServerRaw} (RShift+T)
-shift to crouch: {this.data.config.shiftToCrouch} (RShift+C)
-Reset Everything: (RShift+R)"
+GUI X offset: {this.GUIOffsetX.Value}
+GUI Y offset: {this.GUIOffsetY.Value}
+Show WBM GUI: {this.showGUI.Value} ({this.showGUIShortcut.Value})
+Show Elo on leaderboard: {this.showEloOnLeaderboard.Value} ({this.showEloOnLeaderboardShortcut.Value})
+Show player stats: {this.showPlayerStats.Value} ({this.showPlayerStatsShortcut.Value})
+Show weapon stats: {this.showWeaponStats.Value} ({this.showWeaponStatsShortcut.Value})
+Show teammate stats: {this.showTeamStats.Value} ({this.showTeamStatsShortcut.Value})
+show squad server: {this.showSquadServer.Value} ({this.showSquadServerShortcut.Value})
+show testing server: {this.showTestingServer.Value} ({this.showTestingServerShortcut.Value})
+shift to crouch: {this.shiftToCrouch.Value} ({this.shiftToCrouchShortcut.Value})
+kill streak SFX: {this.killStreakSFX.Value} ({this.killStreakSFXShortcut.Value})"
 	);
 			}
 
-			if (!this.data.config.showGUI) return;
+			if (!this.showGUI.Value) return;
 
 			GUI.Box(
-				new Rect(this.GUIOffsetX, this.GUIOffsetY, 220, 60),
+				new Rect(this.GUIOffsetX.Value, this.GUIOffsetY.Value, 220, 60),
 				@"War Brokers Mods
 Made by [LP] POMP
-v1.3.1.0"
+v1.4.0.0"
 			);
 
 			if (this.data.localPlayerIndex >= 0)
 			{
-				if (this.data.config.showPlayerStats)
+				if (this.showPlayerStats.Value)
 				{
 					try
 					{
@@ -210,7 +213,7 @@ v1.3.1.0"
 						string gamesEloDeltaSign = this.myPlayerStats.gamesEloDelta >= 0 ? "+" : "";
 
 						GUI.Box(
-							new Rect(this.GUIOffsetX, this.GUIOffsetY + 65, 220, 180),
+							new Rect(this.GUIOffsetX.Value, this.GUIOffsetY.Value + 65, 220, 180),
 							$@"Player stats
 
 KDR: {Util.formatKDR(this.myPlayerStats.kills, this.myPlayerStats.deaths)}
@@ -229,12 +232,12 @@ Kill streak: {this.killStreak}"
 					}
 				}
 
-				if (this.data.config.showWeaponStats)
+				if (this.showWeaponStats.Value)
 				{
 					try
 					{
 						GUI.Box(
-							new Rect(this.GUIOffsetX, this.GUIOffsetY + 250, 230, 130),
+							new Rect(this.GUIOffsetX.Value, this.GUIOffsetY.Value + 250, 230, 130),
 							$@"Weapon stats
 
 fire Timer: {String.Format("{0:0.00}", Util.getGunFireTimer(this.personGun))}s (max: {String.Format("{0:0.00}", Util.getGunFireRate(this.personGun))}s)
@@ -250,7 +253,7 @@ zoom: {Util.getGunZoom(this.personGun)}"
 					}
 				}
 
-				if (this.data.config.showTeammateStats)
+				if (this.showTeamStats.Value)
 				{
 					try
 					{
@@ -328,7 +331,7 @@ total kills: {teamTotalKills}"
 						{
 							Logger.LogDebug(this.killStreakAudioDict);
 
-							if (this.killStreakSFXDictionary.ContainsKey(this.killStreak))
+							if (this.killStreakSFX.Value && this.killStreakSFXDictionary.ContainsKey(this.killStreak))
 							{
 								this.killStreakAudioSource.clip = this.killStreakAudioDict[this.killStreakSFXDictionary[this.killStreak]];
 								this.killStreakAudioSource.Play();
@@ -348,10 +351,6 @@ total kills: {teamTotalKills}"
 					this.prevKills = this.myPlayerStats.kills;
 				}
 
-				this.data.config.showSquadServer = this.showSquadServerRaw;
-				this.data.config.showTestingServer = this.showTestingServerRaw;
-				this.data.config.showEloOnLeaderboard = this.showEloOnLeaderboardRaw;
-
 				this.server.WebSocketServices["/json"].Sessions.Broadcast(Util.data2JSON(data));
 			}
 			catch (Exception e)
@@ -363,23 +362,6 @@ total kills: {teamTotalKills}"
 
 			this.UpdateValues = UpdateValuesFunction();
 			StartCoroutine(this.UpdateValues);
-		}
-
-		private void OnDestroy()
-		{
-			// save Configuration
-			PlayerPrefs.SetInt(PrefNames.showSquadServer, Convert.ToInt32(this.showSquadServerRaw));
-			PlayerPrefs.SetInt(PrefNames.showTestingServer, Convert.ToInt32(this.showTestingServerRaw));
-			PlayerPrefs.SetInt(PrefNames.GUIOffsetX, this.GUIOffsetX);
-			PlayerPrefs.SetInt(PrefNames.GUIOffsetY, this.GUIOffsetY);
-			PlayerPrefs.SetInt(PrefNames.showGUI, Convert.ToInt32(this.data.config.showGUI));
-			PlayerPrefs.SetInt(PrefNames.showPlayerStats, Convert.ToInt32(this.data.config.showPlayerStats));
-			PlayerPrefs.SetInt(PrefNames.showWeaponStats, Convert.ToInt32(this.data.config.showWeaponStats));
-			PlayerPrefs.SetInt(PrefNames.showTeammateStats, Convert.ToInt32(this.data.config.showTeammateStats));
-			PlayerPrefs.SetInt(PrefNames.showElo, Convert.ToInt32(this.showEloOnLeaderboardRaw));
-			PlayerPrefs.SetInt(PrefNames.shiftToCrouch, Convert.ToInt32(this.data.config.shiftToCrouch));
-
-			PlayerPrefs.Save();
 		}
 	}
 }

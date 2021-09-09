@@ -13,8 +13,10 @@ dotnet build --configuration Release
 [ -e ./dist ] && rm -rf ./dist
 mkdir ./dist
 cp ./WBM/bin/Release/net48/WBM.dll ./dist/WBM.dll
+cp ./WBM/dll/ConfigurationManager.dll ./dist/ConfigurationManager.dll
 cp -R ./assets ./dist/assets
 
+# create new zip file
 [ -e ./WBM.zip ] && rm ./WBM.zip
 cd ./dist
 zip -r WBM.zip ./*

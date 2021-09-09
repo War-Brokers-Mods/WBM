@@ -80,12 +80,17 @@ Simply go through the installation process again and replace existing files. You
 
 ## Usage
 
-- Hold down <kbd>LCtrl</kbd> or <kbd>RShift</kbd> to show shortcuts in-game.
+### Default shortcuts
 
-| Function                             | Shortcut                                            |
+- Hold down <kbd>LCtrl</kbd> or <kbd>RShift</kbd> to show shortcuts in-game.
+- Press F1 to show menu. Press outside the menu to close.
+
+| Function                             | Default Shortcut                                    |
 | ------------------------------------ | --------------------------------------------------- |
-| Move GUI by one pixel at a time      | <kbd>LCtrl</kbd>+<kbd>Arrow</kbd>                   |
-| Move GUI (long press)                | <kbd>LCtrl</kbd>+<kbd>LShift</kbd>+<kbd>Arrow</kbd> |
+| Show Menu                            | <kbd>F1</kbd>                                       |
+| <br />                               |                                                     |
+| Move GUI                             | <kbd>LCtrl</kbd>+<kbd>LShift</kbd>+<kbd>Arrow</kbd> |
+| Move GUI by one pixel                | <kbd>LCtrl</kbd>+<kbd>Arrow</kbd>                   |
 | Reset GUI position                   | <kbd>LCtrl</kbd>+<kbd>R</kbd>                       |
 | <br />                               |                                                     |
 | Toggle All GUI visibility            | <kbd>RShift</kbd>+<kbd>A</kbd>                      |
@@ -95,10 +100,13 @@ Simply go through the installation process again and replace existing files. You
 | Toggle Elo visibility on leaderboard | <kbd>RShift</kbd>+<kbd>E</kbd>                      |
 | Squad server visibility              | <kbd>RShift</kbd>+<kbd>S</kbd>                      |
 | Testing servers visibility           | <kbd>RShift</kbd>+<kbd>T</kbd>                      |
+| Kill streak sound effect             | <kbd>RShift</kbd>+<kbd>F</kbd>                      |
 | <br />                               |                                                     |
 | Toggle shift to crouch               | <kbd>RShift</kbd>+<kbd>C</kbd>                      |
-| <br />                               |                                                     |
-| Reset everything                     | <kbd>RShift</kbd>+<kbd>R</kbd>                      |
+
+#### Warning
+
+The order of keystroke matter. For example, pressing <kbd>RShift</kbd>+<kbd>A</kbd> is different from pressing <kbd>A</kbd>+<kbd>RShift</kbd>. This is to prevent situation where <kbd>RShift</kbd>+<kbd>A</kbd> fires when the user intended to press <kbd>LCtrl</kbd>+<kbd>RShift</kbd>+<kbd>A</kbd>.
 
 ## Features
 
@@ -178,7 +186,8 @@ If you are a casual user, this is completely unnecessary. **This is only recomme
 1. Install .NET sdk.
 2. Clone this repository.
 3. Copy all DLL files from `<WB install path>/war_brokers_Data/Managed/` to `./WBM/dll/`. Create directory if it does not exist.
-4. Create `scripts/config.sh`.
+4. Download [BepInEx configuration manager v16](https://github.com/BepInEx/BepInEx.ConfigurationManager/releases) and put the dll file in `WBM/dll` directory. Other file(s) in the zip file can be deleted.
+5. Create `scripts/config.sh`.
 
    ```bash
    #!/bin/bash
@@ -186,7 +195,7 @@ If you are a casual user, this is completely unnecessary. **This is only recomme
    WB_PLUGINS_DIR="<PATH_TO_PLUGINS_DIRECTORY_HERE>"
    ```
 
-5. Now you can run the scripts.
+6. Now you can run the scripts.
 
    - `scripts/debug.sh`: Build WBM in debug mode and copy the files to the plugins directory.
    - `scripts/release.sh`: Create a zip file that can be uploaded in the gh release section.

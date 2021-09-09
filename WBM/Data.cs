@@ -69,19 +69,6 @@ namespace WBM
 		}
 
 		[DataContract]
-		public class WBMConfig
-		{
-			[DataMember] public bool showSquadServer = true;
-			[DataMember] public bool showTestingServer = true;
-			[DataMember] public bool showGUI = true;
-			[DataMember] public bool showPlayerStats = true;
-			[DataMember] public bool showWeaponStats = true;
-			[DataMember] public bool showTeammateStats = true;
-			[DataMember] public bool showEloOnLeaderboard = true;
-			[DataMember] public bool shiftToCrouch = true;
-		}
-
-		[DataContract]
 		public class SerializableData
 		{
 			// game version
@@ -92,7 +79,6 @@ namespace WBM
 			[DataMember] public int localPlayerIndex = -1;
 			[DataMember] public string[] nickList = new string[] { };
 			[DataMember] public PlayerStatsStruct[] playerStatsArray = new PlayerStatsStruct[] { };
-			[DataMember] public WBMConfig config = new WBMConfig();
 			[DataMember] public Data.GameStateEnum gameState;
 		}
 	}

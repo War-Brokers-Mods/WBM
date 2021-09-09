@@ -101,6 +101,8 @@ Simply go through the installation process again and replace existing files. You
 | Squad server visibility              | <kbd>RShift</kbd>+<kbd>S</kbd>                      |
 | Testing servers visibility           | <kbd>RShift</kbd>+<kbd>T</kbd>                      |
 | Kill streak sound effect             | <kbd>RShift</kbd>+<kbd>F</kbd>                      |
+| Clear chat                           | <kbd>RShift</kbd>+<kbd>Z</kbd>                      |
+| Clear Messages (kills and death log) | <kbd>RShift</kbd>+<kbd>X</kbd>                      |
 | <br />                               |                                                     |
 | Toggle shift to crouch               | <kbd>RShift</kbd>+<kbd>C</kbd>                      |
 

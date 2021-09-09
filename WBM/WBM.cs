@@ -5,12 +5,11 @@ using UnityEngine.Networking;
 
 using System;
 using System.IO;
-using System.Collections;
 using System.Threading.Tasks;
 
 namespace WBM
 {
-	[BepInPlugin("com.developomp.wbm", "War Brokers Mods", "1.4.0.0")]
+	[BepInPlugin("com.developomp.wbm", "War Brokers Mods", "1.5.0.0")]
 	public partial class WBM : BaseUnityPlugin
 	{
 		private async void Start()
@@ -30,7 +29,11 @@ namespace WBM
 			this.personGunRef = webguyType.GetField("IEGLIMLBDPH", bindFlags);
 			this.nickListRef = webguyType.GetField("CLLDJOMEKIP", bindFlags);
 			this.gameStateRef = webguyType.GetField("MCGMEPGBCKK", bindFlags);
+			this.chatListRef = webguyType.GetField("MOOBJBOCANE", bindFlags);
+
 			this.addMessageFuncRef = webguyType.GetMethod("NBPKLIOLLEI", bindFlags);
+			this.clearMessagesFuncRef = webguyType.GetMethod("IOCHBBACKFA", bindFlags);
+			this.drawChatMessageFuncRef = webguyType.GetMethod("EBDKFEJMEMB", bindFlags);
 
 			// Configurations
 			this.showGUI = Config.Bind("Config", "show GUI", true);
@@ -58,14 +61,22 @@ namespace WBM
 			this.showEloOnLeaderboard = Config.Bind("Config", "show Elo on leaderboard", true);
 			this.showEloOnLeaderboard.SettingChanged += this.showEloOnLeaderboardChanged;
 			this.showEloOnLeaderboardShortcut = Config.Bind("Hotkeys", "show Elo on leaderboard", new KeyboardShortcut(KeyCode.E, KeyCode.RightShift));
+			this.showEloOnLeaderboardRaw = this.showEloOnLeaderboard.Value;
 
 			this.showSquadServer = Config.Bind("Config", "show squad server", true);
 			this.showSquadServer.SettingChanged += this.showSquadServerChanged;
 			this.showSquadServerShortcut = Config.Bind("Hotkeys", "show squad server", new KeyboardShortcut(KeyCode.S, KeyCode.RightShift));
+			this.showSquadServerRaw = this.showSquadServer.Value;
 
 			this.showTestingServer = Config.Bind("Config", "show testing server", true);
 			this.showTestingServer.SettingChanged += this.showTestingServerChanged;
 			this.showTestingServerShortcut = Config.Bind("Hotkeys", "show testing server", new KeyboardShortcut(KeyCode.T, KeyCode.RightShift));
+			this.showTestingServerRaw = this.showTestingServer.Value;
+
+			this.clearChatShortcut = Config.Bind("Hotkeys", "clear chat", new KeyboardShortcut(KeyCode.Z, KeyCode.RightShift));
+			this.clearDeathLogShortcut = Config.Bind("Hotkeys", "clear messages", new KeyboardShortcut(KeyCode.X, KeyCode.RightShift));
+
+			// Audio
 
 			this.killStreakAudioSource = this.gameObject.AddComponent<AudioSource>();
 
@@ -103,6 +114,8 @@ namespace WBM
 					}
 				}
 			}
+
+			// Websocket
 
 			server = new WebSocketSharp.Server.WebSocketServer($"ws://127.0.0.1:{this.serverPort}");
 			server.AddWebSocketService<WSJSONService>("/json");
@@ -151,6 +164,8 @@ namespace WBM
 			if (this.showEloOnLeaderboardShortcut.Value.IsDown()) this.showEloOnLeaderboard.Value = !this.showEloOnLeaderboard.Value;
 			if (this.showSquadServerShortcut.Value.IsDown()) this.showSquadServer.Value = !this.showSquadServer.Value;
 			if (this.showTestingServerShortcut.Value.IsDown()) this.showTestingServer.Value = !this.showTestingServer.Value;
+			if (this.clearChatShortcut.Value.IsDown()) this.clearChat();
+			if (this.clearDeathLogShortcut.Value.IsDown()) this.clearMessagesFuncRef.Invoke(this.webguy, new object[] { });
 
 			// config visibility
 			if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightShift)) this._showConfig = true;
@@ -173,12 +188,14 @@ namespace WBM
 			if (this._showConfig)
 			{
 				GUI.Box(
-		new Rect(Screen.width - 340, 80, 320, 300),
+		new Rect(Screen.width - 340, 70, 320, 340),
 		$@"Configuration
 
 move GUI: LCtrl+LShift+Arrow
 move GUI by pixel: LCtrl+Arrow
 reset GUI position: {this.resetGUIShortcut.Value}
+clear chat: {this.clearChatShortcut.Value}
+clear death log: {this.clearDeathLogShortcut.Value}
 
 GUI X offset: {this.GUIOffsetX.Value}
 GUI Y offset: {this.GUIOffsetY.Value}
@@ -200,7 +217,7 @@ kill streak SFX: {this.killStreakSFX.Value} ({this.killStreakSFXShortcut.Value})
 				new Rect(this.GUIOffsetX.Value, this.GUIOffsetY.Value, 220, 60),
 				@"War Brokers Mods
 Made by [LP] POMP
-v1.4.0.0"
+v1.5.0.0"
 			);
 
 			if (this.data.localPlayerIndex >= 0)
@@ -284,12 +301,12 @@ zoom: {Util.getGunZoom(this.personGun)}"
 							}
 						}
 
-						int teamStatOffset = (this.data.gameState == Data.GameStateEnum.Results) ? 340 : 0;
-						GUI.Box(new Rect(Screen.width - 320, 385 + teamStatOffset, 300, 270), "Team Stats");
-						GUI.Label(new Rect(Screen.width - 315, 410 + teamStatOffset, 105, 190), teamNames);
-						GUI.Label(new Rect(Screen.width - 200, 410 + teamStatOffset, 40, 190), teamKDR);
-						GUI.Label(new Rect(Screen.width - 150, 410 + teamStatOffset, 40, 190), teamPoints);
-						GUI.Label(new Rect(Screen.width - 100, 410 + teamStatOffset, 70, 190), teamDamage);
+						int teamStatOffset = (this.data.gameState == Data.GameStateEnum.Results) ? 310 : 0;
+						GUI.Box(new Rect(Screen.width - 320, 415 + teamStatOffset, 300, 270), "Team Stats");
+						GUI.Label(new Rect(Screen.width - 315, 440 + teamStatOffset, 105, 190), teamNames);
+						GUI.Label(new Rect(Screen.width - 200, 440 + teamStatOffset, 40, 190), teamKDR);
+						GUI.Label(new Rect(Screen.width - 150, 440 + teamStatOffset, 40, 190), teamPoints);
+						GUI.Label(new Rect(Screen.width - 100, 440 + teamStatOffset, 70, 190), teamDamage);
 
 						GUI.Label(
 							new Rect(Screen.width - 315, 595 + teamStatOffset, 300, 55),
@@ -304,62 +321,6 @@ total kills: {teamTotalKills}"
 					}
 				}
 			}
-		}
-
-		private IEnumerator UpdateValuesFunction()
-		{
-			try
-			{
-				this.data.localPlayerIndex = this.localPlayerIndexRaw;
-
-				if (this.data.localPlayerIndex >= 0)
-				{
-					this.data.playerStatsArray = this.playerStatsArrayRaw;
-					this.myPlayerStats = this.data.playerStatsArray[this.data.localPlayerIndex];
-					this.teamList = this.teamListRaw;
-					this.myTeam = this.teamList[this.data.localPlayerIndex];
-					this.personGun = this.personGunRaw;
-					this.data.nickList = this.nickListRaw;
-					this.data.gameState = this.gameStateRaw;
-
-					// check if deaths has changed since the last value update
-					if (this.prevDeaths == this.myPlayerStats.deaths)
-					{
-						this.killStreak = this.myPlayerStats.kills - this.killCountBeforeDeath;
-
-						if (this.prevKills != this.myPlayerStats.kills)
-						{
-							if (this.killStreakSFX.Value && this.killStreakSFXDictionary.ContainsKey(this.killStreak))
-							{
-								this.killStreakAudioSource.clip = this.killStreakAudioDict[this.killStreakSFXDictionary[this.killStreak]];
-								this.killStreakAudioSource.Play();
-
-								this.addMessageFuncRef.Invoke(this.webguy, new object[] { $"You are on a {this.killStreak} kill streak", -1 });
-							}
-						}
-					}
-					else
-					{
-						// reset kill streak when death count changes
-
-						this.killCountBeforeDeath = this.myPlayerStats.kills;
-						this.prevDeaths = this.myPlayerStats.deaths;
-						this.killStreak = 0;
-					}
-					this.prevKills = this.myPlayerStats.kills;
-				}
-
-				this.server.WebSocketServices["/json"].Sessions.Broadcast(Util.data2JSON(data));
-			}
-			catch (Exception e)
-			{
-				Logger.LogError(e);
-			}
-
-			yield return new WaitForSeconds(0.1f);
-
-			this.UpdateValues = UpdateValuesFunction();
-			StartCoroutine(this.UpdateValues);
 		}
 	}
 }

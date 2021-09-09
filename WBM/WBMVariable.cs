@@ -65,6 +65,9 @@ namespace WBM
 		}
 		private ConfigEntry<KeyboardShortcut> showTestingServerShortcut;
 
+		private ConfigEntry<KeyboardShortcut> clearChatShortcut;
+		private ConfigEntry<KeyboardShortcut> clearDeathLogShortcut;
+
 		// Audio
 		private Dictionary<string, AudioClip> killStreakAudioDict = new Dictionary<string, AudioClip>();
 		private string audioPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "assets/audio");
@@ -215,6 +218,85 @@ namespace WBM
 			}
 		}
 
+		private FieldInfo chatListRef;
+		private string[] chatListRaw
+		{
+			get
+			{
+				return (string[])this.chatListRef.GetValue(this.webguy);
+			}
+			set
+			{
+				this.chatListRef.SetValue(this.webguy, value);
+			}
+		}
+
+		// Methods
 		private MethodInfo addMessageFuncRef;
+		private MethodInfo clearMessagesFuncRef;
+		private MethodInfo drawChatMessageFuncRef;
+
+		private IEnumerator UpdateValuesFunction()
+		{
+			try
+			{
+				this.data.localPlayerIndex = this.localPlayerIndexRaw;
+
+				if (this.data.localPlayerIndex >= 0)
+				{
+					this.data.playerStatsArray = this.playerStatsArrayRaw;
+					this.myPlayerStats = this.data.playerStatsArray[this.data.localPlayerIndex];
+					this.teamList = this.teamListRaw;
+					this.myTeam = this.teamList[this.data.localPlayerIndex];
+					this.personGun = this.personGunRaw;
+					this.data.nickList = this.nickListRaw;
+					this.data.gameState = this.gameStateRaw;
+
+					// check if deaths has changed since the last value update
+					if (this.prevDeaths == this.myPlayerStats.deaths)
+					{
+						this.killStreak = this.myPlayerStats.kills - this.killCountBeforeDeath;
+
+						if (this.prevKills != this.myPlayerStats.kills)
+						{
+							if (this.killStreakSFX.Value && this.killStreakSFXDictionary.ContainsKey(this.killStreak))
+							{
+								this.killStreakAudioSource.clip = this.killStreakAudioDict[this.killStreakSFXDictionary[this.killStreak]];
+								this.killStreakAudioSource.Play();
+
+								this.addMessageFuncRef.Invoke(this.webguy, new object[] { $"You are on a {this.killStreak} kill streak", -1 });
+							}
+						}
+					}
+					else
+					{
+						// reset kill streak when death count changes
+
+						this.killCountBeforeDeath = this.myPlayerStats.kills;
+						this.prevDeaths = this.myPlayerStats.deaths;
+						this.killStreak = 0;
+					}
+					this.prevKills = this.myPlayerStats.kills;
+				}
+
+				this.server.WebSocketServices["/json"].Sessions.Broadcast(Util.data2JSON(data));
+			}
+			catch (Exception e)
+			{
+				Logger.LogError(e);
+			}
+
+			yield return new WaitForSeconds(0.1f);
+
+			this.UpdateValues = UpdateValuesFunction();
+			StartCoroutine(this.UpdateValues);
+		}
+
+		private void clearChat()
+		{
+			Logger.LogDebug($"clear1 {chatListRaw.Length}");
+			for (int i = 0; i < this.chatListRaw.Length; i++) this.chatListRaw[i] = string.Empty;
+			this.drawChatMessageFuncRef.Invoke(this.webguy, new object[] { "" });
+		}
 	}
 }

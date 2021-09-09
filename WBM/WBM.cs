@@ -77,7 +77,7 @@ namespace WBM
 
 			foreach (string fileName in Directory.GetFiles(this.audioPath))
 			{
-				Logger.LogDebug(Path.GetFileNameWithoutExtension(fileName));
+				Logger.LogDebug("Loading AudioClip " + Path.GetFileNameWithoutExtension(fileName));
 
 				using (UnityWebRequest uwr = UnityWebRequestMultimedia.GetAudioClip("file://" + Path.Combine(this.audioPath, fileName), AudioType.WAV))
 				{
@@ -329,8 +329,6 @@ total kills: {teamTotalKills}"
 
 						if (this.prevKills != this.myPlayerStats.kills)
 						{
-							Logger.LogDebug(this.killStreakAudioDict);
-
 							if (this.killStreakSFX.Value && this.killStreakSFXDictionary.ContainsKey(this.killStreak))
 							{
 								this.killStreakAudioSource.clip = this.killStreakAudioDict[this.killStreakSFXDictionary[this.killStreak]];

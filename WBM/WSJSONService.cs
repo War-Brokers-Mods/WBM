@@ -1,8 +1,6 @@
-using WebSocketSharp.Server;
-
 namespace WBM
 {
-	public class WSJSONService : WebSocketBehavior
+	public class WSJSONService : WebSocketSharp.Server.WebSocketBehavior
 	{
 	}
 }

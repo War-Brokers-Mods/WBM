@@ -323,7 +323,7 @@ zoom: {Util.getGunZoom(this.personGun)}"
 						GUI.Label(new Rect(Screen.width - 100, 440 + teamStatOffset, 70, 190), teamDamage);
 
 						GUI.Label(
-							new Rect(Screen.width - 315, 620 + teamStatOffset, 300, 55),
+							new Rect(Screen.width - 315, 625 + teamStatOffset, 300, 55),
 							$@"total damage: {teamTotalDamage}
 total deaths: {teamTotalDeaths}
 total kills: {teamTotalKills}"

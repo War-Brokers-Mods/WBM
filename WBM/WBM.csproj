@@ -28,9 +28,6 @@
     <Reference Include="BepInEx">
       <HintPath>dll\BepInEx.dll</HintPath>
     </Reference>
-    <Reference Include="WebSocketSharp">
-      <HintPath>dll\websocket-sharp.dll</HintPath>
-    </Reference>
     <Reference Include="Assembly-CSharp">
       <HintPath>dll\Assembly-CSharp.dll</HintPath>
     </Reference>
@@ -55,5 +52,9 @@
     <Reference Include="UnityEngine.UnityWebRequestModule">
       <HintPath>dll\UnityEngine.UnityWebRequestModule.dll</HintPath>
     </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="WebSocketSharp" Version="1.0.3-rc11" />
   </ItemGroup>
 </Project>

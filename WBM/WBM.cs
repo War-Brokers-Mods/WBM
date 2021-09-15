@@ -6,15 +6,29 @@ using UnityEngine.Networking;
 using System;
 using System.IO;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace WBM
 {
-	[BepInPlugin("com.developomp.wbm", "War Brokers Mods", "1.5.0.0")]
+	[BepInPlugin("com.developomp.wbm", "War Brokers Mods", "1.5.1.0")]
 	public partial class WBM : BaseUnityPlugin
 	{
 		private async void Start()
 		{
 			Logger.LogDebug("Initializing");
+
+			// Initialization moved to Start() because of BepInEx error
+			this.data = new Data.SerializableData();
+			this.killStreakAudioDict = new Dictionary<string, AudioClip>();
+			this.killStreakSFXDictionary = new Dictionary<int, string>()
+			{
+				{10, "rampage"},
+				{20, "killing spree"},
+				{30, "unstoppable"},
+				{50, "godlike"},
+				{69, "nice"},
+			};
+
 			this.webguy = FindObjectOfType<webguy>();
 
 			System.Type webguyType = typeof(webguy);
@@ -217,7 +231,7 @@ kill streak SFX: {this.killStreakSFX.Value} ({this.killStreakSFXShortcut.Value})
 				new Rect(this.GUIOffsetX.Value, this.GUIOffsetY.Value, 220, 60),
 				@"War Brokers Mods
 Made by [LP] POMP
-v1.5.0.0"
+v1.5.1.0"
 			);
 
 			if (this.data.localPlayerIndex >= 0)
@@ -309,7 +323,7 @@ zoom: {Util.getGunZoom(this.personGun)}"
 						GUI.Label(new Rect(Screen.width - 100, 440 + teamStatOffset, 70, 190), teamDamage);
 
 						GUI.Label(
-							new Rect(Screen.width - 315, 595 + teamStatOffset, 300, 55),
+							new Rect(Screen.width - 315, 620 + teamStatOffset, 300, 55),
 							$@"total damage: {teamTotalDamage}
 total deaths: {teamTotalDeaths}
 total kills: {teamTotalKills}"

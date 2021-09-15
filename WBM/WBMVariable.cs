@@ -18,7 +18,7 @@ namespace WBM
 		// websocket data stuff
 		private WebSocketSharp.Server.WebSocketServer server;
 		private ushort serverPort = 24601;
-		private Data.SerializableData data = new Data.SerializableData();
+		private Data.SerializableData data;
 
 		// internal or temporary
 		private bool _showConfig;
@@ -69,17 +69,10 @@ namespace WBM
 		private ConfigEntry<KeyboardShortcut> clearDeathLogShortcut;
 
 		// Audio
-		private Dictionary<string, AudioClip> killStreakAudioDict = new Dictionary<string, AudioClip>();
+		private Dictionary<string, AudioClip> killStreakAudioDict;
 		private string audioPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "assets/audio");
 		private AudioSource killStreakAudioSource;
-		private Dictionary<int, string> killStreakSFXDictionary = new Dictionary<int, string>()
-		{
-			{10, "rampage"},
-			{20, "killing spree"},
-			{30, "unstoppable"},
-			{50, "godlike"},
-			{69, "nice"},
-		};
+		private Dictionary<int, string> killStreakSFXDictionary;
 
 		// memory stuff
 		private static BindingFlags bindFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static;

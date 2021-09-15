@@ -13,6 +13,7 @@ dotnet build --configuration Release
 [ -e ./dist ] && rm -rf ./dist
 mkdir ./dist
 cp ./WBM/bin/Release/net48/WBM.dll ./dist/WBM.dll
+cp ./WBM/bin/Release/net48/websocket-sharp.dll ./dist/websocket-sharp.dll
 cp ./WBM/dll/ConfigurationManager.dll ./dist/ConfigurationManager.dll
 cp -R ./assets ./dist/assets
 

@@ -41,7 +41,7 @@ Only Windows, MacOS, and Linux are officially supported. It is Not compatible wi
    How to find game location:
    ![how to find game location](./images/local_files.png)
 
-3. If you are using Linux or MacOS, you must also perform the following setup:
+3. If you are using Linux or MacOS (or using wine), you must also perform the following setup:
 
    https://docs.bepinex.dev/v5.4.11/articles/advanced/steam_interop.html
 
@@ -111,6 +111,11 @@ Simply go through the installation process again and replace existing files. You
 The order of keystroke matter. For example, pressing <kbd>RShift</kbd>+<kbd>A</kbd> is different from pressing <kbd>A</kbd>+<kbd>RShift</kbd>. This is to prevent situation where <kbd>RShift</kbd>+<kbd>A</kbd> fires when the user intended to press <kbd>LCtrl</kbd>+<kbd>RShift</kbd>+<kbd>A</kbd>.
 
 ## Features
+
+- in-game menu
+- reconfigure shortcut keys
+- clear chat
+- clear game messages (kills, deaths, missile launch, bomb diffuse, etc.)
 
 ### in-game overlays
 

@@ -6,7 +6,6 @@ using UnityEngine.Networking;
 using System;
 using System.IO;
 using System.Threading.Tasks;
-using System.Collections.Generic;
 
 namespace WBM
 {
@@ -16,18 +15,6 @@ namespace WBM
 		private async void Start()
 		{
 			Logger.LogDebug("Initializing");
-
-			// Initialization moved to Start() because of BepInEx error
-			this.data = new Data.SerializableData();
-			this.killStreakAudioDict = new Dictionary<string, AudioClip>();
-			this.killStreakSFXDictionary = new Dictionary<int, string>()
-			{
-				{10, "rampage"},
-				{20, "killing spree"},
-				{30, "unstoppable"},
-				{50, "godlike"},
-				{69, "nice"},
-			};
 
 			this.webguy = FindObjectOfType<webguy>();
 

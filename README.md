@@ -192,10 +192,9 @@ If you are a casual user, this is completely unnecessary. **This is only recomme
 
 1. Install .NET sdk.
 2. Clone this repository.
-3. Copy all DLL files from `<WB install path>/war_brokers_Data/Managed/` to `WBM/dll/`. Create directory if it does not exist.
-4. Copy `BepInEx.dll` from `<WB install path>/BepInEx/core` to `WBM/dll/`. Create directory if it does not exist.
-5. Download [BepInEx configuration manager v16](https://github.com/BepInEx/BepInEx.ConfigurationManager/releases) and put the dll file in `WBM/dll` directory. Other file(s) in the zip file can be deleted.
-6. Create `scripts/config.sh`.
+3. Copy all DLL files from `<WB install path>/war_brokers_Data/Managed/` and `<WB install path>/BepInEx/core` to `WBM/dll/`. Create directory if it does not exist.
+4. Download [BepInEx configuration manager v16](https://github.com/BepInEx/BepInEx.ConfigurationManager/releases) and put the dll file in `WBM/dll` directory. Other file(s) in the zip file can be deleted.
+5. Create `scripts/config.sh`.
 
    ```bash
    #!/bin/bash
@@ -203,7 +202,7 @@ If you are a casual user, this is completely unnecessary. **This is only recomme
    WB_PLUGINS_DIR="<PATH_TO_PLUGINS_DIRECTORY_HERE>"
    ```
 
-7. Now you can run the scripts.
+6. Now you can run the scripts.
 
    - `scripts/debug.sh`: Build WBM in debug mode and copy the files to the plugins directory.
    - `scripts/release.sh`: Create a zip file that can be uploaded in the gh release section.

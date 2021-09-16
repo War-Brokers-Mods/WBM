@@ -1,5 +1,8 @@
 ﻿using BepInEx;
 using BepInEx.Configuration;
+
+using HarmonyLib;
+
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -9,9 +12,15 @@ using System.Threading.Tasks;
 
 namespace WBM
 {
-	[BepInPlugin("com.developomp.wbm", "War Brokers Mods", "1.5.1.0")]
+	[BepInPlugin("com.developomp.wbm", "War Brokers Mods", "1.6.0.0")]
 	public partial class WBM : BaseUnityPlugin
 	{
+		private void Awake()
+		{
+			this.harmony = new Harmony("com.developomp.wbm");
+			this.harmony.PatchAll();
+		}
+
 		private async void Start()
 		{
 			Logger.LogDebug("Initializing");
@@ -189,8 +198,7 @@ namespace WBM
 			if (this._showConfig)
 			{
 				GUI.Box(
-		new Rect(Screen.width - 340, 70, 320, 340),
-		$@"Configuration
+					new Rect(Screen.width - 370, 60, 360, 370), $@"Configuration
 
 move GUI: LCtrl+LShift+Arrow
 move GUI by pixel: LCtrl+Arrow
@@ -209,7 +217,7 @@ show squad server: {this.showSquadServer.Value} ({this.showSquadServerShortcut.V
 show testing server: {this.showTestingServer.Value} ({this.showTestingServerShortcut.Value})
 shift to crouch: {this.shiftToCrouch.Value} ({this.shiftToCrouchShortcut.Value})
 kill streak SFX: {this.killStreakSFX.Value} ({this.killStreakSFXShortcut.Value})"
-	);
+				);
 			}
 
 			if (!this.showGUI.Value) return;
@@ -218,7 +226,7 @@ kill streak SFX: {this.killStreakSFX.Value} ({this.killStreakSFXShortcut.Value})
 				new Rect(this.GUIOffsetX.Value, this.GUIOffsetY.Value, 220, 60),
 				@"War Brokers Mods
 Made by [LP] POMP
-v1.5.1.0"
+v1.6.0.0"
 			);
 
 			if (this.data.localPlayerIndex >= 0)
@@ -303,14 +311,14 @@ zoom: {Util.getGunZoom(this.personGun)}"
 						}
 
 						int teamStatOffset = (this.data.gameState == Data.GameStateEnum.Results) ? 310 : 0;
-						GUI.Box(new Rect(Screen.width - 320, 415 + teamStatOffset, 300, 270), "Team Stats");
-						GUI.Label(new Rect(Screen.width - 315, 440 + teamStatOffset, 105, 190), teamNames);
-						GUI.Label(new Rect(Screen.width - 200, 440 + teamStatOffset, 40, 190), teamKDR);
-						GUI.Label(new Rect(Screen.width - 150, 440 + teamStatOffset, 40, 190), teamPoints);
-						GUI.Label(new Rect(Screen.width - 100, 440 + teamStatOffset, 70, 190), teamDamage);
+						GUI.Box(new Rect(Screen.width - 320, 445 + teamStatOffset, 300, 270), "Team Stats");
+						GUI.Label(new Rect(Screen.width - 315, 470 + teamStatOffset, 105, 190), teamNames);
+						GUI.Label(new Rect(Screen.width - 200, 470 + teamStatOffset, 40, 190), teamKDR);
+						GUI.Label(new Rect(Screen.width - 150, 470 + teamStatOffset, 40, 190), teamPoints);
+						GUI.Label(new Rect(Screen.width - 100, 470 + teamStatOffset, 70, 190), teamDamage);
 
 						GUI.Label(
-							new Rect(Screen.width - 315, 625 + teamStatOffset, 300, 55),
+							new Rect(Screen.width - 315, 655 + teamStatOffset, 300, 55),
 							$@"total damage: {teamTotalDamage}
 total deaths: {teamTotalDeaths}
 total kills: {teamTotalKills}"
@@ -322,6 +330,11 @@ total kills: {teamTotalKills}"
 					}
 				}
 			}
+		}
+
+		private void onDestroy()
+		{
+			this.server.Stop();
 		}
 	}
 }

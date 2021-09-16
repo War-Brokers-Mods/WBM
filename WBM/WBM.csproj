@@ -28,6 +28,9 @@
     <Reference Include="BepInEx">
       <HintPath>dll\BepInEx.dll</HintPath>
     </Reference>
+    <Reference Include="HarmonyLib">
+      <HintPath>dll\0Harmony.dll</HintPath>
+    </Reference>
     <Reference Include="Assembly-CSharp">
       <HintPath>dll\Assembly-CSharp.dll</HintPath>
     </Reference>
@@ -45,6 +48,9 @@
     </Reference>
     <Reference Include="UnityEngine.InputLegacyModule">
       <HintPath>dll\UnityEngine.InputLegacyModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>dll\UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UnityWebRequestAudioModule">
       <HintPath>dll\UnityEngine.UnityWebRequestAudioModule.dll</HintPath>

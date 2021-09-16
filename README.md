@@ -116,6 +116,7 @@ The order of keystroke matter. For example, pressing <kbd>RShift</kbd>+<kbd>A</k
 - reconfigure shortcut keys
 - clear chat
 - clear game messages (kills, deaths, missile launch, bomb diffuse, etc.)
+- Extended fps limit (5~240 => disabled~1000)
 
 ### in-game overlays
 

@@ -1,4 +1,7 @@
 using BepInEx.Configuration;
+
+using HarmonyLib;
+
 using UnityEngine;
 
 using System;
@@ -13,6 +16,7 @@ namespace WBM
 	{
 		// important boy
 		private webguy webguy;
+		private Harmony harmony;
 		private IEnumerator UpdateValues;
 
 		// websocket data stuff
@@ -73,13 +77,13 @@ namespace WBM
 		private string audioPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "assets/audio");
 		private AudioSource killStreakAudioSource;
 		private Dictionary<int, string> killStreakSFXDictionary = new Dictionary<int, string>()
-			{
-				{10, "rampage"},
-				{20, "killing spree"},
-				{30, "unstoppable"},
-				{50, "godlike"},
-				{69, "nice"},
-			};
+		{
+			{10, "rampage"},
+			{20, "killing spree"},
+			{30, "unstoppable"},
+			{50, "godlike"},
+			{69, "nice"},
+		};
 
 		// memory stuff
 		private static BindingFlags bindFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static;

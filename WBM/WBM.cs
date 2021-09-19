@@ -310,7 +310,7 @@ zoom: {Util.getGunZoom(this.personGun)}"
 							}
 						}
 
-						int teamStatOffset = (this.data.gameState == Data.GameStateEnum.Results) ? 310 : 0;
+						int teamStatOffset = (this.data.gameState == Data.GameStateEnum.Results) ? 280 : 0;
 						GUI.Box(new Rect(Screen.width - 320, 445 + teamStatOffset, 300, 270), "Team Stats");
 						GUI.Label(new Rect(Screen.width - 315, 470 + teamStatOffset, 105, 190), teamNames);
 						GUI.Label(new Rect(Screen.width - 200, 470 + teamStatOffset, 40, 190), teamKDR);

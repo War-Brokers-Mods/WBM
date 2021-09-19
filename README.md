@@ -29,23 +29,55 @@ Only Windows, MacOS, and Linux are officially supported. It is Not compatible wi
 
 ### 1. Install BepInEx
 
-1. Download the latest version of BepInEx **version 5** from [here](https://github.com/BepInEx/BepInEx/releases).
+1.  Download the latest version of BepInEx **version 5** from [here](https://github.com/BepInEx/BepInEx/releases). It is important that you download the right version.
 
-   |      Platform | Filename                      |
-   | ------------: | :---------------------------- |
-   | Linux & MacOS | BepInEx_unix\_**5**.Y.Z.W.zip |
-   |       Windows | BepInEx_x86\_**5**.Y.Z.W.zip  |
+    |      Platform | Filename                      |
+    | ------------: | :---------------------------- |
+    | Linux & MacOS | BepInEx\_**unix_5**.Y.Z.W.zip |
+    |       Windows | BepInEx\_**x86_5**.Y.Z.W.zip  |
 
-2. Extract (Unzip) the content**s** to where the game executable is located.
+2.  Extract (Unzip) the content**S** to where the game is installed.
 
-   How to find game location:
-   ![how to find game location](./images/local_files.png)
+    How to find game location:<br />
+    ![how to find game location](./images/local_files.png)
 
-3. If you are using Linux or MacOS (or using wine), you must also perform the following setup:
+    The folder structure should look like this after unzipping file:
 
-   https://docs.bepinex.dev/v5.4.11/articles/advanced/steam_interop.html
+    ```
+    WarBrokers/
+    ├── BepInEx/
+    │  ├── core/
+    │  └ other files...
+    └ other files...
+    ```
 
-4. **[ IMPORTNT ]** Run the game at least once to generate the plugins folder as well as other necessary files.
+3.  If you are using Linux or MacOS, you must also perform the following setup:
+
+    1. make `run_bepinex.sh` executable: `chmod u+x run_bepinex.sh`
+    2. Add launch option
+
+       where to find game properties:<br />
+       ![where to find game properties](images/properties.png)
+
+       If you're on linux, set the launch option to:
+
+       ```bash
+       ./run_bepinex.sh %command%
+       ```
+
+       If you're on Mac, open a terminal in the game folder and run
+
+       ```bash
+       pwd
+       ```
+
+       This will print the full path to the game folder. Copy it. Next, set launch option to
+
+       ```bash
+       "PUT_RESULT_FROM_PWD_HERE/run_bepinex.sh" %command%
+       ```
+
+4.  Run the game at least once to generate the plugins folder as well as other necessary files.
 
 ### 2. Install WBM
 
@@ -55,7 +87,7 @@ Only Windows, MacOS, and Linux are officially supported. It is Not compatible wi
    It should look like this:
 
    ```
-   plugins
+   plugins (in the BepInEx folder)
    └── WBM
        ├── assets
        │   └── audio

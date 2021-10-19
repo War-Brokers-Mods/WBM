@@ -10,7 +10,7 @@ using System.IO;
 
 namespace WBM
 {
-	[BepInPlugin("com.developomp.wbm", "War Brokers Mods", "1.7.0.0")]
+	[BepInPlugin("com.developomp.wbm", "War Brokers Mods", "1.7.1.0")]
 	public partial class WBM : BaseUnityPlugin
 	{
 		private void Awake()
@@ -123,6 +123,10 @@ namespace WBM
 
 			StartCoroutine(UpdateValuesFunction());
 
+			// Final tasks
+
+			this.useOldGunSoundChanged(new object(), new EventArgs());
+
 			Logger.LogDebug("Ready!");
 		}
 
@@ -216,7 +220,7 @@ kill streak SFX: {this.killStreakSFX.Value} ({this.killStreakSFXShortcut.Value})
 				new Rect(this.GUIOffsetX.Value, this.GUIOffsetY.Value, 220, 60),
 				@"War Brokers Mods
 Made by [LP] POMP
-v1.7.0.0"
+v1.7.1.0"
 			);
 
 			if (this.data.localPlayerIndex >= 0)

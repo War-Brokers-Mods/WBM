@@ -1,12 +1,28 @@
+using UnityEngine;
+using UnityEngine.Networking;
+
 using System;
 using System.Text;
 using System.IO;
+using System.Threading.Tasks;
 using System.Runtime.Serialization.Json;
 
 namespace WBM
 {
 	public class Util
 	{
+		public async static Task<AudioClip> fetchAudioClip(string where)
+		{
+			using (UnityWebRequest uwr = UnityWebRequestMultimedia.GetAudioClip("file://" + where, AudioType.WAV))
+			{
+				uwr.SendWebRequest();
+
+				while (!uwr.isDone) await Task.Delay(10);
+
+				return DownloadHandlerAudioClip.GetContent(uwr);
+			}
+		}
+
 		public static string data2JSON(Data.SerializableData data)
 		{
 			MemoryStream stream = new MemoryStream();

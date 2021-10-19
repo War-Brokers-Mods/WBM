@@ -72,8 +72,27 @@ namespace WBM
 		private ConfigEntry<KeyboardShortcut> clearChatShortcut;
 		private ConfigEntry<KeyboardShortcut> clearDeathLogShortcut;
 
+		private ConfigEntry<bool> useOldGunSoundConf;
+		private void useOldGunSoundChanged(object sender, EventArgs e)
+		{
+			if (this.useOldGunSoundConf.Value)
+			{
+				this.AKSoundRaw.ADCOCHNNCHM = this.oldGunSound;
+				this.SMGSoundRaw.ADCOCHNNCHM = this.oldGunSound;
+			}
+			else
+			{
+				this.AKSoundRaw.ADCOCHNNCHM = this.newAKSound;
+				this.SMGSoundRaw.ADCOCHNNCHM = this.newSMGSound;
+			}
+		}
+
 		// Audio
-		private Dictionary<string, AudioClip> killStreakAudioDict = new Dictionary<string, AudioClip>();
+		private AudioClip oldGunSound;
+		private AudioClip newAKSound;
+		private AudioClip newSMGSound;
+
+		private Dictionary<string, AudioClip> AudioDict = new Dictionary<string, AudioClip>();
 		private string audioPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "assets/audio");
 		private AudioSource killStreakAudioSource;
 		private Dictionary<int, string> killStreakSFXDictionary = new Dictionary<int, string>()
@@ -235,6 +254,41 @@ namespace WBM
 			}
 		}
 
+		private FieldInfo oldGunSoundRef;
+		private AudioClip oldGunSoundRaw
+		{
+			get
+			{
+				return ((LPJKBALIFCC)this.oldGunSoundRef.GetValue(this.webguy)).ADCOCHNNCHM;
+			}
+		}
+
+		private FieldInfo AKSoundRef;
+		private LPJKBALIFCC AKSoundRaw
+		{
+			get
+			{
+				return (LPJKBALIFCC)this.AKSoundRef.GetValue(this.webguy);
+			}
+			set
+			{
+				this.AKSoundRef.SetValue(this.webguy, value);
+			}
+		}
+
+		private FieldInfo SMGSoundRef;
+		private LPJKBALIFCC SMGSoundRaw
+		{
+			get
+			{
+				return (LPJKBALIFCC)this.SMGSoundRef.GetValue(this.webguy);
+			}
+			set
+			{
+				this.SMGSoundRef.SetValue(this.webguy, value);
+			}
+		}
+
 		// Methods
 		private MethodInfo addMessageFuncRef;
 		private MethodInfo clearMessagesFuncRef;
@@ -265,7 +319,7 @@ namespace WBM
 						{
 							if (this.killStreakSFX.Value && this.killStreakSFXDictionary.ContainsKey(this.killStreak))
 							{
-								this.killStreakAudioSource.clip = this.killStreakAudioDict[this.killStreakSFXDictionary[this.killStreak]];
+								this.killStreakAudioSource.clip = this.AudioDict[this.killStreakSFXDictionary[this.killStreak]];
 								this.killStreakAudioSource.Play();
 
 								this.addMessageFuncRef.Invoke(this.webguy, new object[] { $"You are on a {this.killStreak} kill streak", -1 });

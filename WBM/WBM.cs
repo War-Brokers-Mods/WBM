@@ -4,15 +4,13 @@ using BepInEx.Configuration;
 using HarmonyLib;
 
 using UnityEngine;
-using UnityEngine.Networking;
 
 using System;
 using System.IO;
-using System.Threading.Tasks;
 
 namespace WBM
 {
-	[BepInPlugin("com.developomp.wbm", "War Brokers Mods", "1.6.1.0")]
+	[BepInPlugin("com.developomp.wbm", "War Brokers Mods", "1.7.0.0")]
 	public partial class WBM : BaseUnityPlugin
 	{
 		private void Awake()
@@ -44,6 +42,10 @@ namespace WBM
 			this.addMessageFuncRef = webguyType.GetMethod("NBPKLIOLLEI", bindFlags);
 			this.clearMessagesFuncRef = webguyType.GetMethod("IOCHBBACKFA", bindFlags);
 			this.drawChatMessageFuncRef = webguyType.GetMethod("EBDKFEJMEMB", bindFlags);
+
+			this.oldGunSoundRef = webguyType.GetField("PINGEJAHHDI", bindFlags);
+			this.AKSoundRef = webguyType.GetField("BJFBGCMEELH", bindFlags);
+			this.SMGSoundRef = webguyType.GetField("HKDDIMFIHCE", bindFlags);
 
 			// Configurations
 			this.showGUI = Config.Bind("Config", "show GUI", true);
@@ -86,6 +88,9 @@ namespace WBM
 			this.clearChatShortcut = Config.Bind("Hotkeys", "clear chat", new KeyboardShortcut(KeyCode.Z, KeyCode.RightShift));
 			this.clearDeathLogShortcut = Config.Bind("Hotkeys", "clear messages", new KeyboardShortcut(KeyCode.X, KeyCode.RightShift));
 
+			this.useOldGunSoundConf = Config.Bind("Config", "use old gun sound", true);
+			this.useOldGunSoundConf.SettingChanged += this.useOldGunSoundChanged;
+
 			// Audio
 
 			this.killStreakAudioSource = this.gameObject.AddComponent<AudioSource>();
@@ -100,30 +105,15 @@ namespace WBM
 			{
 				Logger.LogDebug("Loading AudioClip " + Path.GetFileNameWithoutExtension(fileName));
 
-				using (UnityWebRequest uwr = UnityWebRequestMultimedia.GetAudioClip("file://" + Path.Combine(this.audioPath, fileName), AudioType.WAV))
-				{
-					uwr.SendWebRequest();
-
-					try
-					{
-						while (!uwr.isDone) await Task.Delay(5);
-
-						if (uwr.result == UnityWebRequest.Result.ProtocolError) Logger.LogError($"{uwr.error}");
-						else
-						{
-							this.killStreakAudioDict.Add(
-								Path.GetFileNameWithoutExtension(fileName),
-								DownloadHandlerAudioClip.GetContent(uwr)
-							);
-
-						}
-					}
-					catch (Exception err)
-					{
-						Logger.LogError($"{err.Message}, {err.StackTrace}");
-					}
-				}
+				this.AudioDict.Add(
+					Path.GetFileNameWithoutExtension(fileName),
+					await Util.fetchAudioClip(Path.Combine(this.audioPath, fileName))
+				);
 			}
+
+			this.oldGunSound = this.oldGunSoundRaw;
+			this.newAKSound = this.AKSoundRaw.ADCOCHNNCHM;
+			this.newSMGSound = this.SMGSoundRaw.ADCOCHNNCHM;
 
 			// Websocket
 
@@ -226,7 +216,7 @@ kill streak SFX: {this.killStreakSFX.Value} ({this.killStreakSFXShortcut.Value})
 				new Rect(this.GUIOffsetX.Value, this.GUIOffsetY.Value, 220, 60),
 				@"War Brokers Mods
 Made by [LP] POMP
-v1.6.1.0"
+v1.7.0.0"
 			);
 
 			if (this.data.localPlayerIndex >= 0)

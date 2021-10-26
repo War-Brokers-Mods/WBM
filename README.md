@@ -41,17 +41,17 @@ Only Windows, MacOS, and Linux are officially supported. It is Not compatible wi
     How to find game location:<br />
     ![how to find game location](./images/local_files.png)
 
-    The folder structure should look like this after unzipping file:
+    The folder structure should look like this after unzipping the file:
 
     ```
     WarBrokers/
     ├── BepInEx/
-    │  ├── core/
-    │  └ other files...
+    │   ├── core/
+    │   └── other files...
     └ other files...
     ```
 
-3.  If you are using Linux or MacOS, you must also perform the following setup:
+3.  **If you are using Linux or MacOS**, you must also perform the following setup:
 
     1. make `run_bepinex.sh` executable: `chmod u+x run_bepinex.sh`
     2. Add launch option
@@ -59,40 +59,44 @@ Only Windows, MacOS, and Linux are officially supported. It is Not compatible wi
        where to find game properties:<br />
        ![where to find game properties](images/properties.png)
 
-       If you're on linux, set the launch option to:
+       **If you're using linux**, set the launch option to:
 
        ```bash
        ./run_bepinex.sh %command%
        ```
 
-       If you're on Mac, open a terminal in the game folder and run
+       **If you're using Mac**, open a terminal in the game folder and run
 
        ```bash
        pwd
        ```
 
-       This will print the full path to the game folder. Copy it. Next, set launch option to
+       This will print the full path to the game folder. Copy it, then set the launch option to:
 
        ```bash
-       "PUT_RESULT_FROM_PWD_HERE/run_bepinex.sh" %command%
+       "PWD_RESULT_HERE/run_bepinex.sh" %command%
        ```
 
-4.  Run the game at least once to generate the plugins folder as well as other necessary files.
+4.  **RUN THE GAME AT LEAST ONCE** to generate the plugins folder as well as other necessary files.
 
 ### 2. Install WBM
 
 1. [Download](https://github.com/War-Brokers-Mods/WBM/releases/latest) the latest version of WBM. (`WBM.zip` file)
 2. Unzip it in the `<Game folder>/BepInEx/plugins` folder.
 
-   It should look like this:
+   The folder structure should look like this after unzipping the file:
 
    ```
-   plugins (in the BepInEx folder)
-   └── WBM
-       ├── assets
-       │   └── audio
-       │       └── ...
-       └── WBM.dll
+   WarBrokers/
+   ├── BepInEx/
+   │   ├── plugins/
+   │   │   └── WBM
+   │   │       ├── assets/
+   │   │       ├── other files...
+   │   │       └── WBM.dll
+   │   ├── core/
+   │   └── other files...
+   └── other files...
    ```
 
 ### 3. Set up OBS (optional)

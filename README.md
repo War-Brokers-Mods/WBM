@@ -197,11 +197,11 @@ The order of keystroke matter. For example, pressing <kbd>RShift</kbd>+<kbd>A</k
 
 ### Sound effects
 
-- 10 kill streak: "rampage"
-- 20 kill streak: "killing spree"
-- 30 kill streak: "unstoppable"
-- 50 kill streak: "godlike"
-- 69 kill streak: "nice"
+- 10 kill streak: ["rampage"](./assets/audio/rampage.wav)
+- 20 kill streak: ["killing spree"](<./assets/audio/killing spree.wav>)
+- 30 kill streak: ["unstoppable"](./assets/audio/unstoppable.wav)
+- 50 kill streak: ["godlike"](./assets/audio/godlike.wav)
+- 69 kill streak: ["nice"](./assets/audio/nice.wav)
 
 ### OBS overlays
 

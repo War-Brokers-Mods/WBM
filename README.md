@@ -46,7 +46,7 @@ Only Windows, MacOS, and Linux are officially supported. It is Not compatible wi
     ```
     WarBrokers/
     ├── BepInEx/
-    │   ├── core/
+    │   ├── core/
     │   └── other files...
     └── other files...
     ```
@@ -94,7 +94,7 @@ Only Windows, MacOS, and Linux are officially supported. It is Not compatible wi
    │   │       ├── assets/
    │   │       ├── other files...
    │   │       └── WBM.dll
-   │   ├── core/
+   │   ├── core/
    │   └── other files...
    └── other files...
    ```
@@ -152,7 +152,7 @@ The order of keystroke matter. For example, pressing <kbd>RShift</kbd>+<kbd>A</k
 - reconfigure shortcut keys
 - clear chat
 - clear game messages (kills, deaths, missile launch, bomb diffuse, etc.)
-- Extended fps limit (5~240 => disabled~1000)
+- Extended fps limit (5\~240 => disabled\~1000)
 
 ### in-game overlays
 

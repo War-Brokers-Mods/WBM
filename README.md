@@ -22,10 +22,12 @@
 
 ## Installation
 
-Only Windows, MacOS, and Linux are officially supported. It is Not compatible with browsers.
+Only Windows, MacOS, and Linux are officially supported. It is **NOT** compatible with browsers.
 
-> **WARNING**<br />
-> I do not upload WBM anywhere other than github. If you find it elsewhere, IT IS NOT UPLOADED BY ME.
+[WBM Installer](https://github.com/War-Brokers-Mods/WBM-installer) will be available soon.
+
+<details>
+<summary>Manual Installation Instruction (click to unfold)</summary>
 
 ### 1. Install BepInEx
 
@@ -114,51 +116,57 @@ Only Windows, MacOS, and Linux are officially supported. It is Not compatible wi
 
 Simply go through the installation process again and replace existing files. You don't have to reinstall BepInEx to reinstall WBM.
 
+</details>
+
 ## Usage
+
+### Warning
+
+The order of keystroke matters.
+For example, pressing <kbd>RShift</kbd>+<kbd>A</kbd> is different from pressing <kbd>A</kbd>+<kbd>RShift</kbd>. This is to prevent situation where <kbd>RShift</kbd>+<kbd>A</kbd> fires when the user intended to press <kbd>LCtrl</kbd>+<kbd>RShift</kbd>+<kbd>A</kbd>.
 
 ### Default shortcuts
 
 - Hold down <kbd>LCtrl</kbd> or <kbd>RShift</kbd> to show shortcuts in-game.
-- Press F1 to show menu. Press outside the menu to close.
+- Press F1 to show menu. Click outside the menu to close.
 
-| Function                             | Default Shortcut                                    |
-| ------------------------------------ | --------------------------------------------------- |
-| Show Menu                            | <kbd>F1</kbd>                                       |
-| <br />                               |                                                     |
-| Move GUI                             | <kbd>LCtrl</kbd>+<kbd>LShift</kbd>+<kbd>Arrow</kbd> |
-| Move GUI by one pixel                | <kbd>LCtrl</kbd>+<kbd>Arrow</kbd>                   |
-| Reset GUI position                   | <kbd>LCtrl</kbd>+<kbd>R</kbd>                       |
-| <br />                               |                                                     |
-| Toggle All GUI visibility            | <kbd>RShift</kbd>+<kbd>A</kbd>                      |
-| Toggle Player statistics visibility  | <kbd>RShift</kbd>+<kbd>P</kbd>                      |
-| Toggle Weapon statistics visibility  | <kbd>RShift</kbd>+<kbd>W</kbd>                      |
-| Toggle Team statistics visibility    | <kbd>RShift</kbd>+<kbd>L</kbd>                      |
-| Toggle Elo visibility on leaderboard | <kbd>RShift</kbd>+<kbd>E</kbd>                      |
-| Squad server visibility              | <kbd>RShift</kbd>+<kbd>S</kbd>                      |
-| Testing servers visibility           | <kbd>RShift</kbd>+<kbd>T</kbd>                      |
-| Kill streak sound effect             | <kbd>RShift</kbd>+<kbd>F</kbd>                      |
-| Clear chat                           | <kbd>RShift</kbd>+<kbd>Z</kbd>                      |
-| Clear Messages (kills and death log) | <kbd>RShift</kbd>+<kbd>X</kbd>                      |
-| <br />                               |                                                     |
-| Toggle shift to crouch               | <kbd>RShift</kbd>+<kbd>C</kbd>                      |
-
-#### Warning
-
-The order of keystroke matter. For example, pressing <kbd>RShift</kbd>+<kbd>A</kbd> is different from pressing <kbd>A</kbd>+<kbd>RShift</kbd>. This is to prevent situation where <kbd>RShift</kbd>+<kbd>A</kbd> fires when the user intended to press <kbd>LCtrl</kbd>+<kbd>RShift</kbd>+<kbd>A</kbd>.
+| Function                                   | Default Shortcut                                    |
+| ------------------------------------------ | --------------------------------------------------- |
+| Show Menu                                  | <kbd>F1</kbd>                                       |
+| <br />                                     |                                                     |
+| Move GUI (long press)                      | <kbd>LCtrl</kbd>+<kbd>LShift</kbd>+<kbd>Arrow</kbd> |
+| Move GUI by one pixel                      | <kbd>LCtrl</kbd>+<kbd>Arrow</kbd>                   |
+| Reset GUI position                         | <kbd>LCtrl</kbd>+<kbd>R</kbd>                       |
+| <br />                                     |                                                     |
+| Toggle All GUI visibility                  | <kbd>RShift</kbd>+<kbd>A</kbd>                      |
+| Toggle player statistics visibility        | <kbd>RShift</kbd>+<kbd>P</kbd>                      |
+| Toggle weapon statistics visibility        | <kbd>RShift</kbd>+<kbd>W</kbd>                      |
+| Toggle team statistics visibility          | <kbd>RShift</kbd>+<kbd>L</kbd>                      |
+| Toggle kills Elo visibility on leaderboard | <kbd>RShift</kbd>+<kbd>E</kbd>                      |
+| Toggle squad server visibility             | <kbd>RShift</kbd>+<kbd>S</kbd>                      |
+| Toggle Testing servers visibility          | <kbd>RShift</kbd>+<kbd>T</kbd>                      |
+| Toggle kill streak sound effect            | <kbd>RShift</kbd>+<kbd>F</kbd>                      |
+| Clear chat                                 | <kbd>RShift</kbd>+<kbd>Z</kbd>                      |
+| Clear kills and death log                  | <kbd>RShift</kbd>+<kbd>X</kbd>                      |
+| <br />                                     |                                                     |
+| Toggle shift to crouch                     | <kbd>RShift</kbd>+<kbd>C</kbd>                      |
 
 ## Features
 
+<details>
+<summary>A list of all the features in WBM (click to unfold)</summary>
+
 - in-game menu
-- reconfigure shortcut keys
+- custom shortcut keys
 - clear chat
 - clear game messages (kills, deaths, missile launch, bomb diffuse, etc.)
-- Extended fps limit (5\~240 => disabled\~1000)
+- Extended fps limit (5\~240 => disabled\~1000) (may be buggy)
 
 ### in-game overlays
 
-- Tab Leaderboard
+- Leaderboard
 
-  - show kills Elo
+  - kills Elo for each player
 
 - Player statistics
 
@@ -211,19 +219,29 @@ The order of keystroke matter. For example, pressing <kbd>RShift</kbd>+<kbd>A</k
 
 ### Etc
 
-- persistent configuration
 - kill streak sound effect
-- Quickly change settings with keyboard shortcut
+- Quickly change settings with keyboard shortcuts
+
+</details>
 
 ## Limitations
 
-WBM is not a hack. WBM will not include any features that will give unfair advantage. These features include but not limited to: extended minimap zoom, quick weapon swap, instant zoom, extended field of view, audio filter, etc.
+WBM is not a hack.
+WBM will not include any features that will give unfair advantages.
+These features include but not limited to:
+extended minimap zoom, quick weapon swap, instant zoom, extended field of view, audio filter, etc.
 
-WBM will not include any custom skins. Micro-transaction accounts for a significant portion of the developers' income and WBM will not include any feature that will damage it.
+WBM will not include any custom skins.
+Micro-transaction accounts for a significant portion of the developers' income,
+and WBM will not include any feature that will affect it.
 
 ## Building
 
-If you are a casual user, this is completely unnecessary. **This is only recommended for developers.**
+If you are a casual user, this is completely unnecessary.
+**This is only recommended for developers.**
+
+<details>
+   <summary>Building instructions (click to unfold)</summary>
 
 > Assumes that working directory is project root.
 
@@ -244,13 +262,15 @@ If you are a casual user, this is completely unnecessary. **This is only recomme
    - `scripts/debug.sh`: Build WBM in debug mode and copy the files to the plugins directory.
    - `scripts/release.sh`: Create a zip file that can be uploaded in the gh release section.
 
+</details>
+
 ## Bug reports / Suggestions
 
 If you have a cool idea that will make WBM better, or if WBM misbehaves in any way (no matter how minor the problem is), feel free go to the [Issues page](https://github.com/War-Brokers-Mods/WBM/issues) and open a new issue!
 
 ## Contributing
 
-- use GH pull request
+- use the github pull request.
 - use vscode and install [recommended extensions](.vscode/extensions.json). This is required for code formatting.
 
 ## Special thanks
@@ -261,7 +281,7 @@ If you have a cool idea that will make WBM better, or if WBM misbehaves in any w
 
 ## License
 
-This project is licenced under the [MIT License](https://opensource.org/licenses/MIT).
+The source code for this project is available under the [MIT License](https://opensource.org/licenses/MIT).
 
 Fonts:
 

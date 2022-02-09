@@ -24,7 +24,7 @@
 
 Only Windows, MacOS, and Linux are officially supported. It is **NOT** compatible with browsers.
 
-[WBM Installer](https://github.com/War-Brokers-Mods/WBM-installer) will be available soon.
+Usage of the [WBM Installer](https://github.com/War-Brokers-Mods/WBM-installer/releases) is recommended.
 
 <details>
 <summary>Manual Installation Instruction (click to unfold)</summary>
@@ -79,12 +79,10 @@ Only Windows, MacOS, and Linux are officially supported. It is **NOT** compatibl
        "PWD_RESULT_HERE/run_bepinex.sh" %command%
        ```
 
-4.  **RUN THE GAME AT LEAST ONCE** to generate the plugins folder as well as other necessary files.
-
 ### 2. Install WBM
 
 1. [Download](https://github.com/War-Brokers-Mods/WBM/releases/latest) the latest version of WBM. (`WBM.zip` file)
-2. Unzip it in the `<Game folder>/BepInEx/plugins` folder.
+2. Unzip it in the `<Game folder>/BepInEx/plugins` folder. Create one if it doesn't exist.
 
    The folder structure should look like this after unzipping the file:
 
@@ -100,6 +98,8 @@ Only Windows, MacOS, and Linux are officially supported. It is **NOT** compatibl
    │   └── other files...
    └── other files...
    ```
+
+That's it! You can open War Brokers now.
 
 ### 3. Set up OBS (optional)
 

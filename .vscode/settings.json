@@ -1,5 +1,13 @@
 {
-  "cSpell.words": ["Behaviour", "Prefs", "headshot", "leaderboard", "wbm"],
+  "cSpell.words": [
+    "Behaviour",
+    "developomp",
+    "headshot",
+    "leaderboard",
+    "Prefs",
+    "wbm"
+  ],
+
   "editor.formatOnSave": true,
   "editor.formatOnPaste": true,
 

@@ -71,21 +71,7 @@ namespace WBM
 
         private void Update()
         {
-            this.moveUIOnKeyPress();
-            this.resetUIOnKeyPress();
-            this.toggleUIOnKeyPress();
-            this.toggleShiftToCrouchOnKeyPress();
-            this.toggleKillStreakSFXOnKeyPress();
-            this.togglePlayerStatsOnKeyPress();
-            this.toggleWeaponStatsOnKeyPress();
-            this.toggleTeamStatsOnKeyPress();
-            this.toggleLeaderboardEloOnKeyPress();
-            this.toggleSquadServerOnKeyPress();
-            this.toggleTestingServerOnKeyPress();
-            this.clearChatOnKeyPress();
-            this.clearDeathLogOnKeyPress();
-            this.showConfigOnKeyPress();
-            this.crouchOnKeyPress();
+            this.handleKeyPresses();
         }
 
         private void OnGUI()

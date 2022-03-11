@@ -193,7 +193,7 @@ This is to prevent situation where <kbd>RShift</kbd>+<kbd>A</kbd> fires when the
 
 ### Controls
 
-- Shift to crouch
+- Shift to crouch (does not interfere with breath holding)
 
 ### Sound effects
 

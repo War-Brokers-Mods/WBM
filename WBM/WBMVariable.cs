@@ -14,20 +14,32 @@ namespace WBM
 {
     public partial class WBM
     {
+        //
         // important boy
+        //
+
         private webguy webguy;
         private Harmony harmony;
         private IEnumerator UpdateValues;
 
+        //
         // websocket data stuff
+        //
+
         private WebSocketSharp.Server.WebSocketServer server;
         private ushort serverPort = 24601;
         private Data.SerializableData data = new Data.SerializableData();
 
+        //
         // internal or temporary
+        //
+
         private bool _showConfig;
 
+        //
         // Configurations
+        //
+
         private ConfigEntry<bool> showGUI;
         private ConfigEntry<KeyboardShortcut> showGUIShortcut;
 
@@ -87,7 +99,10 @@ namespace WBM
             }
         }
 
+        //
         // Audio
+        //
+
         private AudioClip oldGunSound;
         private AudioClip newAKSound;
         private AudioClip newSMGSound;
@@ -104,7 +119,10 @@ namespace WBM
             {69, "nice"},
         };
 
+        //
         // memory stuff
+        //
+
         private static BindingFlags bindFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static;
 
         private FieldInfo showEloOnLeaderboardRef;
@@ -289,7 +307,10 @@ namespace WBM
             }
         }
 
+        //
         // Methods
+        //
+
         private MethodInfo addMessageFuncRef;
         private MethodInfo clearMessagesFuncRef;
         private MethodInfo drawChatMessageFuncRef;

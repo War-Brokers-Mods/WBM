@@ -1,12 +1,20 @@
+using BepInEx.Configuration;
+
 using UnityEngine;
 
 using System;
 
-
 namespace WBM
 {
-    public partial class WBM
+    partial class WBM
     {
+        private ConfigEntry<bool> showGUI;
+        private ConfigEntry<KeyboardShortcut> showGUIShortcut;
+
+        private ConfigEntry<int> GUIOffsetX;
+        private ConfigEntry<int> GUIOffsetY;
+        private ConfigEntry<KeyboardShortcut> resetGUIShortcut;
+
         private void setupGUI()
         {
             GUI.skin.box.fontSize = 15;
@@ -153,6 +161,48 @@ total kills: {teamTotalKills}"
             {
                 Logger.LogError(e);
             }
+        }
+
+        private void moveUIOnKeyPress()
+        {
+            if (Input.GetKey(KeyCode.LeftControl))
+            {
+                // move GUI
+                if (Input.GetKey(KeyCode.LeftShift))
+                {
+                    if (Input.GetKey(KeyCode.UpArrow)) this.GUIOffsetY.Value -= 1;
+                    if (Input.GetKey(KeyCode.DownArrow)) this.GUIOffsetY.Value += 1;
+                    if (Input.GetKey(KeyCode.LeftArrow)) this.GUIOffsetX.Value -= 1;
+                    if (Input.GetKey(KeyCode.RightArrow)) this.GUIOffsetX.Value += 1;
+                }
+                else
+                {
+                    if (Input.GetKeyDown(KeyCode.UpArrow)) this.GUIOffsetY.Value -= 1;
+                    if (Input.GetKeyDown(KeyCode.DownArrow)) this.GUIOffsetY.Value += 1;
+                    if (Input.GetKeyDown(KeyCode.LeftArrow)) this.GUIOffsetX.Value -= 1;
+                    if (Input.GetKeyDown(KeyCode.RightArrow)) this.GUIOffsetX.Value += 1;
+                }
+            }
+        }
+
+        private void resetUIOnKeyPress()
+        {
+            if (this.resetGUIShortcut.Value.IsDown())
+            {
+                this.GUIOffsetX.Value = (int)this.GUIOffsetX.DefaultValue;
+                this.GUIOffsetY.Value = (int)this.GUIOffsetY.DefaultValue;
+            }
+        }
+
+        private void toggleUIOnKeyPress()
+        {
+            if (this.showGUIShortcut.Value.IsDown()) this.showGUI.Value = !this.showGUI.Value;
+        }
+
+        private void showConfigOnKeyPress()
+        {
+            if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightShift)) this._showConfig = true;
+            if (!Input.GetKey(KeyCode.LeftControl) && !Input.GetKey(KeyCode.RightShift)) this._showConfig = false;
         }
     }
 }

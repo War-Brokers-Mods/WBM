@@ -8,9 +8,9 @@ namespace WBM
 
         private void setupWSSever()
         {
-            server = new WebSocketSharp.Server.WebSocketServer($"ws://127.0.0.1:{this.serverPort}");
-            server.AddWebSocketService<WSJSONService>("/json");
-            server.Start();
+            this.server = new WebSocketSharp.Server.WebSocketServer($"ws://127.0.0.1:{this.serverPort}");
+            this.server.AddWebSocketService<WSService>("/json");
+            this.server.Start();
         }
 
         private void destroyWSSever()
@@ -20,7 +20,7 @@ namespace WBM
         }
     }
 
-    public class WSJSONService : WebSocketSharp.Server.WebSocketBehavior
+    public class WSService : WebSocketSharp.Server.WebSocketBehavior
     {
     }
 }

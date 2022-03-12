@@ -11,5 +11,10 @@ namespace WBM
         {
             if (this.showPlayerStatsShortcut.Value.IsDown()) this.showPlayerStats.Value = !this.showPlayerStats.Value;
         }
+
+        private void doPlayerStats()
+        {
+            this.togglePlayerStatsOnKeyPress();
+        }
     }
 }

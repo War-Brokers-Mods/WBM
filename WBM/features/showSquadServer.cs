@@ -30,9 +30,14 @@ namespace WBM
             this.showSquadServerRef = webguyType.GetField("PHPIBBCFKFI", bindFlags);
 
             this.showSquadServer = Config.Bind("Config", "show squad server", true);
-            this.showSquadServer.SettingChanged += this.onShowSquadServerChanged;
+            this.showSquadServer.SettingChanged += this.onShowSquadServerChange;
             this.showSquadServerShortcut = Config.Bind("Hotkeys", "show squad server", new KeyboardShortcut(KeyCode.S, KeyCode.RightShift));
             this.showSquadServerRaw = this.showSquadServer.Value;
+        }
+
+        private void doShowSquadServer()
+        {
+            this.toggleShowSquadServerOnKeyPress();
         }
 
         private void toggleShowSquadServerOnKeyPress()
@@ -40,7 +45,7 @@ namespace WBM
             if (this.showSquadServerShortcut.Value.IsDown()) this.showSquadServer.Value = !this.showSquadServer.Value;
         }
 
-        private void onShowSquadServerChanged(object sender, EventArgs e)
+        private void onShowSquadServerChange(object sender, EventArgs e)
         {
             this.showSquadServerRaw = this.showSquadServer.Value;
         }

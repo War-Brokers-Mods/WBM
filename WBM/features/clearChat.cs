@@ -12,13 +12,13 @@ namespace WBM
 
         private ConfigEntry<KeyboardShortcut> clearChatShortcut;
 
-        private void setupClearChatOnKeyPress()
+        private void setupClearChat()
         {
             this.drawChatMessageFuncRef = webguyType.GetMethod("EBDKFEJMEMB", bindFlags);
             this.clearChatShortcut = Config.Bind("Hotkeys", "clear chat", new KeyboardShortcut(KeyCode.Z, KeyCode.RightShift));
         }
 
-        private void clearChatOnKeyPress()
+        private void doClearChat()
         {
             if (this.clearChatShortcut.Value.IsDown()) this.clearChat();
         }

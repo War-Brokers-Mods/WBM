@@ -29,6 +29,11 @@ namespace WBM
             this.killStreakSFXShortcut = Config.Bind("Hotkeys", "kill streak sound effect", new KeyboardShortcut(KeyCode.F, KeyCode.RightShift));
         }
 
+        private void doKillStreakSFX()
+        {
+            this.toggleKillStreakSFXOnKeyPress();
+        }
+
         private void toggleKillStreakSFXOnKeyPress()
         {
             if (this.killStreakSFXShortcut.Value.IsDown()) this.killStreakSFX.Value = !this.killStreakSFX.Value;

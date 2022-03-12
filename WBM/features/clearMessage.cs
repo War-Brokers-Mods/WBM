@@ -6,7 +6,7 @@ namespace WBM
     {
         private ConfigEntry<KeyboardShortcut> clearDeathLogShortcut;
 
-        private void clearDeathLogOnKeyPress()
+        private void doclearMessage()
         {
             if (this.clearDeathLogShortcut.Value.IsDown()) this.clearMessagesFuncRef.Invoke(this.webguy, new object[] { });
         }

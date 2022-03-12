@@ -30,9 +30,14 @@ namespace WBM
             this.showTestingServerRef = webguyType.GetField("LHHEGFHLNJE", bindFlags);
 
             this.showTestingServer = Config.Bind("Config", "show testing server", true);
-            this.showTestingServer.SettingChanged += this.onShowTestingServerChanged;
+            this.showTestingServer.SettingChanged += this.onShowTestingServerChange;
             this.showTestingServerShortcut = Config.Bind("Hotkeys", "show testing server", new KeyboardShortcut(KeyCode.T, KeyCode.RightShift));
             this.showTestingServerRaw = this.showTestingServer.Value;
+        }
+
+        private void doTestingServer()
+        {
+            this.toggleTestingServerOnKeyPress();
         }
 
         private void toggleTestingServerOnKeyPress()
@@ -40,7 +45,7 @@ namespace WBM
             if (this.showTestingServerShortcut.Value.IsDown()) this.showTestingServer.Value = !this.showTestingServer.Value;
         }
 
-        private void onShowTestingServerChanged(object sender, EventArgs e)
+        private void onShowTestingServerChange(object sender, EventArgs e)
         {
             this.showTestingServerRaw = this.showTestingServer.Value;
         }

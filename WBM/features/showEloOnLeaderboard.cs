@@ -30,9 +30,14 @@ namespace WBM
             this.showEloOnLeaderboardRef = webguyType.GetField("KDOBENAOLLF", bindFlags);
 
             this.showEloOnLeaderboard = Config.Bind("Config", "show Elo on leaderboard", true);
-            this.showEloOnLeaderboard.SettingChanged += this.onShowEloOnLeaderboardChanged;
+            this.showEloOnLeaderboard.SettingChanged += this.onShowEloOnLeaderboardChange;
             this.showEloOnLeaderboardShortcut = Config.Bind("Hotkeys", "show Elo on leaderboard", new KeyboardShortcut(KeyCode.E, KeyCode.RightShift));
             this.showEloOnLeaderboardRaw = this.showEloOnLeaderboard.Value;
+        }
+
+        private void doLeaderboardElo()
+        {
+            this.toggleLeaderboardEloOnKeyPress();
         }
 
         private void toggleLeaderboardEloOnKeyPress()
@@ -40,7 +45,7 @@ namespace WBM
             if (this.showEloOnLeaderboardShortcut.Value.IsDown()) this.showEloOnLeaderboard.Value = !this.showEloOnLeaderboard.Value;
         }
 
-        private void onShowEloOnLeaderboardChanged(object sender, EventArgs e)
+        private void onShowEloOnLeaderboardChange(object sender, EventArgs e)
         {
             this.showEloOnLeaderboardRaw = this.showEloOnLeaderboard.Value;
         }

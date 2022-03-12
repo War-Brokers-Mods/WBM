@@ -29,7 +29,7 @@ namespace WBM
 
             this.setupOldGunSound();
             this.setupWSSever();
-            this.setupClearChatOnKeyPress();
+            this.setupClearChat();
             this.setupShiftToCrouch();
             this.setupShowEloOnLeaderBoard();
             this.setupShowSquadServer();
@@ -47,19 +47,18 @@ namespace WBM
             this.moveUIOnKeyPress();
             this.resetUIOnKeyPress();
             this.toggleUIOnKeyPress();
-            this.toggleKillStreakSFXOnKeyPress();
-            this.togglePlayerStatsOnKeyPress();
-            this.toggleWeaponStatsOnKeyPress();
-            this.toggleTeamStatsOnKeyPress();
-            this.toggleLeaderboardEloOnKeyPress();
-            this.toggleShowSquadServerOnKeyPress();
-            this.toggleTestingServerOnKeyPress();
-            this.clearChatOnKeyPress();
-            this.clearDeathLogOnKeyPress();
+            this.doKillStreakSFX();
+            this.doPlayerStats();
+            this.doWeaponStats();
+            this.doTeamStats();
+            this.doLeaderboardElo();
+            this.doShowSquadServer();
+            this.doTestingServer();
+            this.doClearChat();
+            this.doclearMessage();
             this.showConfigOnKeyPress();
 
-            this.toggleShiftToCrouchOnKeyPress();
-            this.crouchOnKeyPress();
+            this.doShiftToCrouch();
         }
 
         /// Called multiple times per frame in response to GUI events.

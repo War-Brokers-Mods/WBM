@@ -15,6 +15,12 @@ namespace WBM
             this.shiftToCrouchShortcut = Config.Bind("Hotkeys", "shift to crouch", new KeyboardShortcut(KeyCode.C, KeyCode.RightShift));
         }
 
+        private void doShiftToCrouch()
+        {
+            this.crouchOnKeyPress();
+            this.toggleShiftToCrouchOnKeyPress();
+        }
+
         private void crouchOnKeyPress()
         {
             // Skip if this setting is not activated

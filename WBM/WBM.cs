@@ -44,9 +44,8 @@ namespace WBM
         /// This function is called on each frame.
         private void Update()
         {
-            this.moveUIOnKeyPress();
-            this.resetUIOnKeyPress();
-            this.toggleUIOnKeyPress();
+            this.doCore();
+
             this.doKillStreakSFX();
             this.doPlayerStats();
             this.doWeaponStats();
@@ -56,8 +55,6 @@ namespace WBM
             this.doTestingServer();
             this.doClearChat();
             this.doclearMessage();
-            this.showConfigOnKeyPress();
-
             this.doShiftToCrouch();
         }
 
@@ -66,13 +63,7 @@ namespace WBM
         /// followed by a Layout and keyboard/mouse event for each input event.
         private void OnGUI()
         {
-            this.setupGUI();
-
-            if (this._showConfig) this.drawConfig();
-
-            if (!this.showGUI.Value) return;
-
-            this.drawWBMVersion();
+            this.drawCoreUI();
 
             // don't draw if player is not in a games
             if (this.data.localPlayerIndex < 0) return;

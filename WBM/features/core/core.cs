@@ -280,5 +280,13 @@ namespace WBM
                 );
             }
         }
+
+        private void doCore()
+        {
+            this.moveUIOnKeyPress();
+            this.resetUIOnKeyPress();
+            this.toggleUIOnKeyPress();
+            this.showConfigOnKeyPress();
+        }
     }
 }

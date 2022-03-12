@@ -15,14 +15,20 @@ namespace WBM
         private ConfigEntry<int> GUIOffsetY;
         private ConfigEntry<KeyboardShortcut> resetGUIShortcut;
 
-        private void setupGUI()
+        private void drawCoreUI()
         {
             GUI.skin.box.fontSize = 15;
             GUI.skin.label.fontSize = 15;
             GUI.skin.label.wordWrap = false;
+
+            if (this._showConfig) this.showConfig();
+
+            if (!this.showGUI.Value) return;
+
+            this.showWBMVersion();
         }
 
-        private void drawConfig()
+        private void showConfig()
         {
             GUI.Box(
                     new Rect(Screen.width - 370, 60, 360, 370), $@"Configuration
@@ -47,7 +53,7 @@ kill streak SFX: {this.killStreakSFX.Value} ({this.killStreakSFXShortcut.Value})
                 );
         }
 
-        private void drawWBMVersion()
+        private void showWBMVersion()
         {
             GUI.Box(
                 new Rect(this.GUIOffsetX.Value, this.GUIOffsetY.Value, 220, 60),
@@ -55,112 +61,6 @@ kill streak SFX: {this.killStreakSFX.Value} ({this.killStreakSFXShortcut.Value})
 Made by [LP] POMP
 v1.7.1.0"
             );
-        }
-
-        private void drawPlayerStats()
-        {
-            if (!this.showPlayerStats.Value) return;
-
-            try
-            {
-                string killsEloDeltaSign = this.myPlayerStats.killsEloDelta >= 0 ? "+" : "";
-                string gamesEloDeltaSign = this.myPlayerStats.gamesEloDelta >= 0 ? "+" : "";
-
-                GUI.Box(
-                    new Rect(this.GUIOffsetX.Value, this.GUIOffsetY.Value + 65, 220, 180),
-                    $@"Player stats
-
-KDR: {Util.formatKDR(this.myPlayerStats.kills, this.myPlayerStats.deaths)}
-kills Elo: {this.myPlayerStats.killsElo} {killsEloDeltaSign}{Util.formatDecimal((float)this.myPlayerStats.killsEloDelta / 10)}
-games Elo: {this.myPlayerStats.gamesElo} {gamesEloDeltaSign}{Util.formatDecimal((float)this.myPlayerStats.gamesEloDelta / 10)}
-Damage dealt: {this.myPlayerStats.damage}
-Longest Kill: {this.myPlayerStats.longestKill}m
-Points: {this.myPlayerStats.points}
-Headshots: {this.myPlayerStats.headShots}
-Kill streak: {this.killStreak}"
-                );
-            }
-            catch (Exception e)
-            {
-                Logger.LogError(e);
-            }
-        }
-
-        private void drawWeaponStats()
-        {
-
-            if (!this.showWeaponStats.Value) return;
-
-            try
-            {
-                GUI.Box(
-                    new Rect(this.GUIOffsetX.Value, this.GUIOffsetY.Value + 250, 230, 130),
-                    $@"Weapon stats
-
-fire Timer: {String.Format("{0:0.00}", Util.getGunFireTimer(this.personGun))}s (max: {String.Format("{0:0.00}", Util.getGunFireRate(this.personGun))}s)
-reload Timer: {Util.getGunReloadTimer(this.personGun)}
-cooldown Timer: {Util.getGunCooldownTimer(this.personGun)}
-speed: {Util.getGunFireVelocity(this.personGun)}
-zoom: {Util.getGunZoom(this.personGun)}"
-                );
-            }
-            catch (Exception e)
-            {
-                Logger.LogError(e);
-            }
-        }
-
-        private void drawTeamStats()
-        {
-            if (!this.showTeamStats.Value) return;
-
-            try
-            {
-                string teamNames = "Nickname\n\n";
-                string teamKDR = "KDR\n\n";
-                string teamPoints = "pts\n\n";
-                string teamDamage = "Damage\n\n";
-
-                int teamTotalKills = 0;
-                int teamTotalDeaths = 0;
-                int teamTotalDamage = 0;
-
-                for (int i = 0; i < this.data.playerStatsArray.Length; i++)
-                {
-                    Data.PlayerStatsStruct stat = this.data.playerStatsArray[i];
-
-                    // if player is not a bot and if player is in my team
-                    if ((stat.killsElo != 0) && (this.teamList[i] == this.myTeam))
-                    {
-                        teamNames += $"{this.data.nickList[i]}\n";
-                        teamKDR += $"{Util.formatKDR(stat.kills, stat.deaths)}\n";
-                        teamPoints += $"{stat.points}\n";
-                        teamDamage += $"{stat.damage}\n";
-
-                        teamTotalKills += stat.kills;
-                        teamTotalDeaths += stat.deaths;
-                        teamTotalDamage += stat.damage;
-                    }
-                }
-
-                int teamStatOffset = (this.data.gameState == Data.GameStateEnum.Results) ? 280 : 0;
-                GUI.Box(new Rect(Screen.width - 320, 445 + teamStatOffset, 300, 270), "Team Stats");
-                GUI.Label(new Rect(Screen.width - 315, 470 + teamStatOffset, 105, 190), teamNames);
-                GUI.Label(new Rect(Screen.width - 200, 470 + teamStatOffset, 40, 190), teamKDR);
-                GUI.Label(new Rect(Screen.width - 150, 470 + teamStatOffset, 40, 190), teamPoints);
-                GUI.Label(new Rect(Screen.width - 100, 470 + teamStatOffset, 70, 190), teamDamage);
-
-                GUI.Label(
-                    new Rect(Screen.width - 315, 655 + teamStatOffset, 300, 55),
-                    $@"total damage: {teamTotalDamage}
-total deaths: {teamTotalDeaths}
-total kills: {teamTotalKills}"
-                );
-            }
-            catch (Exception e)
-            {
-                Logger.LogError(e);
-            }
         }
 
         private void moveUIOnKeyPress()

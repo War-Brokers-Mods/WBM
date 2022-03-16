@@ -1,6 +1,6 @@
 # [War Brokers Mods (WBM)](https://github.com/War-Brokers-Mods/WBM)
 
-![License: MIT](https://img.shields.io/github/license/War-Brokers-Mods/WBM?style=for-the-badge&color=blue)
+[![what's this?](https://img.shields.io/badge/what's_this%3F-grey?style=for-the-badge)](https://developomp.com/portfolio/wbm)
 [![discord invite](https://img.shields.io/badge/Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/aQqamSCUcS)
 
 <p align="center">
@@ -267,6 +267,10 @@ If you have a cool idea that will make WBM better, or if WBM misbehaves in any w
 ## Special thanks
 
 - [l3lackShark](https://github.com/l3lackShark) for [inspiration](https://github.com/l3lackShark/gosumemory)
+- REKT (discord: `REKT#7777`, 710249221609226320) for:
+  - fps improvement by modifying `boot.config`
+  - shader rework
+  - video tutorial
 
 ## License
 

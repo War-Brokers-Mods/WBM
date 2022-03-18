@@ -11,19 +11,6 @@ namespace WBM
             Blue
         }
 
-        private enum QuestTypeEnum
-        {
-            Kill,
-            Damage,
-            Package,
-            Missile,
-            Capture,
-            Play,
-            Travel,
-            Assist,
-            Finish
-        }
-
         public struct PlayerStatsStruct
         {
             public int kills;
@@ -38,26 +25,6 @@ namespace WBM
             public int gamesEloDelta;
             public int killsElo;
             public int killsEloDelta;
-        }
-
-        public enum GameModeEnum
-        {
-            DeathMatch,
-            DemolitionDerby,
-            ProtectLeader,
-            ResourceCapture,
-            Race,
-            TankBattle,
-            TankKing,
-            CapturePoint,
-            VehicleEscort,
-            PackageDrop,
-            ScudLaunch,
-            BattleRoyale,
-            Competitive,
-            LobbyCompetitive,
-            LobbyBR,
-            Count
         }
 
         public enum GameStateEnum

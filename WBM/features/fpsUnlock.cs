@@ -5,8 +5,9 @@ using UnityEngine.UI;
 
 namespace WBM
 {
+    /// patch for onFPSChanged function
     [HarmonyPatch(typeof(webguy))]
-    [HarmonyPatch("FHBMKCDMGII")]
+    [HarmonyPatch("LIJHKNOLECJ")]
     class FPSSliderPatch
     {
         private static int defaultTargetFrameRate = -1;
@@ -14,21 +15,21 @@ namespace WBM
 
         private static GameObject fpsSliderTextObj = GameObject.Find("fpsSlideFuckText");
         private static Slider slider = GameObject.Find("fpsSlider").GetComponent<Slider>();
-        private static AccessTools.FieldRef<webguy, float> fpsValueRef = AccessTools.FieldRefAccess<webguy, float>("CLLNACDIPHE");
+        private static AccessTools.FieldRef<webguy, float> fpsValueRef = AccessTools.FieldRefAccess<webguy, float>("KLAKEIFEFMH");
 
-        static bool Prefix(webguy __instance, float JKNNNLEEIAO)
+        static bool Prefix(webguy __instance, float EJPANIOHKEC)
         {
-            fpsValueRef(__instance) = JKNNNLEEIAO;
-            int targetFrameRate = (int)(JKNNNLEEIAO * maxTargetFrameRate);
+            fpsValueRef(__instance) = EJPANIOHKEC;
+            int targetFrameRate = (int)(EJPANIOHKEC * maxTargetFrameRate);
 
             if (targetFrameRate == 0)
             {
-                ((InfernalBehaviour)__instance).KKFJBNFGKEP(fpsSliderTextObj, __instance.HNDAMJPNGAE("Disabled"));
+                ((InfernalBehaviour)__instance).NKANMPOLMOA(fpsSliderTextObj, __instance.HOLCODAHDKF("Disabled"));
                 targetFrameRate = defaultTargetFrameRate;
             }
             else
             {
-                ((InfernalBehaviour)__instance).KKFJBNFGKEP(fpsSliderTextObj, targetFrameRate.ToString());
+                ((InfernalBehaviour)__instance).NKANMPOLMOA(fpsSliderTextObj, targetFrameRate.ToString());
             }
 
             if (targetFrameRate > 0 && targetFrameRate < 5) targetFrameRate = 5;

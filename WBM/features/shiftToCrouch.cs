@@ -40,7 +40,8 @@ namespace WBM
 
         private void setCrouchState(bool crouchState)
         {
-            OMOJPGNNKFN.NEELEHFDKBP.EGACOOOGDDC = crouchState;
+            // CFPSGuy.inSt.isCrouching
+            GENPAICHGGE.DMBBKHNIMOK.FHJOPAFOHLA = crouchState;
         }
     }
 }

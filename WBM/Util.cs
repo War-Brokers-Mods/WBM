@@ -45,34 +45,29 @@ namespace WBM
             return String.Format("{0:0.0}", number);
         }
 
-        public static float getGunZoom(NGNJNHEFLHB gun)
+        public static float getGunZoom(CGMPHDEJMIG gun)
         {
-            return gun.ADLGCCMDNED;
+            return gun.EGDGNFIOIPO;
         }
 
-        public static float getGunFireTimer(NGNJNHEFLHB gun)
+        public static float getGunFireTimer(CGMPHDEJMIG gun)
         {
-            return gun.MAKBOBOAAHG;
+            return gun.ALHAPEJFBMM;
         }
 
-        public static float getGunFireVelocity(NGNJNHEFLHB gun)
+        public static float getGunFireVelocity(CGMPHDEJMIG gun)
         {
-            return gun.HOIKHOJJBOG;
+            return gun.CPKKPKBEDGG;
         }
 
-        public static float getGunFireRate(NGNJNHEFLHB gun)
+        public static float getGunFireRate(CGMPHDEJMIG gun)
         {
-            return gun.IHEEIAIOABG;
+            return gun.DPACFNHLIKA;
         }
 
-        public static float getGunReloadTimer(NGNJNHEFLHB gun)
+        public static float getGunReloadTimer(CGMPHDEJMIG gun)
         {
-            return gun.NBLDKJAKFIB;
-        }
-
-        public static float getGunCooldownTimer(NGNJNHEFLHB gun)
-        {
-            return gun.LBOBALHJBDM;
+            return gun.PMLOOHEKAGB;
         }
     }
 }

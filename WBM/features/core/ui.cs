@@ -2,8 +2,6 @@ using BepInEx.Configuration;
 
 using UnityEngine;
 
-using System;
-
 namespace WBM
 {
     partial class WBM
@@ -59,7 +57,7 @@ kill streak SFX: {this.killStreakSFX.Value} ({this.killStreakSFXShortcut.Value})
                 new Rect(this.GUIOffsetX.Value, this.GUIOffsetY.Value, 220, 60),
                 @"War Brokers Mods
 Made by [LP] POMP
-v1.7.1.0"
+v1.8.0.0"
             );
         }
 

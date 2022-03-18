@@ -16,17 +16,17 @@ namespace WBM
         {
             get
             {
-                return ((LPJKBALIFCC)this.oldGunSoundRef.GetValue(this.webguy)).ADCOCHNNCHM;
+                return ((HKPCKNFOBNA)this.oldGunSoundRef.GetValue(this.webguy)).DDKAHAAKKME;
             }
         }
         private AudioClip oldGunSound;
 
         private FieldInfo AKSoundRef;
-        private LPJKBALIFCC AKSoundRaw
+        private HKPCKNFOBNA AKSoundRaw
         {
             get
             {
-                return (LPJKBALIFCC)this.AKSoundRef.GetValue(this.webguy);
+                return (HKPCKNFOBNA)this.AKSoundRef.GetValue(this.webguy);
             }
             set
             {
@@ -36,11 +36,11 @@ namespace WBM
         private AudioClip newAKSound;
 
         private FieldInfo SMGSoundRef;
-        private LPJKBALIFCC SMGSoundRaw
+        private HKPCKNFOBNA SMGSoundRaw
         {
             get
             {
-                return (LPJKBALIFCC)this.SMGSoundRef.GetValue(this.webguy);
+                return (HKPCKNFOBNA)this.SMGSoundRef.GetValue(this.webguy);
             }
             set
             {
@@ -51,30 +51,30 @@ namespace WBM
 
         private void setupOldGunSound()
         {
-            this.oldGunSoundRef = webguyType.GetField("PINGEJAHHDI", bindFlags);
-            this.AKSoundRef = webguyType.GetField("BJFBGCMEELH", bindFlags);
-            this.SMGSoundRef = webguyType.GetField("HKDDIMFIHCE", bindFlags);
+            this.oldGunSoundRef = webguyType.GetField("ICMCDLNEIAI", bindFlags);
+            this.AKSoundRef = webguyType.GetField("DGEJAAPKEAD", bindFlags);
+            this.SMGSoundRef = webguyType.GetField("OFAALIJFKEI", bindFlags);
 
             this.useOldGunSoundConf = Config.Bind("Config", "use old gun sound", true);
             this.useOldGunSoundConf.SettingChanged += this.onOldGunSoundChange;
             this.onOldGunSoundChange(new object(), new EventArgs());
 
             this.oldGunSound = this.oldGunSoundRaw;
-            this.newAKSound = this.AKSoundRaw.ADCOCHNNCHM;
-            this.newSMGSound = this.SMGSoundRaw.ADCOCHNNCHM;
+            this.newAKSound = this.AKSoundRaw.DDKAHAAKKME;
+            this.newSMGSound = this.SMGSoundRaw.DDKAHAAKKME;
         }
 
         private void onOldGunSoundChange(object sender, EventArgs e)
         {
             if (this.useOldGunSoundConf.Value)
             {
-                this.AKSoundRaw.ADCOCHNNCHM = this.oldGunSound;
-                this.SMGSoundRaw.ADCOCHNNCHM = this.oldGunSound;
+                this.AKSoundRaw.DDKAHAAKKME = this.oldGunSound;
+                this.SMGSoundRaw.DDKAHAAKKME = this.oldGunSound;
             }
             else
             {
-                this.AKSoundRaw.ADCOCHNNCHM = this.newAKSound;
-                this.SMGSoundRaw.ADCOCHNNCHM = this.newSMGSound;
+                this.AKSoundRaw.DDKAHAAKKME = this.newAKSound;
+                this.SMGSoundRaw.DDKAHAAKKME = this.newSMGSound;
             }
         }
     }

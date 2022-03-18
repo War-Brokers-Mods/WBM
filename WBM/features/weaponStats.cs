@@ -29,7 +29,6 @@ namespace WBM
 
 fire Timer: {String.Format("{0:0.00}", Util.getGunFireTimer(this.personGun))}s (max: {String.Format("{0:0.00}", Util.getGunFireRate(this.personGun))}s)
 reload Timer: {Util.getGunReloadTimer(this.personGun)}
-cooldown Timer: {Util.getGunCooldownTimer(this.personGun)}
 speed: {Util.getGunFireVelocity(this.personGun)}
 zoom: {Util.getGunZoom(this.personGun)}"
                 );

@@ -5,6 +5,8 @@ using UnityEngine;
 using System;
 using System.Reflection;
 
+using CAudioClip = HKPCKNFOBNA;
+
 namespace WBM
 {
     public partial class WBM
@@ -16,17 +18,17 @@ namespace WBM
         {
             get
             {
-                return ((HKPCKNFOBNA)this.oldGunSoundRef.GetValue(this.webguy)).DDKAHAAKKME;
+                return ((CAudioClip)this.oldGunSoundRef.GetValue(this.webguy)).DDKAHAAKKME;
             }
         }
         private AudioClip oldGunSound;
 
         private FieldInfo AKSoundRef;
-        private HKPCKNFOBNA AKSoundRaw
+        private CAudioClip AKSoundRaw
         {
             get
             {
-                return (HKPCKNFOBNA)this.AKSoundRef.GetValue(this.webguy);
+                return (CAudioClip)this.AKSoundRef.GetValue(this.webguy);
             }
             set
             {
@@ -36,11 +38,11 @@ namespace WBM
         private AudioClip newAKSound;
 
         private FieldInfo SMGSoundRef;
-        private HKPCKNFOBNA SMGSoundRaw
+        private CAudioClip SMGSoundRaw
         {
             get
             {
-                return (HKPCKNFOBNA)this.SMGSoundRef.GetValue(this.webguy);
+                return (CAudioClip)this.SMGSoundRef.GetValue(this.webguy);
             }
             set
             {
@@ -51,9 +53,9 @@ namespace WBM
 
         private void setupOldGunSound()
         {
-            this.oldGunSoundRef = webguyType.GetField("ICMCDLNEIAI", bindFlags);
-            this.AKSoundRef = webguyType.GetField("DGEJAAPKEAD", bindFlags);
-            this.SMGSoundRef = webguyType.GetField("OFAALIJFKEI", bindFlags);
+            this.oldGunSoundRef = webguyType.GetField(MangledNames.gunShotClip, bindFlags);
+            this.AKSoundRef = webguyType.GetField(MangledNames.AKRifleShotClip, bindFlags);
+            this.SMGSoundRef = webguyType.GetField(MangledNames.SMGShotClip, bindFlags);
 
             this.useOldGunSoundConf = Config.Bind("Config", "use old gun sound", true);
             this.useOldGunSoundConf.SettingChanged += this.onOldGunSoundChange;

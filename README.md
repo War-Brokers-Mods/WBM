@@ -2,6 +2,7 @@
 
 [![what's this?](https://img.shields.io/badge/what's_this%3F-grey?style=for-the-badge)](https://developomp.com/portfolio/wbm)
 [![discord invite](https://img.shields.io/badge/Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/aQqamSCUcS)
+[![video tutorial](https://img.shields.io/badge/video_tutorial-red?style=for-the-badge&logo=youtube&logoColor=white)](https://www.youtube.com/watch?v=ZBE3nVvHwF8&t=64s)
 
 <p align="center">
    <strong>IF YOU USE THIS TO DEVELOP HACKS YOUR MOM IS GAY.</strong>

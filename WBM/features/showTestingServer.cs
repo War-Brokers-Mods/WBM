@@ -27,7 +27,7 @@ namespace WBM
 
         private void setupShowTestingServer()
         {
-            this.showTestingServerRef = webguyType.GetField("CCECDEDJELJ", bindFlags);
+            this.showTestingServerRef = webguyType.GetField(MangledNames.isTesting, bindFlags);
 
             this.showTestingServer = Config.Bind("Config", "show testing server", true);
             this.showTestingServer.SettingChanged += this.onShowTestingServerChange;

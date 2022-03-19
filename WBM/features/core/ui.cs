@@ -55,9 +55,9 @@ kill streak SFX: {this.killStreakSFX.Value} ({this.killStreakSFXShortcut.Value})
         {
             GUI.Box(
                 new Rect(this.GUIOffsetX.Value, this.GUIOffsetY.Value, 220, 60),
-                @"War Brokers Mods
+                $@"{WBM.programName}
 Made by [LP] POMP
-v1.8.0.0"
+v{WBM.programVersion}"
             );
         }
 

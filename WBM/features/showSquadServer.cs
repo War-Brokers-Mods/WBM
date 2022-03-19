@@ -27,7 +27,7 @@ namespace WBM
 
         private void setupShowSquadServer()
         {
-            this.showSquadServerRef = webguyType.GetField("IKOJAEHBIJI", bindFlags);
+            this.showSquadServerRef = webguyType.GetField(MangledNames.isClan, bindFlags);
 
             this.showSquadServer = Config.Bind("Config", "show squad server", true);
             this.showSquadServer.SettingChanged += this.onShowSquadServerChange;

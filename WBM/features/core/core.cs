@@ -9,6 +9,8 @@ using System.IO;
 using System.Reflection;
 using System.Collections;
 using System.Collections.Generic;
+using CPersonGun = LELHDOPKMBE;
+using SPlayerStats = BBOACLMHKLF;
 
 namespace WBM
 {
@@ -93,34 +95,32 @@ namespace WBM
             StartCoroutine(this.UpdateValues);
         }
 
-        private MethodInfo clearMessagesFuncRef;
-
         private FieldInfo playerStatsArrayRef;
         private Data.PlayerStatsStruct[] playerStatsArrayRaw
         {
             get
             {
-                IACNKEGEEAG[] rawPlayerStatsArray = (IACNKEGEEAG[])this.playerStatsArrayRef.GetValue(this.webguy);
+                SPlayerStats[] rawPlayerStatsArray = (SPlayerStats[])this.playerStatsArrayRef.GetValue(this.webguy);
                 Data.PlayerStatsStruct[] result = new Data.PlayerStatsStruct[rawPlayerStatsArray.Length];
 
                 for (int i = 0; i < rawPlayerStatsArray.Length; i++)
                 {
-                    IACNKEGEEAG currentlyParsing = rawPlayerStatsArray[i];
+                    SPlayerStats currentlyParsing = rawPlayerStatsArray[i];
 
                     result[i] = new Data.PlayerStatsStruct
                     {
-                        kills = currentlyParsing.IOOFDGPKMFK,
-                        deaths = currentlyParsing.FOKKPNMGKDP,
-                        damage = currentlyParsing.HABIHPNAEHO,
-                        longestKill = currentlyParsing.CEKBGCGKILN,
-                        points = currentlyParsing.FOBEJABPFJJ,
-                        headShots = currentlyParsing.NPMFKNDMOHB,
-                        vote = currentlyParsing.DGKDCINHCEA,
-                        mapVote = currentlyParsing.OCEJJALAMJI,
-                        gamesElo = currentlyParsing.EFMOAKCIAJP,
-                        gamesEloDelta = currentlyParsing.AAGINDPBBJJ,
-                        killsElo = currentlyParsing.FIEJIAFBDJP,
-                        killsEloDelta = currentlyParsing.MBJFMGKHFPM,
+                        kills = currentlyParsing.GPLIPBNIDNC,
+                        deaths = currentlyParsing.DKJCHCPBADP,
+                        damage = currentlyParsing.EOPJFDCLCCL,
+                        longestKill = currentlyParsing.MPJBKDPMLBD,
+                        points = currentlyParsing.IEJEOANMHKI,
+                        headShots = currentlyParsing.PEJJONGBLLH,
+                        vote = currentlyParsing.BIPKEJFKPGD,
+                        mapVote = currentlyParsing.FLOHPDGHOOG,
+                        gamesElo = currentlyParsing.EAFMCHFNJAL,
+                        gamesEloDelta = currentlyParsing.GPLEHHJJCIN,
+                        killsElo = currentlyParsing.GOJIAOADAJJ,
+                        killsEloDelta = currentlyParsing.IPICEMAAMBM,
                     };
                 }
 
@@ -153,14 +153,14 @@ namespace WBM
         }
 
         private FieldInfo personGunRef;
-        private CGMPHDEJMIG personGunRaw
+        private CPersonGun personGunRaw
         {
             get
             {
-                return (CGMPHDEJMIG)this.personGunRef.GetValue(this.webguy);
+                return (CPersonGun)this.personGunRef.GetValue(this.webguy);
             }
         }
-        private CGMPHDEJMIG personGun;
+        private CPersonGun personGun;
 
         private FieldInfo nickListRef;
         private string[] nickListRaw
@@ -202,7 +202,7 @@ namespace WBM
 
         private void initCore()
         {
-            this.harmony = new Harmony("com.developomp.wbm");
+            this.harmony = new Harmony(WBM.programID);
             this.harmony.PatchAll();
         }
 
@@ -215,16 +215,15 @@ namespace WBM
             // References
             //
 
-            this.playerStatsArrayRef = webguyType.GetField("FLDPBAEABJG", bindFlags);
-            this.teamListRef = webguyType.GetField("BFMPAFOBMKP", bindFlags);
-            this.localPlayerIndexRef = webguyType.GetField("AEILDFPIIGG", bindFlags);
-            this.personGunRef = webguyType.GetField("IDKKPOAJPMC", bindFlags);
-            this.nickListRef = webguyType.GetField("MOOLDAMLJLO", bindFlags);
-            this.gameStateRef = webguyType.GetField("NKADGEOAKKB", bindFlags);
-            this.chatListRef = webguyType.GetField("PODNOOGFEFE", bindFlags);
+            this.playerStatsArrayRef = webguyType.GetField(MangledNames.statsList, bindFlags);
+            this.teamListRef = webguyType.GetField(MangledNames.teamList, bindFlags);
+            this.localPlayerIndexRef = webguyType.GetField(MangledNames.localPlayerIndex, bindFlags);
+            this.personGunRef = webguyType.GetField(MangledNames.personGun, bindFlags);
+            this.nickListRef = webguyType.GetField(MangledNames.nickList, bindFlags);
+            this.gameStateRef = webguyType.GetField(MangledNames.gameState, bindFlags);
+            this.chatListRef = webguyType.GetField(MangledNames.chatList, bindFlags);
 
-            this.addMessageFuncRef = webguyType.GetMethod("NNLPKKPEBOF", bindFlags);
-            this.clearMessagesFuncRef = webguyType.GetMethod("EIHHBPDPNDF", bindFlags);
+            this.addMessageFuncRef = webguyType.GetMethod(MangledNames.addMessage, bindFlags);
 
             //
             // Configurations

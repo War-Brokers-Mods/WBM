@@ -1,11 +1,9 @@
 using BepInEx.Configuration;
 
-using UnityEngine;
-
 using System;
 using System.Reflection;
 
-using CAudioClip = HKPCKNFOBNA;
+using CAudioClip = DMJGLPCLOPG;
 
 namespace WBM
 {
@@ -14,14 +12,14 @@ namespace WBM
         private ConfigEntry<bool> useOldGunSoundConf;
 
         private FieldInfo oldGunSoundRef;
-        private AudioClip oldGunSoundRaw
+        private CAudioClip oldGunSoundRaw
         {
             get
             {
-                return ((CAudioClip)this.oldGunSoundRef.GetValue(this.webguy)).DDKAHAAKKME;
+                return (CAudioClip)this.oldGunSoundRef.GetValue(this.webguy);
             }
         }
-        private AudioClip oldGunSound;
+        private CAudioClip oldGunSound;
 
         private FieldInfo AKSoundRef;
         private CAudioClip AKSoundRaw
@@ -35,7 +33,7 @@ namespace WBM
                 this.AKSoundRef.SetValue(this.webguy, value);
             }
         }
-        private AudioClip newAKSound;
+        private CAudioClip newAKSound;
 
         private FieldInfo SMGSoundRef;
         private CAudioClip SMGSoundRaw
@@ -49,7 +47,7 @@ namespace WBM
                 this.SMGSoundRef.SetValue(this.webguy, value);
             }
         }
-        private AudioClip newSMGSound;
+        private CAudioClip newSMGSound;
 
         private void setupOldGunSound()
         {
@@ -62,21 +60,21 @@ namespace WBM
             this.onOldGunSoundChange(new object(), new EventArgs());
 
             this.oldGunSound = this.oldGunSoundRaw;
-            this.newAKSound = this.AKSoundRaw.DDKAHAAKKME;
-            this.newSMGSound = this.SMGSoundRaw.DDKAHAAKKME;
+            this.newAKSound = this.AKSoundRaw;
+            this.newSMGSound = this.SMGSoundRaw;
         }
 
         private void onOldGunSoundChange(object sender, EventArgs e)
         {
             if (this.useOldGunSoundConf.Value)
             {
-                this.AKSoundRaw.DDKAHAAKKME = this.oldGunSound;
-                this.SMGSoundRaw.DDKAHAAKKME = this.oldGunSound;
+                this.AKSoundRaw = this.oldGunSound;
+                this.SMGSoundRaw = this.oldGunSound;
             }
             else
             {
-                this.AKSoundRaw.DDKAHAAKKME = this.newAKSound;
-                this.SMGSoundRaw.DDKAHAAKKME = this.newSMGSound;
+                this.AKSoundRaw = this.newAKSound;
+                this.SMGSoundRaw = this.newSMGSound;
             }
         }
     }

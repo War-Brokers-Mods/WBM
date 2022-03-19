@@ -14,7 +14,7 @@ namespace WBM
 
         private void setupClearChat()
         {
-            this.drawChatMessageFuncRef = webguyType.GetMethod("MEDCOGOAHEN", bindFlags);
+            this.drawChatMessageFuncRef = webguyType.GetMethod(MangledNames.drawChatMessage, bindFlags);
             this.clearChatShortcut = Config.Bind("Hotkeys", "clear chat", new KeyboardShortcut(KeyCode.Z, KeyCode.RightShift));
         }
 

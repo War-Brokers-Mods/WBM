@@ -27,7 +27,7 @@ namespace WBM
 
         private void setupShowEloOnLeaderBoard()
         {
-            this.showEloOnLeaderboardRef = webguyType.GetField("BCFHKALFBLB", bindFlags);
+            this.showEloOnLeaderboardRef = webguyType.GetField(MangledNames.showElo, bindFlags);
 
             this.showEloOnLeaderboard = Config.Bind("Config", "show Elo on leaderboard", true);
             this.showEloOnLeaderboard.SettingChanged += this.onShowEloOnLeaderboardChange;

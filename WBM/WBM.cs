@@ -8,9 +8,13 @@ namespace WBM
     /// are event functions that gets called on specific stages of the component's lifecycle. 
     /// More information can be found in the <see href="https://docs.unity3d.com/Manual/ExecutionOrder.html">unity's documentation page</see>.
     /// </summary>
-    [BepInPlugin("com.developomp.wbm", "War Brokers Mods", "1.8.0.0")]
+    [BepInPlugin(WBM.programID, WBM.programName, WBM.programVersion)]
     public partial class WBM : BaseUnityPlugin
     {
+        public const string programID = "com.developomp.wbm";
+        public const string programName = "War Brokers Mods";
+        public const string programVersion = "1.9.0.0";
+
         /// This function is called as soon as the component becomes active.
         /// It is the first event function that's called during the component's lifecycle.
         private void Awake()

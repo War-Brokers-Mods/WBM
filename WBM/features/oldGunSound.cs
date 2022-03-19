@@ -11,23 +11,11 @@ namespace WBM
     {
         private ConfigEntry<bool> useOldGunSoundConf;
 
-        private FieldInfo oldGunSoundRef;
-        private CAudioClip oldGunSoundRaw
-        {
-            get
-            {
-                return (CAudioClip)this.oldGunSoundRef.GetValue(this.webguy);
-            }
-        }
         private CAudioClip oldGunSound;
 
         private FieldInfo AKSoundRef;
         private CAudioClip AKSoundRaw
         {
-            get
-            {
-                return (CAudioClip)this.AKSoundRef.GetValue(this.webguy);
-            }
             set
             {
                 this.AKSoundRef.SetValue(this.webguy, value);
@@ -38,10 +26,6 @@ namespace WBM
         private FieldInfo SMGSoundRef;
         private CAudioClip SMGSoundRaw
         {
-            get
-            {
-                return (CAudioClip)this.SMGSoundRef.GetValue(this.webguy);
-            }
             set
             {
                 this.SMGSoundRef.SetValue(this.webguy, value);
@@ -51,7 +35,6 @@ namespace WBM
 
         private void setupOldGunSound()
         {
-            this.oldGunSoundRef = webguyType.GetField(MangledNames.gunShotClip, bindFlags);
             this.AKSoundRef = webguyType.GetField(MangledNames.AKRifleShotClip, bindFlags);
             this.SMGSoundRef = webguyType.GetField(MangledNames.SMGShotClip, bindFlags);
 
@@ -59,9 +42,14 @@ namespace WBM
             this.useOldGunSoundConf.SettingChanged += this.onOldGunSoundChange;
             this.onOldGunSoundChange(new object(), new EventArgs());
 
-            this.oldGunSound = this.oldGunSoundRaw;
-            this.newAKSound = this.AKSoundRaw;
-            this.newSMGSound = this.SMGSoundRaw;
+            this.oldGunSound = new DMJGLPCLOPG("Sound/gun_shot", 1f, 0f);
+            this.oldGunSound.GPBDJPDFDMJ(50f, 1_000f);
+
+            this.newAKSound = new CAudioClip("Sound/AK47_Krinkov_Close_Single", 1f, 0f);
+            this.newAKSound.GPBDJPDFDMJ(50f, 1_000f);
+
+            this.newSMGSound = new DMJGLPCLOPG("Sound/smg_gun_shot", 1f, 0f);
+            this.newSMGSound.GPBDJPDFDMJ(50f, 1_000f);
         }
 
         private void onOldGunSoundChange(object sender, EventArgs e)

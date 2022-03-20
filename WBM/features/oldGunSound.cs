@@ -35,21 +35,22 @@ namespace WBM
 
         private void setupOldGunSound()
         {
+            this.useOldGunSoundConf = Config.Bind("Config", "use old gun sound", true);
+            this.useOldGunSoundConf.SettingChanged += this.onOldGunSoundChange;
+
             this.AKSoundRef = webguyType.GetField(MangledNames.AKRifleShotClip, bindFlags);
             this.SMGSoundRef = webguyType.GetField(MangledNames.SMGShotClip, bindFlags);
 
-            this.useOldGunSoundConf = Config.Bind("Config", "use old gun sound", true);
-            this.useOldGunSoundConf.SettingChanged += this.onOldGunSoundChange;
-            this.onOldGunSoundChange(new object(), new EventArgs());
-
-            this.oldGunSound = new DMJGLPCLOPG("Sound/gun_shot", 1f, 0f);
+            this.oldGunSound = new CAudioClip("Sound/gun_shot", 1f, 0f);
             this.oldGunSound.GPBDJPDFDMJ(50f, 1_000f);
 
             this.newAKSound = new CAudioClip("Sound/AK47_Krinkov_Close_Single", 1f, 0f);
             this.newAKSound.GPBDJPDFDMJ(50f, 1_000f);
 
-            this.newSMGSound = new DMJGLPCLOPG("Sound/smg_gun_shot", 1f, 0f);
+            this.newSMGSound = new CAudioClip("Sound/smg_gun_shot", 1f, 0f);
             this.newSMGSound.GPBDJPDFDMJ(50f, 1_000f);
+
+            this.onOldGunSoundChange(new object(), new EventArgs());
         }
 
         private void onOldGunSoundChange(object sender, EventArgs e)

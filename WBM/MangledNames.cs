@@ -5,6 +5,10 @@ namespace WBM
 {
     public static class MangledNames
     {
+        //
+        // Variables
+        //
+
         public const string AKRifleShotClip = "AMLFKFMFNHJ";
         public const string SMGShotClip = "JBPCEBHIPOA";
         // fps limit value

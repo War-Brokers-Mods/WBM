@@ -1,7 +1,7 @@
 using BepInEx.Configuration;
 
 using UnityEngine;
-using CFPSGuy = BLALJCIJGGH;
+using CFPSGuy = NNAPHAANNBH;
 
 namespace WBM
 {
@@ -42,7 +42,7 @@ namespace WBM
         private void setCrouchState(bool crouchState)
         {
             // CFPSGuy.inSt.isCrouching
-            CFPSGuy.GODHOHFPIFB.BLACKAOLGNP = crouchState;
+            CFPSGuy.IEEOONGMDCO.ELHNALDDABE = crouchState;
         }
     }
 }

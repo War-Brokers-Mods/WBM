@@ -9,30 +9,30 @@ namespace WBM
         // Variables
         //
 
-        public const string AKRifleShotClip = "AMLFKFMFNHJ";
-        public const string SMGShotClip = "JBPCEBHIPOA";
+        public const string AKRifleShotClip = "KOPNJGAFJPJ";
+        public const string SMGShotClip = "NIBJHJKGFGM";
         // fps limit value
-        public const string fpsValue = "DDMMENCGNNJ";
-        public const string showElo = "GOLMFEFNGEO";
+        public const string fpsValue = "DJINOOHCNED";
+        public const string showElo = "IGGKIHFPINI";
         // show squad servers
-        public const string isClan = "DMKFINANCKN";
+        public const string isClan = "FOAHJKKGADA";
         // show testing servers
-        public const string isTesting = "IMIBKMIHNEF";
-        public const string chatList = "NPGFEBBFCKM";
-        public const string gameState = "HJKIAMIDEMB";
-        public const string nickList = "PAGBLNDBFFM";
-        public const string personGun = "DOKPBFNBIMP";
-        public const string localPlayerIndex = "HHMPKKFMJCN";
-        public const string teamList = "MGHADKEDFHK";
-        public const string statsList = "CHNEHJPEKGM";
+        public const string isTesting = "LHEKKMODFPJ";
+        public const string chatList = "PCBPHCPLMJJ";
+        public const string gameState = "EMPEJBNDMDJ";
+        public const string nickList = "KLPKEAEKILP";
+        public const string personGun = "AAOANFBKCAP";
+        public const string localPlayerIndex = "EBIHMNMOAOI";
+        public const string teamList = "MNPJBKGAIBD";
+        public const string statsList = "AKABPCKCMKO";
 
         //
         // functions
         //
 
-        public const string drawChatMessage = "CIHAFDBGGDP";
-        public const string clearMessages = "FOLIGEPKOMI";
-        public const string onFPSChanged = "NGENLDFJGLK";
-        public const string addMessage = "HAFDILLPPMB";
+        public const string drawChatMessage = "OODIFGBIKLH";
+        public const string clearMessages = "IBIHDJMOONL";
+        public const string onFPSChanged = "LNMOKJEAAIL";
+        public const string addMessage = "EGKICEMGIAN";
     }
 }

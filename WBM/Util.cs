@@ -6,7 +6,7 @@ using System.Text;
 using System.IO;
 using System.Threading.Tasks;
 using System.Runtime.Serialization.Json;
-using CPersonGun = PBMBHMPCKCN;
+using CPersonGun = BOKJJMJCNGM;
 
 namespace WBM
 {
@@ -49,31 +49,31 @@ namespace WBM
         public static float getGunZoom(CPersonGun gun)
         {
             // CPersonGun.cameraZoom
-            return gun.GDFNMDDLJBC;
+            return gun.KJOHIDPMFGJ;
         }
 
         public static float getGunFireTimer(CPersonGun gun)
         {
             // CPersonGun.fireTimer
-            return gun.MJOHAFCEOHC;
+            return gun.LKMIHJFMGMP;
         }
 
         public static float getGunFireVelocity(CPersonGun gun)
         {
             // CPersonGun.fireVel
-            return gun.LIILKCBLDCK;
+            return gun.KNBPIMGMICO;
         }
 
         public static float getGunFireRate(CPersonGun gun)
         {
             // CPersonGun.fireRate
-            return gun.JNAJOIFEDCF;
+            return gun.AMBMNGKBKHL;
         }
 
         public static float getGunReloadTimer(CPersonGun gun)
         {
             // CPersonGun.reloadTimer
-            return gun.DEBADKJLNHC;
+            return gun.MEEIEBOPDGF;
         }
     }
 }

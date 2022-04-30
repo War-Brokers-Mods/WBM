@@ -3,7 +3,7 @@ using BepInEx.Configuration;
 using System;
 using System.Reflection;
 
-using CAudioClip = JOHBIOLPABD;
+using CAudioClip = EGMGOCHNIAA;
 
 namespace WBM
 {
@@ -41,14 +41,15 @@ namespace WBM
             this.AKSoundRef = webguyType.GetField(MangledNames.AKRifleShotClip, bindFlags);
             this.SMGSoundRef = webguyType.GetField(MangledNames.SMGShotClip, bindFlags);
 
+
             this.oldGunSound = new CAudioClip("Sound/gun_shot", 1f, 0f);
-            this.oldGunSound.FNHBCEACCHK(50f, 1_000f);
+            this.oldGunSound.GFHPMKOJOEA(50f, 1_000f);
 
             this.newAKSound = new CAudioClip("Sound/AK47_Krinkov_Close_Single", 1f, 0f);
-            this.newAKSound.FNHBCEACCHK(50f, 1_000f);
+            this.newAKSound.GFHPMKOJOEA(50f, 1_000f);
 
             this.newSMGSound = new CAudioClip("Sound/smg_gun_shot", 1f, 0f);
-            this.newSMGSound.FNHBCEACCHK(50f, 1_000f);
+            this.newSMGSound.GFHPMKOJOEA(50f, 1_000f);
 
             this.onOldGunSoundChange(new object(), new EventArgs());
         }

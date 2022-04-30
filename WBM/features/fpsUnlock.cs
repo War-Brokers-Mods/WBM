@@ -17,19 +17,19 @@ namespace WBM
         private static Slider slider = GameObject.Find("fpsSlider").GetComponent<Slider>();
         private static AccessTools.FieldRef<webguy, float> fpsValueRef = AccessTools.FieldRefAccess<webguy, float>(MangledNames.fpsValue);
 
-        static bool Prefix(webguy __instance, float FFALKGOIMAL)
+        static bool Prefix(webguy __instance, float LFJDCBMHKHF)
         {
-            fpsValueRef(__instance) = FFALKGOIMAL;
-            int targetFrameRate = (int)(FFALKGOIMAL * maxTargetFrameRate);
+            fpsValueRef(__instance) = LFJDCBMHKHF;
+            int targetFrameRate = (int)(LFJDCBMHKHF * maxTargetFrameRate);
 
             if (targetFrameRate == 0)
             {
-                ((InfernalBehaviour)__instance).DBGHLKJOLEN(fpsSliderTextObj, __instance.GFPPHLOPCBA("Disabled"));
+                ((InfernalBehaviour)__instance).PNINPKEBNNF(fpsSliderTextObj, __instance.PECHBMNCFBF("Disabled"));
                 targetFrameRate = defaultTargetFrameRate;
             }
             else
             {
-                ((InfernalBehaviour)__instance).DBGHLKJOLEN(fpsSliderTextObj, targetFrameRate.ToString());
+                ((InfernalBehaviour)__instance).PNINPKEBNNF(fpsSliderTextObj, targetFrameRate.ToString());
             }
 
             if (targetFrameRate > 0 && targetFrameRate < 5) targetFrameRate = 5;

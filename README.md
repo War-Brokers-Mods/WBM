@@ -254,7 +254,8 @@ and can create hacks on their own anyway.
    WB_PLUGINS_DIR="<PATH_TO_PLUGIN_INSTALL_DIRECTORY>"
    ```
 
-5. Now you can run the scripts.
+5. Install the `zip` cli. Most likely you already have it.
+6. Now you can run the scripts.
 
    - `scripts/debug.sh`: Builds WBM in debug mode and copy the files to the plugins directory.
    - `scripts/release.sh`: Creates a zip file that can be uploaded to the gh release section.

@@ -13,7 +13,7 @@ namespace WBM
     {
         public const string programID = "com.developomp.wbm";
         public const string programName = "War Brokers Mods";
-        public const string programVersion = "1.13.0.0";
+        public const string programVersion = "1.14.0.0";
 
         /// This function is called as soon as the component becomes active.
         /// It is the first event function that's called during the component's lifecycle.

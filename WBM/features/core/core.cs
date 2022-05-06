@@ -9,8 +9,8 @@ using System.IO;
 using System.Reflection;
 using System.Collections;
 using System.Collections.Generic;
-using CPersonGun = BOKJJMJCNGM;
-using SPlayerStats = AOCINPBCGCH;
+using CPersonGun = JABKDMKNMKE;
+using SPlayerStats = INPDBACNIGK;
 
 namespace WBM
 {
@@ -109,18 +109,18 @@ namespace WBM
 
                     result[i] = new Data.PlayerStatsStruct
                     {
-                        kills = currentlyParsing.GDAAGFMFLNI,
-                        deaths = currentlyParsing.CCJMDIHCBDP,
-                        damage = currentlyParsing.OCGEPPGBDNH,
-                        longestKill = currentlyParsing.CBALDOLFIHK,
-                        points = currentlyParsing.AIEMHCIHIFN,
-                        headShots = currentlyParsing.JGFCAIPDMIF,
-                        vote = currentlyParsing.KHEHPPEJLFP,
-                        mapVote = currentlyParsing.DDIINLJFLFD,
-                        gamesElo = currentlyParsing.MHLFOIJHBAC,
-                        gamesEloDelta = currentlyParsing.HFHOJIAHLIH,
-                        killsElo = currentlyParsing.MKKAAMMOBJB,
-                        killsEloDelta = currentlyParsing.CJLEKFIHJBM,
+                        kills = currentlyParsing.JJEIOHLJMHO,
+                        deaths = currentlyParsing.CADBJPEGEAL,
+                        damage = currentlyParsing.MBNBFDFDBAN,
+                        longestKill = currentlyParsing.FNOCIFHHINH,
+                        points = currentlyParsing.AIDBBHHNCAK,
+                        headShots = currentlyParsing.FJPBIMILEPN,
+                        vote = currentlyParsing.ILNFHPIOPCI,
+                        mapVote = currentlyParsing.DPMNDAMAHML,
+                        gamesElo = currentlyParsing.OPMKKKJPDON,
+                        gamesEloDelta = currentlyParsing.BIFCAPOBMIO,
+                        killsElo = currentlyParsing.ICIBGMLJNHJ,
+                        killsEloDelta = currentlyParsing.ONICDMLDBFL,
                     };
                 }
 
